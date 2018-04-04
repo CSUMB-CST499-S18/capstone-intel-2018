@@ -1,0 +1,19 @@
+{
+  "name": "webpack",
+  "version": "1.0.0",
+  "description": "Edited by branAve 3-8-2018 12:55 pm Edited by Mavey April 4 HELLO",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSUMB-CST499-S18/capstone-intel-2018.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSUMB-CST499-S18/capstone-intel-2018/issues"
+  },
+  "homepage": "https://github.com/CSUMB-CST499-S18/capstone-intel-2018#readme"
+}
