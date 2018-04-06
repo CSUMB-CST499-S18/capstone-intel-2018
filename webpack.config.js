@@ -1,14 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
 
+
 var BUILD_DIR = path.resolve(__dirname, './static');
 var APP_DIR = path.resolve(__dirname, 'scripts');
+
 
 var config = {
   entry: APP_DIR + '/index.jsx',
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
+
   },
   
   module : {
@@ -17,6 +20,7 @@ var config = {
         include : APP_DIR,
         loader : 'babel-loader'
     }]
+
   }
 };
 

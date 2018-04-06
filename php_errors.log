@@ -1,0 +1,44 @@
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:33
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:33
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:33
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_scripts.js.php:33
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/phpmyadmin.css.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/phpmyadmin.css.php:16
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:23
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/messages.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/messages.php:23
+[08-Mar-2018 20:49:46 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:49:46 UTC] PHP Stack trace:
+[08-Mar-2018 20:49:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_image.js.php:0
+[08-Mar-2018 20:49:46 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_image.js.php:21
+[08-Mar-2018 20:50:56 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:50:56 UTC] PHP Stack trace:
+[08-Mar-2018 20:50:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/messages.php:0
+[08-Mar-2018 20:50:56 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/messages.php:23
+[08-Mar-2018 20:50:56 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:50:56 UTC] PHP Stack trace:
+[08-Mar-2018 20:50:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/get_image.js.php:0
+[08-Mar-2018 20:50:56 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/get_image.js.php:21
+[08-Mar-2018 20:50:56 UTC] PHP Fatal error:  Class 'PMA\libraries\Tracker' not found in /home/ubuntu/workspace/phpMyAdmin/libraries/common.inc.php on line 867
+[08-Mar-2018 20:50:56 UTC] PHP Stack trace:
+[08-Mar-2018 20:50:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:0
+[08-Mar-2018 20:50:56 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:23
