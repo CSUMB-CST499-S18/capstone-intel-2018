@@ -15,13 +15,20 @@ var config = {
   },
   
   module : {
-    rules : [{
+    rules : [
+      {
         test : /\.jsx?/,
         include : APP_DIR,
         loader : 'babel-loader'
-    }]
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader?sourceMap'
+      }
+    ]
 
   }
+
 };
 
 module.exports = config;
