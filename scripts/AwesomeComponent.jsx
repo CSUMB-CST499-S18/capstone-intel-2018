@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../static/CSS/AwesomeComponent.scss';
 class AwesomeComponent extends React.Component {
 
   constructor(props) {
@@ -16,8 +16,9 @@ class AwesomeComponent extends React.Component {
   render() {
     return (
       <div>
-        Likes : <span>{this.state.likesCount}</span>
-        <div><button onClick={this.onLike}>Like Me</button></div>
+        <p className="makeGreen">reddddd</p>
+        Likes: <span className="makeBlue">{this.state.likesCount}</span>
+        <div><button onClick={this.onLike} className="likeButton">Like Me</button></div>
       </div>
     );
   }
