@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
-class DisplayUserComponent extends React.Component {
+class AjaxTest extends React.Component {
 
   constructor(props) {
     super(props);
@@ -115,4 +115,4 @@ class DisplayUserComponent extends React.Component {
     }
 }
 
-export default DisplayUserComponent;
+export default AjaxTest;
