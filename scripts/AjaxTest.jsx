@@ -8,39 +8,41 @@ class AjaxTest extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      Employee: []
+      data: []
         };
         
     this.componentDidMount = this.componentDidMount.bind(this);
   }
-
+  
+   blah() {
+    $.ajax({
+      type: "GET",
+      url: "../API/DisplayUsers.php",
+      dataType: "json",
+      data: { "EmployeeID": 11 },
+      success: function(data,status) {
+        for(var i=0; i<data.length;i++){
+            $("#Name").append("<option>" + data[i].Name + "</option>");
+        }
+        this.setState({Employee: data["Name"]});
+      }.bind(this),
+      complete: function(data,status) { //optional, used for debugging purposes
+          // alert(status);
+      }
+      
+      });//ajax
+   }
     
       componentDidMount() {
-         $.ajax({
-        
-        type: "GET",
-        url: "../API/DisplayUsers.php",
-        dataType: "json",
-        data: { "EmployeeID": 11 },
-        success: function(data,status) {
-           for(var i=0; i<data.length;i++){
-               $("#Name").append("<option>" + data[i].Name + "</option>");
-           }
-        
-        },
-        complete: function(data,status) { //optional, used for debugging purposes
-        //alert(status);
-        }
-        
-        });//ajax
-        
+  
+     /*   
        $.ajax({
         
         type: "GET",
         url: "../API/ChangeIsManager.php",
         dataType: "json",
         data: { "EmployeeID": 11,
-                "isManager": 0},
+                "isManager": 1},
         success: function(data,status) {
         alert("Success");
         },
@@ -48,7 +50,7 @@ class AjaxTest extends React.Component {
         //alert(status);
         }
         
-        });//ajax
+        });//ajax 
         
         $.ajax({
         
@@ -66,9 +68,9 @@ class AjaxTest extends React.Component {
         //alert(status);
         }
         
-        });//ajax
+        });//ajax 
                  
-   /* adding to team             
+               
         $.ajax({
         
         type: "GET",
@@ -86,7 +88,7 @@ class AjaxTest extends React.Component {
         }
       
         });//ajax
-        */
+        /*
          $.ajax({
         
         type: "GET",
@@ -102,15 +104,18 @@ class AjaxTest extends React.Component {
         //alert(status);
         }
         
-        });//ajax
+        });//ajax*/ 
+        
+        $(document).ready(function(){
+       
+        $("#Name").change( function(){this.blah(); } );
+   } ); //documentReady
   }
 
 
     render() {
       return (
-        <ul name = "Name" id="Name">
-          <li>Hello</li>
-        </ul>
+        <select name = "Name" id="Name">{this.blah()}</select>
       );
     }
 }
