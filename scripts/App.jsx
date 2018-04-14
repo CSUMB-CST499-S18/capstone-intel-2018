@@ -1,6 +1,6 @@
 // import packages
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import openSocket from 'socket.io-client';
 const  socket = openSocket();
 
@@ -12,21 +12,15 @@ class App extends Component {
     this.state = { timestamp: 'no timestamp yet' };
     
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.subToTimer = this.subToTimer.bind(this);
-    
-    
     
   }
  
   
-  subToTimer(cb) {
-    socket.on('timer', timestamp => cb(null, timestamp));
-    socket.emit('subscribeToTimer', 1000);
-  }
-  
    componentDidMount(){
       
-      this.subToTimer((timestamp) => this.setState({ timestamp }));
+      socket.on('time', (timeString) => {
+        this.setState({ timestamp : timeString });
+      });
 
     }
   
@@ -34,7 +28,7 @@ class App extends Component {
     return (
       <div className="App">
         <p className="App-intro">
-        This is the timer value: {this.state.timestamp}
+          {this.state.timestamp}
         </p>
       </div>
   );

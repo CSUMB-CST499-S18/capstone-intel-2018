@@ -5,7 +5,7 @@ const socketIO = require('socket.io');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, './scripts/index.html');
+const INDEX = path.join(__dirname, 'scripts/index.html');
 
 const server = express()
   .use((req, res) => res.sendFile(INDEX) )
@@ -15,15 +15,7 @@ const io = socketIO(server);
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  
   socket.on('disconnect', () => console.log('Client disconnected'));
-  
-  socket.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    
-    setInterval(() => {
-      socket.emit('timer', new Date());
-    }, interval);
-    
-  });
 });
+
+setInterval(() => io.emit('time', new Date().toTimeString()), 1000);

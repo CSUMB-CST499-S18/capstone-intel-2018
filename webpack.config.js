@@ -18,10 +18,15 @@ var config = {
     rules : [{
         test : /\.jsx?/,
         include : APP_DIR,
+        exclude: /(node_modules)/,
         loader : 'babel-loader'
     }]
 
-  }
+  },
+  
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 module.exports = config;
