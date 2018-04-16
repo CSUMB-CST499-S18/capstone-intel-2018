@@ -19,7 +19,7 @@ class App extends Component {
    componentDidMount(){
       
       socket.on('time', (timeString) => {
-        this.setState({ timestamp : timeString });
+        this.setState({timestamp : 'Server time: ' + timeString });
       });
 
     }
@@ -35,4 +35,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;

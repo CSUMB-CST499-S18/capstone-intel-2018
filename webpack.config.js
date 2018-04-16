@@ -10,6 +10,7 @@ var config = {
   entry: APP_DIR + '/index.jsx',
   output: {
     path: BUILD_DIR,
+    publicPath: '/',
     filename: 'bundle.js'
 
   },
