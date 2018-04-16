@@ -16,18 +16,25 @@ var config = {
   },
   
   module : {
-    rules : [{
+    rules : [
+      {
         test : /\.jsx?/,
         include : APP_DIR,
         exclude: /(node_modules)/,
         loader : 'babel-loader'
-    }]
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader?sourceMap'
+      }
+    ]
 
   },
   
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+
 };
 
 module.exports = config;
