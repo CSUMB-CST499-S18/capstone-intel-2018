@@ -1,21 +1,44 @@
-'use strict';
+var path = require('path');
+var express = require('express');
+var app = express();
+var PORT = process.env.PORT || 8080;
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
-const express = require('express');
-const socketIO = require('socket.io');
-const path = require('path');
+// using webpack-dev-server and middleware in development environment
+if (process.env.NODE_ENV !== 'production') {
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var webpack = require('webpack');
+  var config = require('./webpack.config');
+  var compiler = webpack(config);
 
-const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'scripts/index.html');
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-const io = socketIO(server);
-
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/dist/index.html')
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+io.on('connection', function(client) {
+  console.log('client connected!');
+
+  client.on('join', function(data) {
+    console.log(data);
+  });
+  
+  client.on('set', (data) => setInterval(() => io.emit('time', new Date().toTimeString()), 1000));
+});
+
+server.listen(PORT, function(error) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.info('==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.', PORT, PORT);
+  }
+});
+
+

@@ -1,40 +1,31 @@
 var webpack = require('webpack');
 var path = require('path');
 
-
-var BUILD_DIR = path.resolve(__dirname, './static');
-var APP_DIR = path.resolve(__dirname, 'scripts');
-
-
-var config = {
-  entry: APP_DIR + '/index.jsx',
+module.exports = {
+  entry: [
+    './src/index'
+  ],
+  module: {
+    loaders: [
+      { test: /\.js?$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.s?css$/, loader: 'style!css!sass' },
+    ]
+  },
+  resolve: {
+    extensions: ['', '.js']
+  },
   output: {
-    path: BUILD_DIR,
+    path: path.join(__dirname, '/dist'),
     publicPath: '/',
     filename: 'bundle.js'
-
   },
-  
-  module : {
-    rules : [
-      {
-        test : /\.jsx?/,
-        include : APP_DIR,
-        exclude: /(node_modules)/,
-        loader : 'babel-loader'
-      },
-      {
-        test: /\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader?sourceMap'
-      }
-    ]
-
+  devServer: {
+    contentBase: './dist',
+    hot: true
   },
-  
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
-
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 };
-
-module.exports = config;
