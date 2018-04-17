@@ -195,3 +195,36 @@ Stack trace:
 #0 /home/ubuntu/workspace/capstone-intel-2018/API/AddToTeam.php(19): PDOStatement->fetch(2)
 #1 {main}
   thrown in /home/ubuntu/workspace/capstone-intel-2018/API/AddToTeam.php on line 19
+[17-Apr-2018 07:05:32 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:05:32 UTC] PHP Stack trace:
+[17-Apr-2018 07:05:32 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:09:02 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:09:02 UTC] PHP Stack trace:
+[17-Apr-2018 07:09:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:09:15 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:09:15 UTC] PHP Stack trace:
+[17-Apr-2018 07:09:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:10:35 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:10:35 UTC] PHP Stack trace:
+[17-Apr-2018 07:10:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:02 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:02 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:16 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:16 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:16 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:39 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:39 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:19:58 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:19:58 UTC] PHP Stack trace:
+[17-Apr-2018 07:19:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:21:08 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:21:08 UTC] PHP Stack trace:
+[17-Apr-2018 07:21:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:22:00 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:22:00 UTC] PHP Stack trace:
+[17-Apr-2018 07:22:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:22:19 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:22:19 UTC] PHP Stack trace:
+[17-Apr-2018 07:22:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0

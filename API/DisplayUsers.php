@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://capstone-intel-jaimegvelazquez.c9users.io:8081");
+header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] . "");
 include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
