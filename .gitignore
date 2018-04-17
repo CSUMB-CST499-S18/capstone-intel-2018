@@ -1,3 +1,4 @@
-phpMyAdmin
-npm-debug.log
-node_modules
+node_modules/
+*bundle.js
+*npm-debug.log
+*.DS_Store

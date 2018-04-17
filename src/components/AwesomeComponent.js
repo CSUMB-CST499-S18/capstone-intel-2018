@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../../static/CSS/AwesomeComponent.scss';
-import Profile from './Profile.jsx';
+import '../assets/stylesheets/AwesomeComponent.scss';
+import Profile from './Profile.js';
 import SplitPane from 'react-split-pane'
-import AjaxTest from '../AjaxTest.jsx'
+import AjaxTest from './AjaxTest.js'
 
 class AwesomeComponent extends Component {
 

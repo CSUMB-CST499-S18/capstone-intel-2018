@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../static/CSS/Profile.scss';
+import '../assets/stylesheets/Profile.scss';
 
 
 class EmployeeName extends Component {
