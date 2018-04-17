@@ -11,13 +11,11 @@ class AjaxTest extends React.Component {
       isLoaded: false,
       Employee: []
     };
-
         
-    this.blah = this.blah.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
   
-
-  blah() {
+  componentDidMount() {
     $.ajax({
       type: "GET",
       url: "../../API/DisplayUsers.php",
@@ -34,8 +32,6 @@ class AjaxTest extends React.Component {
       }
       
       });//ajax
-
-
         
       // $.ajax({
         
@@ -68,11 +64,12 @@ class AjaxTest extends React.Component {
       //   complete: function(data,status) { //optional, used for debugging purposes
       //   //alert(status);
       //   }
-
+        
       //   });//ajax
                  
    // adding to team             
         // $.ajax({
+        
         // type: "GET",
         // url: "../API/AddToTeam.php",
         // dataType: "json",
@@ -88,7 +85,7 @@ class AjaxTest extends React.Component {
         // }
       
         // });//ajax
-
+        
         // $.ajax({
         
         // type: "GET",
@@ -105,12 +102,10 @@ class AjaxTest extends React.Component {
         // }
         
         // });//ajax
-
   }
 
 
     render() {
-    this.blah();
       return (
         <div>
           <div>SANITY</div>
