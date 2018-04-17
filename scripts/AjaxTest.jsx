@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import axios from 'axios'
 
 class AjaxTest extends React.Component {
 
@@ -8,13 +9,15 @@ class AjaxTest extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      data: []
-        };
+      Employee: []
+    };
+
         
-    this.componentDidMount = this.componentDidMount.bind(this);
+    this.blah = this.blah.bind(this);
   }
   
-   blah() {
+
+  blah() {
     $.ajax({
       type: "GET",
       url: "../API/DisplayUsers.php",
@@ -31,91 +34,88 @@ class AjaxTest extends React.Component {
       }
       
       });//ajax
-   }
-    
-      componentDidMount() {
-  
-     /*   
-       $.ajax({
-        
-        type: "GET",
-        url: "../API/ChangeIsManager.php",
-        dataType: "json",
-        data: { "EmployeeID": 11,
-                "isManager": 1},
-        success: function(data,status) {
-        alert("Success");
-        },
-        complete: function(data,status) { //optional, used for debugging purposes
-        //alert(status);
-        }
-        
-        });//ajax 
-        
-        $.ajax({
-        
-        type: "GET",
-        url: "../API/ChangeIsTeamManager.php",
-        dataType: "json",
-        data: { "EmployeeID": 1,
-                "TeamID": 1,
-                "isTeamManager":0
-        },
-        success: function(data,status) {
 
-        },
-        complete: function(data,status) { //optional, used for debugging purposes
-        //alert(status);
-        }
+
         
-        });//ajax 
+      // $.ajax({
+        
+      //   type: "GET",
+      //   url: "../API/ChangeIsManager.php",
+      //   dataType: "json",
+      //   data: { "EmployeeID": 11,
+      //           "isManager": 0},
+      //   success: function(data,status) {
+      //   alert("Success");
+      //   },
+      //   complete: function(data,status) { //optional, used for debugging purposes
+      //   //alert(status);
+      //   }
+        
+      //   });//ajax
+        
+      //   $.ajax({
+        
+      //   type: "GET",
+      //   url: "../API/ChangeIsTeamManager.php",
+      //   dataType: "json",
+      //   data: { "EmployeeID": 1,
+      //           "TeamID": 1,
+      //           "isTeamManager":0
+      //   },
+      //   success: function(data,status) {
+
+      //   },
+      //   complete: function(data,status) { //optional, used for debugging purposes
+      //   //alert(status);
+      //   }
+
+      //   });//ajax
                  
-               
-        $.ajax({
-        
-        type: "GET",
-        url: "../API/AddToTeam.php",
-        dataType: "json",
-        data: { "EmployeeID": 1,
-                "TeamID": 31,
-                "isTeamManager":0
-        },
-        success: function(data,status) {
+   // adding to team             
+        // $.ajax({
+        // type: "GET",
+        // url: "../API/AddToTeam.php",
+        // dataType: "json",
+        // data: { "EmployeeID": 1,
+        //         "TeamID": 31,
+        //         "isTeamManager":0
+        // },
+        // success: function(data,status) {
 
-        },
-        complete: function(data,status) { //optional, used for debugging purposes
-        //alert(status);
-        }
+        // },
+        // complete: function(data,status) { //optional, used for debugging purposes
+        // //alert(status);
+        // }
       
-        });//ajax
-        /*
-         $.ajax({
-        
-        type: "GET",
-        url: "../API/RemoveFromTeam.php",
-        dataType: "json",
-        data: { "EmployeeID": 1,
-                "TeamID": 31
-        },
-        success: function(data,status) {
+        // });//ajax
 
-        },
-        complete: function(data,status) { //optional, used for debugging purposes
-        //alert(status);
-        }
+        // $.ajax({
         
-        });//ajax*/ 
+        // type: "GET",
+        // url: "../API/RemoveFromTeam.php",
+        // dataType: "json",
+        // data: { "EmployeeID": 1,
+        //         "TeamID": 31
+        // },
+        // success: function(data,status) {
+
+        // },
+        // complete: function(data,status) { //optional, used for debugging purposes
+        // //alert(status);
+        // }
         
-        $(document).ready(function(){
-       
-        $("#Name").change( function(){this.blah(); } );
-   } ); //documentReady
+        // });//ajax
+
   }
 
 
     render() {
+    this.blah();
       return (
-        <select name = "Name" id="Name">{this.blah()}</select>
+        <div>
+          <div>SANITY</div>
+          <div>{this.state.Employee}</div>
+        </div>
       );
     }
 }
