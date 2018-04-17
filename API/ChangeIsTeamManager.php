@@ -1,7 +1,6 @@
 <?php
-
-include '../dbConnection.php';
-
+include 'dbConnection.php';
+header("Access-Control-Allow-Origin: http://capstone-intel-jaimegvelazquez.c9users.io:8081");
 $conn = getDatabaseConnection();
 
 $sql = "UPDATE employeeteam

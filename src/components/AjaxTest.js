@@ -14,11 +14,10 @@ class AjaxTest extends React.Component {
         
     this.componentDidMount = this.componentDidMount.bind(this);
   }
-  
   componentDidMount() {
     $.ajax({
       type: "GET",
-      url: "../../API/DisplayUsers.php",
+      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/API/DisplayUsers.php",
       dataType: "json",
       data: { "EmployeeID": 11 },
       success: function(data,status) {
