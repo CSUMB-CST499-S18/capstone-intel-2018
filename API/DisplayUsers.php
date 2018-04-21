@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] . "");
 include 'dbConnection.php';
+
 $conn = getDatabaseConnection();
 
 $sql = "SELECT *
