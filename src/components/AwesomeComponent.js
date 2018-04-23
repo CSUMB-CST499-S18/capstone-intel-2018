@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import '../assets/stylesheets/AwesomeComponent.scss';
 import Profile from './Profile.js';
 import SplitPane from 'react-split-pane'
 import AjaxTest from './AjaxTest.js'
 
 class AwesomeComponent extends Component {
+  
+  static propTypes = {
+    socket: PropTypes.object.isRequired
+  };
 
   constructor(props) {
-    super(props);
+    super(props, context);
     this.state = {
       likesCount : 0,
     };
     this.onLike = this.onLike.bind(this);
+  }
+  
+  componentDidMount(){
+    const { socket } = this.props;
   }
 
   onLike () {
@@ -32,7 +41,7 @@ class AwesomeComponent extends Component {
           <div className="teamPane">
             Likes: <span className="makeBlue">{this.state.likesCount}</span>
             <div><button onClick={this.onLike} className="likeButton">Like Me</button></div>
-             <AjaxTest/>
+             <AjaxTest {...this.props} socket={this.socket} />
           </div>
         </SplitPane>
       </div>

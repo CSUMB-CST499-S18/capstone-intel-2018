@@ -1,13 +1,18 @@
 import '../assets/stylesheets/base.scss';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AwesomeComponent from './AwesomeComponent.js';
 
 let socket = io.connect();
 
 class App extends Component {
   
+  static propTypes = {
+    socket: PropTypes.object.isRequired
+  };
+  
   constructor(props) {
-    super(props);
+    super(props, context);
   
     this.state = { timestamp: 'no timestamp yet' };
     
@@ -17,6 +22,7 @@ class App extends Component {
   }
   
   componentDidMount() {
+   const { socket } = this.props;
    
     var that = this;
       
@@ -43,7 +49,7 @@ class App extends Component {
         <p className="App-intro">
           {this.state.timestamp}
         </p>
-        <div><AwesomeComponent /></div>
+        <div><AwesomeComponent {...this.props} socket={this.socket}/></div>
       </div>
     );
   }

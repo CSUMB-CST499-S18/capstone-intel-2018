@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types';
 import $ from 'jquery';
 import axios from 'axios'
 
 class AjaxTest extends React.Component {
+
+ static propTypes = {
+    socket: PropTypes.object.isRequired
+  };
 
   constructor(props) {
     super(props);
@@ -12,9 +17,29 @@ class AjaxTest extends React.Component {
       Employee: []
     };
         
-    this.blah = this.blah.bind(this);
+    //this.blah = this.blah.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
   
+  componentDidMount() {
+    
+    const { socket } = this.props;
+    
+    var that = this;
+      
+      
+    socket.emit('getEmployee', '');
+    
+      
+    socket.on('name', function(data) {
+       
+        that.setState({Employee: data["Name"]});
+        
+      });
+  }
+  
+  
+  /*
   blah() {
     $.ajax({
       type: "GET",
@@ -103,10 +128,10 @@ class AjaxTest extends React.Component {
         
         // });//ajax
   }
-
+*/
 
     render() {
-    this.blah();
+    //this.blah();
       return (
         <div>
           <div>SANITY</div>
