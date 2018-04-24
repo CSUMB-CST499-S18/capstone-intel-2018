@@ -18,7 +18,7 @@ class AjaxTest extends React.Component {
   blah() {
     $.ajax({
       type: "GET",
-      url: "https://cst499s18-bavery.c9users.io:8080/Project_Folder/capstone-intel-2018/API/DisplayUsers.php",
+      url: "https://capstone-intel-2018.herokuapp.com/:8080/Project_Folder/capstone-intel-2018/API/DisplayUsers.php",
       dataType: "json",
       data: { "EmployeeID": 11 },
       success: function(data,status) {
