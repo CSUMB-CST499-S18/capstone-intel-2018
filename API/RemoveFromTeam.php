@@ -16,4 +16,12 @@ $namedParameters[':TeamID'] = $_GET['TeamID'];
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);
 
+
+//TODO: REMOVAL LOGIC
+//SELECT *
+//FROM teamresource NATURAL JOIN employeeresource 
+//WHERE employeeresource.ResourceID = teamresource.ResourceID AND employeeresource.EmployeeID = 1 AND TeamID = 21;
+
+//This removes an employees resource access to that specific team ID.
+
 ?>
