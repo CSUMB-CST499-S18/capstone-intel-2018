@@ -15,11 +15,12 @@ class AjaxTest extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
   componentDidMount() {
+    console.log("AjaxTest.js");
     $.ajax({
       type: "GET",
       //url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/API/DisplayUsers.php",
 
-      url: "https://capstone-intel-2018.herokuapp.com/capstone-intel-2018/API/DisplayUsers.php",
+      url: "https://capstone-intel-2018.herokuapp.com/capstone-intel-2018/dist/API/DisplayUsers.php",
       dataType: "json",
       data: { "EmployeeID": 11 },
       success: function(data,status) {
@@ -27,9 +28,11 @@ class AjaxTest extends React.Component {
             $("#Name").append("<option>" + data[i].Name + "</option>");
         }
         this.setState({Employee: data["Name"]});
+        console.log("Ajax Success");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
+          console.log("Ajax complete");
       }
       
       });//ajax
