@@ -1,72 +1,75 @@
-import React from 'react'
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
-import Main from './Main.js'
+} from 'react-router-dom';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Image, Grid, Row, Col  } from 'react-bootstrap';
+import '../assets/stylesheets/App.scss';
+import AwesomeComponent from './AwesomeComponent.js';
+import ServerTime from './ServerTime.js';
+
 
 const Home = () => (
   <div>
     <h2>Home</h2>
-    <div><Main/></div>
+    <div>About component</div>
   </div>
-)
+);
 
-const About = () => (
+const ListEmployees = () => (
   <div>
-    <h2>About</h2>
+    <h2>List Employees</h2>
+    <div><AwesomeComponent/></div>
   </div>
-)
+);
 
-const Topic = ({ match }) => (
+const Search = () => (
   <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.path}/:topicId`} component={Topic}/>
-    <Route exact path={match.path} render={() => (
-      <h3>Please select a topic.</h3>
-    )}/>
+    <h2>Search</h2>
+    <div>Search component</div>
   </div>
 )
 
 const BasicExample = () => (
   <Router>
     <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-      </ul>
-
-      <hr/>
+      <Grid fluid>
+        <Row>
+          <Col xs={6} md={4} xsOffset={4}>
+            <Image src={require('../assets/images/Capstone Logo 2.png')} thumbnail responsive/>
+          </Col>
+        </Row>
+          
+            <h1 style = {{align: 'center'}}>CSUMB Spring 2018 Capstone</h1>
+          
+        <Row>
+        </Row>
+      </Grid>;
+ 
+        <Navbar collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">Home</Link>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavItem eventKey={1}>
+              <Link to="/listEmployees">List Employees</Link>
+            </NavItem>
+            <NavItem eventKey={2}>
+              <Link to="/Search">Search</Link>
+            </NavItem>
+            
+          </Nav>
+          <Nav pullRight>
+            <Navbar.Text pullRight><ServerTime /></Navbar.Text>
+          </Nav>
+        </Navbar>
 
       <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
-      <Route path="/topics" component={Topics}/>
+      <Route path="/listEmployees" component={ListEmployees}/>
+      <Route path="/Search" component={Search}/>
     </div>
   </Router>
 )
