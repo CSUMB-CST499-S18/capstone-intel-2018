@@ -2,7 +2,6 @@
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] . "");
 include 'dbConnection.php';
 
-console.log("DisplayUsers.php");
 
 $conn = getDatabaseConnection();
 

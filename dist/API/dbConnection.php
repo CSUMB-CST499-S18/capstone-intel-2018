@@ -1,7 +1,6 @@
 <?php
 
 function getDatabaseConnection(){
-    console.log("dbConnection.php");
     
     $host = 'localhost';//cloud 9
     $dbname = 'Capstone';
