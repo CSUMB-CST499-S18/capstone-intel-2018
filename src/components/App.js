@@ -8,12 +8,13 @@ import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader  } from 'react-
 import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
+import HomeComp from './HomeComp.js';
 
 
 const Home = () => (
   <div>
     <h2>Home</h2>
-    <div>About component</div>
+    <HomeComp/>
   </div>
 );
 

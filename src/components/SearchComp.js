@@ -122,7 +122,8 @@ class SearchComp extends React.Component {
   }
 
 
-    render() {
+
+  render() {
       return (
         <div>
             <Navbar>
