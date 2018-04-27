@@ -10,10 +10,13 @@ class SearchComp extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      Employee: []
+      Employee: [],
+      searchVal: ''
     };
         
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     console.log("AjaxTest.js");
@@ -106,16 +109,33 @@ class SearchComp extends React.Component {
         
         // });//ajax
   }
+  
+  handleChange(event) {
+      var that = this;
+      
+      that.setState({searchVal: event.target.value});
+      
+  }
+  
+  handleSubmit(event) {
+    
+  }
 
 
     render() {
       return (
         <div>
             <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        Search
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
                 <Navbar.Collapse>
                     <Navbar.Form pullLeft>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Enter team/employee name here..." />
+                            <FormControl type="text" placeholder="Enter team/employee name here..." value={this.state.searchVal} onChange={this.handleChange}/>
                         </FormGroup>{' '}
                         <Button type="submit">Submit</Button>
                     </Navbar.Form>
@@ -123,6 +143,7 @@ class SearchComp extends React.Component {
             </Navbar>
             <div>SANITY</div>
             <div>{this.state.Employee}</div>
+            <div>{this.state.searchVal}</div>
         </div>
       );
     }
