@@ -1,8 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios'
+import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
 
-class AjaxTest extends React.Component {
+class SearchComp extends React.Component {
 
   constructor(props) {
     super(props);
@@ -110,11 +111,21 @@ class AjaxTest extends React.Component {
     render() {
       return (
         <div>
-          <div>SANITY</div>
-          <div>{this.state.Employee}</div>
+            <Navbar>
+                <Navbar.Collapse>
+                    <Navbar.Form pullLeft>
+                        <FormGroup>
+                            <FormControl type="text" placeholder="Enter team/employee name here..." />
+                        </FormGroup>{' '}
+                        <Button type="submit">Submit</Button>
+                    </Navbar.Form>
+                </Navbar.Collapse>
+            </Navbar>
+            <div>SANITY</div>
+            <div>{this.state.Employee}</div>
         </div>
       );
     }
 }
 
-export default AjaxTest;
+export default SearchComp;
