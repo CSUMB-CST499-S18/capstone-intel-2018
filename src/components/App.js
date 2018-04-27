@@ -4,31 +4,32 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Image, Grid, Row, Col  } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader  } from 'react-bootstrap';
 import '../assets/stylesheets/App.scss';
-import AwesomeComponent from './AwesomeComponent.js';
 import ServerTime from './ServerTime.js';
+import SearchComp from './SearchComp.js';
+import HomeComp from './HomeComp.js';
+import AwesomeComponent from './AwesomeComponent.js';
 
 const Home = () => (
   <div>
     <h2>Home</h2>
-    <div>About component</div>
+    <HomeComp/>
   </div>
 );
 
 const ListEmployees = () => (
   <div>
     <h2>List Employees</h2>
-    <div><AwesomeComponent/></div>
+    <div>Display employees component</div>
   </div>
 );
 
 const Search = () => (
   <div>
-    <h2>Search</h2>
-    <div>Search component</div>
+    <SearchComp />
   </div>
-)
+);
 
 const BasicExample = () => (
   <Router>
@@ -47,6 +48,7 @@ const BasicExample = () => (
           <Nav>
             <NavItem eventKey={1}>
               <Link to="/listEmployees">List Employees</Link>
+              <AwesomeComponent/>
             </NavItem>
             <NavItem eventKey={2}>
               <Link to="/Search">Search</Link>
@@ -63,5 +65,6 @@ const BasicExample = () => (
       <Route path="/Search" component={Search}/>
     </div>
   </Router>
-)
-export default BasicExample
+);
+
+export default BasicExample;
