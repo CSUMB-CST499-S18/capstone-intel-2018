@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/stylesheets/AwesomeComponent.scss';
-import Profile from './Profile.js';
+import EmployeeInfo from './EmployeeInfo.js';
 import SplitPane from 'react-split-pane'
 import AjaxTest from './AjaxTest.js'
 
@@ -23,9 +23,9 @@ class AwesomeComponent extends Component {
     return (
       <div>
         <SplitPane split="vertical" defaultSize="50%">
-          <div className="profilePane">
+          <div className="employeePane">
             {/*<p> Hello React!</p>*/}
-            <Profile myProfileName={"Felicity Smoak\n"}/>
+            <EmployeeInfo myProfileName={"Felicity Smoak\n"}/>
             <p className="makeGreen">reddddd</p>
           </div>
           

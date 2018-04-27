@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import '../assets/stylesheets/Profile.scss';
+import '../assets/stylesheets/EmployeeInfo.scss';
 
 
 class EmployeeName extends Component {
-    getName() {
-        
-    }
-    
     render() {
         return (
             <div>{this.props.myTextName}</div>
@@ -14,7 +10,7 @@ class EmployeeName extends Component {
     }
 }
 
-class Profile extends Component {
+class EmployeeInfo extends Component {
     render() {
         return (
             <div>
@@ -25,4 +21,4 @@ class Profile extends Component {
 }
 
 
-export default Profile;
+export default EmployeeInfo;
