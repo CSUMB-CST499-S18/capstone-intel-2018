@@ -9,7 +9,6 @@ import '../assets/stylesheets/App.scss';
 import AwesomeComponent from './AwesomeComponent.js';
 import ServerTime from './ServerTime.js';
 
-
 const Home = () => (
   <div>
     <h2>Home</h2>
@@ -35,17 +34,9 @@ const BasicExample = () => (
   <Router>
     <div>
       <Grid fluid>
-        <Row>
-          <Col xs={6} md={4} xsOffset={4}>
-            <Image src={require('../assets/images/Capstone Logo 2.png')} thumbnail responsive/>
-          </Col>
-        </Row>
-          
+            <a href="http://capstone-intel-maveyma.c9users.io:8081/"><img src={require('../assets/images/Capstone Logo 2.png')} height="128"/></a>
             <h1 style = {{align: 'center'}}>CSUMB Spring 2018 Capstone</h1>
-          
-        <Row>
-        </Row>
-      </Grid>;
+      </Grid>
  
         <Navbar collapseOnSelect>
           <Navbar.Header>
