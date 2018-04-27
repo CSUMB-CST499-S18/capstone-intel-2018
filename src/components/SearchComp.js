@@ -24,10 +24,11 @@ class SearchComp extends React.Component {
     
     var that = this;
     
-    var temp = ajaxCalls.displayUser();
+    var temp =  ajaxCalls.displayUser();
+
+    console.log("PLEASE SHOW ME MY USER!");
     console.log(temp);
-    that.setState({Employee: temp["Name"]});
-    
+    console.log(ajaxCalls.printF());
     /*
     $.ajax({
       type: "GET",

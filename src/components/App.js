@@ -21,7 +21,7 @@ const Home = () => (
 const ListEmployees = () => (
   <div>
     <h2>List Employees</h2>
-    <div>Display employees component</div>
+    <AwesomeComponent/>
   </div>
 );
 
@@ -48,7 +48,6 @@ const BasicExample = () => (
           <Nav>
             <NavItem eventKey={1}>
               <Link to="/listEmployees">List Employees</Link>
-              <AwesomeComponent/>
             </NavItem>
             <NavItem eventKey={2}>
               <Link to="/Search">Search</Link>
