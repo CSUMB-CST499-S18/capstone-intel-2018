@@ -22,9 +22,9 @@ class SearchComp extends React.Component {
     console.log("AjaxTest.js");
     $.ajax({
       type: "GET",
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       dataType: "json",
-      data: { "EmployeeID": 11 },
+      data: { "EmployeeID": 1 },
       success: function(data,status) {
         for(var i=0; i<data.length;i++){
             $("#Name").append("<option>" + data[i].Name + "</option>");
