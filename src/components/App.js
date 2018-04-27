@@ -9,7 +9,7 @@ import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
 import HomeComp from './HomeComp.js';
-import AwesomeComponent from './AwesomeComponent.js';
+import Profile from './Profile.js';
 
 const Home = () => (
   <div>
@@ -20,8 +20,7 @@ const Home = () => (
 
 const ListEmployees = () => (
   <div>
-    <h2>List Employees</h2>
-    <AwesomeComponent/>
+    <Profile/>
   </div>
 );
 
@@ -47,7 +46,7 @@ const BasicExample = () => (
           </Navbar.Header>
           <Nav>
             <NavItem eventKey={1}>
-              <Link to="/listEmployees">List Employees</Link>
+              <Link to="/listEmployees">Profile</Link>
             </NavItem>
             <NavItem eventKey={2}>
               <Link to="/Search">Search</Link>
