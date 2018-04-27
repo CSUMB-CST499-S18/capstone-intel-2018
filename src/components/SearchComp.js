@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
-import axios from 'axios'
+import axios from 'axios';
+import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class SearchComp extends React.Component {
@@ -18,8 +19,16 @@ class SearchComp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
   componentDidMount() {
-    console.log("AjaxTest.js");
+    
+    var that = this;
+    
+    var temp = ajaxCalls.displayUser();
+    console.log(temp);
+    that.setState({Employee: temp["Name"]});
+    
+    /*
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
@@ -108,6 +117,7 @@ class SearchComp extends React.Component {
         // }
         
         // });//ajax
+        */
   }
   
   handleChange(event) {
