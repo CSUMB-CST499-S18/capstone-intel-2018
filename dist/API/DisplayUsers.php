@@ -6,12 +6,10 @@ include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
 $sql = "SELECT *
-        FROM employee
-        WHERE EmployeeID = :EmployeeID";
+        FROM employee";
 
 //Sanitizing Input
 $namedParameters = array();
-$namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
         
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);

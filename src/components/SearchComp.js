@@ -29,7 +29,7 @@ class SearchComp extends React.Component {
     
     $.ajax({
       type: "GET",
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       dataType: "json",
       data: { "EmployeeID": 1 },
       success: function(data,status) {
