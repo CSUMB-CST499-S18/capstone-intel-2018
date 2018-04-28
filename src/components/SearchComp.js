@@ -20,6 +20,7 @@ class SearchComp extends React.Component {
     };
         
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -48,9 +49,9 @@ class SearchComp extends React.Component {
           console.log("Ajax complete");
           console.log(this.state.Employee);
       }.bind(this),
-      error: function(data,status) {
-        
-      }
+      error: function(errMsg) {
+            console.log(errMsg);
+        }.bind(this),
     
       
       
@@ -127,6 +128,10 @@ class SearchComp extends React.Component {
         
         // });//ajax
         
+  }
+  
+  componentDidUpdate() {
+    console.log(this.state.Employee);
   }
   
   handleChange(event) {
