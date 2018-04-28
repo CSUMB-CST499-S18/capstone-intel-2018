@@ -4,7 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader  } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
@@ -54,13 +55,12 @@ const BasicExample = () => (
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem eventKey={1}>
-              <Link to="/listEmployees">List Employees</Link>
-            </NavItem>
-            <NavItem eventKey={2}>
-              <Link to="/Search">Search</Link>
-            </NavItem>
-            
+            <LinkContainer to="/listEmployees">
+              <NavItem eventKey={1}>List Employees</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/Search">
+              <NavItem eventKey={2}>Search</NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
             <ServerTime />

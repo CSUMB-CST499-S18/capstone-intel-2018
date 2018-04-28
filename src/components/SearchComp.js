@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
 import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
-import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button, Table } from 'react-bootstrap';
 
 
 
@@ -25,28 +25,33 @@ class SearchComp extends React.Component {
   }
   
   componentDidMount() {
-    var that = this;
     
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
       dataType: "json",
-      data: { "EmployeeID": 11 },
+      data: { "EmployeeID": 1 },
       success: function(data,status) {
+        var table = new Array();
+        var row = new Array();
         for(var i=0; i < data.length;i++){
-            $("#Name").append(data[i].Name);
-            $("#EmployeeID").append(data[i].EmployeeID );
-            $("#Phone").append(data[i].Phone);
-            $("#Email").append(data[i].Email);
-            $("#Salary").append(data[i].Salary);
+            row = {Name:data[i].Name, EmployeeID:data[i].EmployeeID, Phone:data[i].Phone, Email:data[i].Email, Salary:data[i].Salary};
+            table.push(row);
+            row = [];
         }
-        that.setState({Employee: data});
+        
+        this.setState({Employee: table});
         console.log("Ajax Success");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
           console.log("Ajax complete");
+          console.log(this.state.Employee);
+      }.bind(this),
+      error: function(data,status) {
+        
       }
+    
       
       
       
@@ -140,7 +145,7 @@ class SearchComp extends React.Component {
 
 
   render() {
-    /*
+    
     const TableRow = ({row}) => (
   <tr>
     <td key={row.EmployeeID}>{row.EmployeeID}</td>
@@ -151,7 +156,7 @@ class SearchComp extends React.Component {
   </tr>
   );
   
-const Table = ({data}) => (
+const TableComp = ({data}) => (
   <Table striped bordered condensed hover>
     <thead>
       <tr>
@@ -169,7 +174,7 @@ const Table = ({data}) => (
     </tbody>
   </Table>
 );
-    */
+    
       return (
         <div>
             <Navbar>
@@ -191,26 +196,7 @@ const Table = ({data}) => (
             <div>SANITY</div>
             
             <div>
-              <Table striped bordered condensed hover>
-                <thead>
-                  <tr>
-                    <th>EmpID#</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Salary</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <td {this.state.Employee['EmployeeID']}</td>
-                      <td {this.state.Employee['Name']}</td>
-                      <td {this.state.Employee['Phone']}</td>
-                      <td {this.state.Employee['Email']}</td>
-                      <td {this.state.Employee['Salary']}</td>
-                    </tr>
-                </tbody>
-              </Table>
+              <TableComp data={this.state.Employee}/>
             </div>
             <div>{this.state.searchVal}</div>
         </div>
