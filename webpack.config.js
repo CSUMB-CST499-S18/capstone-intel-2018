@@ -15,6 +15,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js']
   },
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/',
@@ -22,7 +23,8 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist',
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),

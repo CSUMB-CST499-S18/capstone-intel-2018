@@ -110,7 +110,7 @@ class AjaxTest extends React.Component {
     render() {
       return (
         <div>
-          <div>SANITY</div>
+          <div>YOU SHOULD NOT SEE THIS</div>
           <div>{this.state.Employee}</div>
         </div>
       );
