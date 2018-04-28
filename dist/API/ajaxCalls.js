@@ -22,6 +22,8 @@ export function displayTeamInfo() {
 }
 
 export function displayUser() {
+  
+  
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
@@ -35,10 +37,11 @@ export function displayUser() {
       },
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
+
           console.log("Ajax complete");
-          return data;
       }
     });
+  
 }
 
 export function removeFromTeam() {

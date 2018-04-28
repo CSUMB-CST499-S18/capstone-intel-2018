@@ -32,6 +32,8 @@ io.on('connection', function(client) {
   });
   
   client.on('set', (data) => setInterval(() => io.emit('time', new Date().toTimeString()), 1000));
+  
+  client.on('displayUser', (data) => io.emit('userData', data));
 });
 
 server.listen(PORT, function(error) {

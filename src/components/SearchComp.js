@@ -4,6 +4,10 @@ import axios from 'axios';
 import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
 
+
+
+
+
 class SearchComp extends React.Component {
 
   constructor(props) {
@@ -22,13 +26,6 @@ class SearchComp extends React.Component {
   
   componentDidMount() {
     
-    var that = this;
-    
-    var temp = ajaxCalls.displayUser();
-    console.log(temp);
-    that.setState({Employee: temp["Name"]});
-    
-    /*
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
@@ -36,9 +33,13 @@ class SearchComp extends React.Component {
       data: { "EmployeeID": 11 },
       success: function(data,status) {
         for(var i=0; i<data.length;i++){
-            $("#Name").append("<option>" + data[i].Name + "</option>");
+            $("#Name").append(data[i].Name);
+            $("#EmployeeID").append(data[i].EmployeeID );
+            $("#Phone").append(data[i].Phone);
+            $("#Email").append(data[i].Email);
+            $("#Salary").append(data[i].Salary);
         }
-        this.setState({Employee: data["Name"]});
+        this.setState({Employee: data});
         console.log("Ajax Success");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
@@ -117,7 +118,7 @@ class SearchComp extends React.Component {
         // }
         
         // });//ajax
-        */
+        
   }
   
   handleChange(event) {
@@ -130,10 +131,42 @@ class SearchComp extends React.Component {
   handleSubmit(event) {
     
   }
+  
+  
 
 
 
   render() {
+    
+    const TableRow = ({row}) => (
+  <tr>
+    <td key={row.EmployeeID}>{row.EmployeeID}</td>
+    <td key={row.Name}>{row.Name}</td>
+    <td key={row.Phone}>{row.Phone}</td>
+    <td key={row.Email}>{row.Email}</td>
+    <td key={row.Salary}>{row.Salary}</td>
+  </tr>
+  );
+  
+const Table = ({data}) => (
+  <Table striped bordered condensed hover>
+    <thead>
+      <tr>
+        <th>EmpID#</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+      {data.map(row => {
+        <TableRow row={row} />
+      })}
+    </tbody>
+  </Table>
+);
+    
       return (
         <div>
             <Navbar>
@@ -153,7 +186,8 @@ class SearchComp extends React.Component {
                 </Navbar.Collapse>
             </Navbar>
             <div>SANITY</div>
-            <div>{this.state.Employee}</div>
+            
+            <div><Table data={this.state.Employee} /></div>
             <div>{this.state.searchVal}</div>
         </div>
       );
