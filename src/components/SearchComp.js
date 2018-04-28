@@ -47,7 +47,6 @@ class SearchComp extends React.Component {
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
           console.log("Ajax complete");
-          console.log(this.state.Employee);
       }.bind(this),
       error: function(errMsg) {
             console.log(errMsg);
@@ -173,7 +172,7 @@ const TableComp = ({data}) => (
         </tr>
     </thead>
     <tbody>
-      {data.map((row) => {
+      {data.map(row => {
         <TableRow row={row} />
       })}
     </tbody>
