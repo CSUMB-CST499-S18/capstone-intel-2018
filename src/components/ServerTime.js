@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Navbar } from 'react-bootstrap';
 
 let socket = io.connect();
 
@@ -30,9 +31,9 @@ class ServerTime extends Component {
   render() {
      return (
         <div>
-        
+          <Navbar.Text pullRight>
           Server Time:  {this.state.timestamp}
-        
+          </Navbar.Text>
         </div>
     );
   }

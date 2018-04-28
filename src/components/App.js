@@ -63,7 +63,7 @@ const BasicExample = () => (
             
           </Nav>
           <Nav pullRight>
-            <Navbar.Text pullRight><ServerTime /></Navbar.Text>
+            <ServerTime />
           </Nav>
         </Navbar>
 

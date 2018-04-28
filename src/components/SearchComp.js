@@ -25,6 +25,7 @@ class SearchComp extends React.Component {
   }
   
   componentDidMount() {
+    var that = this;
     
     $.ajax({
       type: "GET",
@@ -32,20 +33,22 @@ class SearchComp extends React.Component {
       dataType: "json",
       data: { "EmployeeID": 11 },
       success: function(data,status) {
-        for(var i=0; i<data.length;i++){
+        for(var i=0; i < data.length;i++){
             $("#Name").append(data[i].Name);
             $("#EmployeeID").append(data[i].EmployeeID );
             $("#Phone").append(data[i].Phone);
             $("#Email").append(data[i].Email);
             $("#Salary").append(data[i].Salary);
         }
-        this.setState({Employee: data});
+        that.setState({Employee: data});
         console.log("Ajax Success");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
           console.log("Ajax complete");
       }
+      
+      
       
       });//ajax
         
@@ -137,7 +140,7 @@ class SearchComp extends React.Component {
 
 
   render() {
-    
+    /*
     const TableRow = ({row}) => (
   <tr>
     <td key={row.EmployeeID}>{row.EmployeeID}</td>
@@ -160,13 +163,13 @@ const Table = ({data}) => (
         </tr>
     </thead>
     <tbody>
-      {data.map(row => {
+      {data.map((row) => {
         <TableRow row={row} />
       })}
     </tbody>
   </Table>
 );
-    
+    */
       return (
         <div>
             <Navbar>
@@ -187,7 +190,28 @@ const Table = ({data}) => (
             </Navbar>
             <div>SANITY</div>
             
-            <div><Table data={this.state.Employee} /></div>
+            <div>
+              <Table striped bordered condensed hover>
+                <thead>
+                  <tr>
+                    <th>EmpID#</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td {this.state.Employee['EmployeeID']}</td>
+                      <td {this.state.Employee['Name']}</td>
+                      <td {this.state.Employee['Phone']}</td>
+                      <td {this.state.Employee['Email']}</td>
+                      <td {this.state.Employee['Salary']}</td>
+                    </tr>
+                </tbody>
+              </Table>
+            </div>
             <div>{this.state.searchVal}</div>
         </div>
       );
