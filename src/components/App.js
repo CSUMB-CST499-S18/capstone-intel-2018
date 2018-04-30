@@ -4,7 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';

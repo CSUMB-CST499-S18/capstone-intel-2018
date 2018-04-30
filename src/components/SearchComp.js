@@ -2,10 +2,12 @@ import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
 import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
-import { Navbar, FormGroup, FormControl, Button, Table } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import SearchTab from './SearchTab.js';
+import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
 
 
-
+let socket = io.connect();
 
 
 class SearchComp extends React.Component {
@@ -27,22 +29,33 @@ class SearchComp extends React.Component {
   
   componentDidMount() {
     
+    var that = this;
+    
+    socket.emit('searchTest');
+    
+    socket.on('user-info', function (data) {
+      console.log(data);
+      that.setState({Employee: data});
+      
+      
+    });
+    
+    socket.emit('conTest');
+    
+    socket.on('testResponse', function (data) {
+      console.log(data);
+    });
+    
+    
+    /*
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       dataType: "json",
-      data: { "EmployeeID": 1 },
+      data: { "EmployeeID": 11 },
       success: function(data,status) {
-        var table = new Array();
-        var row = new Array();
-        for(var i=0; i < data.length;i++){
-            row = {Name:data[i].Name, EmployeeID:data[i].EmployeeID, Phone:data[i].Phone, Email:data[i].Email, Salary:data[i].Salary};
-            table.push(row);
-            row = [];
-        }
-        
-        this.setState({Employee: table});
-        console.log("Ajax Success");
+        this.setState({Employee: data});
+        console.log("Set employee profile");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
@@ -51,12 +64,10 @@ class SearchComp extends React.Component {
       error: function(errMsg) {
             console.log(errMsg);
         }.bind(this),
-    
-      
       
       
       });//ajax
-        
+        */
       // $.ajax({
         
       //   type: "GET",
@@ -149,36 +160,7 @@ class SearchComp extends React.Component {
 
 
   render() {
-    
-    const TableRow = ({row}) => (
-  <tr>
-    <td key={row.EmployeeID}>{row.EmployeeID}</td>
-    <td key={row.Name}>{row.Name}</td>
-    <td key={row.Phone}>{row.Phone}</td>
-    <td key={row.Email}>{row.Email}</td>
-    <td key={row.Salary}>{row.Salary}</td>
-  </tr>
-  );
-  
-const TableComp = ({data}) => (
-  <Table striped bordered condensed hover>
-    <thead>
-      <tr>
-        <th>EmpID#</th>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Salary</th>
-        </tr>
-    </thead>
-    <tbody>
-      {data.map(row => {
-        <TableRow row={row} />
-      })}
-    </tbody>
-  </Table>
-);
-    
+    if(this.state.Employee.length == 0) { return null; }
       return (
         <div>
             <Navbar>
@@ -200,7 +182,7 @@ const TableComp = ({data}) => (
             <div>SANITY</div>
             
             <div>
-              <TableComp data={this.state.Employee}/>
+              <SearchTab data={this.state.Employee} />
             </div>
             <div>{this.state.searchVal}</div>
         </div>

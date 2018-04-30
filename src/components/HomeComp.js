@@ -33,10 +33,30 @@ class HomeComp extends React.Component {
       return (
         <div>
             <Jumbotron>
-                <h1>Hello, world!</h1>
+                <h1>Introduction</h1>
                 <p>
-                    This is a simple hero unit, a simple jumbotron-style component for calling
-                    extra attention to featured content or information.
+                    Introduction to the project.
+                </p>
+                <p>
+                    <Button bsStyle="primary">Learn more</Button>
+                </p>
+                <h1>Project Objectives</h1>
+                <p>
+                    List of the project goals.
+                </p>
+                <p>
+                    <Button bsStyle="primary">Learn more</Button>
+                </p>
+                <h1>Aproach and Tools Used</h1>
+                <p>
+                    Description of how we aproached the problem.
+                </p>
+                <p>
+                    <Button bsStyle="primary">Learn more</Button>
+                </p>
+                <h1>Going Forward</h1>
+                <p>
+                    What we would want to add to the project to make it better.
                 </p>
                 <p>
                     <Button bsStyle="primary">Learn more</Button>
