@@ -6,9 +6,9 @@ include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
 $sql = "SELECT *
-        FROM employee";
+        FROM employee
+        WHERE 1";
 
-//Sanitizing Input
 $namedParameters = array();
         
 $stmt = $conn->prepare($sql);
