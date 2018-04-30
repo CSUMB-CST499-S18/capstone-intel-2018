@@ -4,12 +4,13 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Image, Grid, Row, Col, PageHeader  } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Grid } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
 import HomeComp from './HomeComp.js';
-
+import Profile from './Profile.js';
 
 const Home = () => (
   <div>
@@ -20,8 +21,7 @@ const Home = () => (
 
 const ListEmployees = () => (
   <div>
-    <h2>List Employees</h2>
-    <div>Display employees component</div>
+    <Profile/>
   </div>
 );
 
@@ -35,17 +35,9 @@ const BasicExample = () => (
   <Router>
     <div>
       <Grid fluid>
-        <Row>
-          <Col xs={6} md={4} xsOffset={4}>
-            <Image src={require('../assets/images/Capstone Logo 2.png')} thumbnail responsive/>
-          </Col>
-        </Row>
-            <PageHeader>
-              CSUMB Spring 2018 Capstone
-            </PageHeader>
-        <Row>
-        </Row>
-      </Grid>;
+            <a href="http://capstone-intel-maveyma.c9users.io:8081/"><img src={require('../assets/images/Capstone Logo 2.png')} height="128"/></a>
+            <h1 style = {{align: 'center'}}>CSUMB Spring 2018 Capstone</h1>
+      </Grid>
  
         <Navbar collapseOnSelect>
           <Navbar.Header>
@@ -54,16 +46,17 @@ const BasicExample = () => (
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem eventKey={1}>
-              <Link to="/listEmployees">List Employees</Link>
-            </NavItem>
-            <NavItem eventKey={2}>
-              <Link to="/Search">Search</Link>
-            </NavItem>
-            
+
+            <LinkContainer to="/listEmployees">
+              <NavItem eventKey={1}>Profile</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/Search">
+              <NavItem eventKey={2}>Search</NavItem>
+            </LinkContainer>
+
           </Nav>
           <Nav pullRight>
-            <Navbar.Text pullRight><ServerTime /></Navbar.Text>
+            <ServerTime />
           </Nav>
         </Navbar>
 

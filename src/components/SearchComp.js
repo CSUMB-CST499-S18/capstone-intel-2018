@@ -3,6 +3,12 @@ import $ from 'jquery';
 import axios from 'axios';
 import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import SearchTab from './SearchTab.js';
+import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
+
+
+let socket = io.connect();
+
 
 class SearchComp extends React.Component {
 
@@ -16,6 +22,7 @@ class SearchComp extends React.Component {
     };
         
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,30 +31,43 @@ class SearchComp extends React.Component {
     
     var that = this;
     
-    var temp = ajaxCalls.displayUser();
-    console.log(temp);
-    that.setState({Employee: temp["Name"]});
+    socket.emit('searchTest');
+    
+    socket.on('user-info', function (data) {
+      console.log(data);
+      that.setState({Employee: data});
+      
+      
+    });
+    
+    socket.emit('conTest');
+    
+    socket.on('testResponse', function (data) {
+      console.log(data);
+    });
+    
     
     /*
     $.ajax({
       type: "GET",
       url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       dataType: "json",
-      data: { "EmployeeID": 1 },
+      data: { "EmployeeID": 11 },
       success: function(data,status) {
-        for(var i=0; i<data.length;i++){
-            $("#Name").append("<option>" + data[i].Name + "</option>");
-        }
-        this.setState({Employee: data["Name"]});
-        console.log("Ajax Success");
+        this.setState({Employee: data});
+        console.log("Set employee profile");
       }.bind(this),
       complete: function(data,status) { //optional, used for debugging purposes
           // alert(status);
           console.log("Ajax complete");
-      }
+      }.bind(this),
+      error: function(errMsg) {
+            console.log(errMsg);
+        }.bind(this),
+      
       
       });//ajax
-        
+        */
       // $.ajax({
         
       //   type: "GET",
@@ -117,7 +137,11 @@ class SearchComp extends React.Component {
         // }
         
         // });//ajax
-        */
+        
+  }
+  
+  componentDidUpdate() {
+    console.log(this.state.Employee);
   }
   
   handleChange(event) {
@@ -130,10 +154,13 @@ class SearchComp extends React.Component {
   handleSubmit(event) {
     
   }
+  
+  
 
 
 
   render() {
+    if(this.state.Employee.length == 0) { return null; }
       return (
         <div>
             <Navbar>
@@ -153,7 +180,10 @@ class SearchComp extends React.Component {
                 </Navbar.Collapse>
             </Navbar>
             <div>SANITY</div>
-            <div>{this.state.Employee}</div>
+            
+            <div>
+              <SearchTab data={this.state.Employee} />
+            </div>
             <div>{this.state.searchVal}</div>
         </div>
       );
