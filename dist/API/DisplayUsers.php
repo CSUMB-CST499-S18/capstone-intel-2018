@@ -9,10 +9,12 @@ $sql = "SELECT *
         FROM employee";
 
 //Sanitizing Input
-        
-$stmt = $conn->prepare($sql);
+$stmt = $conn->query($sql);
 $stmt->execute();
-$record = $stmt->fetch(PDO::FETCH_ASSOC);
+$rows = array();
 
-echo json_encode($record);
+while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+  $rows[] = $row; // appends each row to the array
+}
+echo json_encode($rows);
 ?>

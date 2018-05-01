@@ -26,6 +26,24 @@ export function printF() {
 }
 
 export function displayUser() {
+/*
+    $.ajax({
+      type: "GET",
+      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      dataType: "json",
+      data: { },
+      success: function(data,status) {
+        for(var i=0; i<data.length;i++){
+            $("#Name").append("<option>" + data[i].Name + "</option>");
+        }
+        return data;
+        //console.log("Ajax Success");
+      },
+      complete: function(data,status) { //optional, used for debugging purposes
+          // alert(status);
+          console.log("Ajax complete");
+          */
+
     // var myData;
     // $.ajax({
     //   type: "GET",
@@ -45,14 +63,13 @@ export function displayUser() {
     //   }
     // });
     // return myData;
-    var url = "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php";
+    var url = "capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php";
     // GET request for remote image
     return axios({
       method:'get',
       url:url,
       responseType:'json',
       params: {
-      EmployeeID: 11
       }
     }).then(function(response) {
       console.log("GOT RESPONSE");
