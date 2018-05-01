@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
 
 $sql = "SELECT *
         FROM employee";
-        
+
 $stmt = $conn->query($sql);
 $stmt->execute();
 $rows = array();
