@@ -9,10 +9,9 @@ $sql = "SELECT *
         FROM employee";
 
 //Sanitizing Input
-$namedParameters = array();
         
 $stmt = $conn->prepare($sql);
-$stmt->execute($namedParameters);
+$stmt->execute();
 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
 echo json_encode($record);
