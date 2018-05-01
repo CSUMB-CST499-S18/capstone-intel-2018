@@ -15,9 +15,9 @@ class EmployeeInfo extends Component {
     console.log("Getting employee profile");
     $.ajax({
       type: "GET",
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
       dataType: "json",
-      data: { "EmployeeID": this.props.myProfileID},
+      data: { },
       success: function(data,status) {
         this.setState({Employee: data});
         console.log("Set employee profile");

@@ -39,3 +39,32 @@
 [26-Apr-2018 21:45:03 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
 [26-Apr-2018 21:45:03 UTC] PHP   2. getDatabaseConnection() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:7
 [26-Apr-2018 21:45:03 UTC] PHP   3. log(*uninitialized*) /home/ubuntu/workspace/capstone-intel-2018/dist/API/dbConnection.php:4
+[01-May-2018 00:49:25 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'could not find driver' in /home/ubuntu/workspace/capstone-intel-2018/dist/API/dbConnection.php:21
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dist/API/dbConnection.php(21): PDO->__construct('mysqli:host=loc...', 'root', '')
+#1 /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php(6): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dist/API/dbConnection.php on line 21
+[01-May-2018 00:50:19 UTC] PHP Fatal error:  Call to undefined method PDO::mysqli_query() in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 11
+[01-May-2018 00:50:19 UTC] PHP Stack trace:
+[01-May-2018 00:50:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:50:51 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, object given in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 15
+[01-May-2018 00:50:51 UTC] PHP Stack trace:
+[01-May-2018 00:50:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:50:51 UTC] PHP   2. mysqli_fetch_assoc() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:15
+[01-May-2018 00:50:51 UTC] PHP Fatal error:  Call to a member function free() on a non-object in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 18
+[01-May-2018 00:50:51 UTC] PHP Stack trace:
+[01-May-2018 00:50:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:53:40 UTC] PHP Fatal error:  Call to undefined method PDO::mysqli_query() in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 11
+[01-May-2018 00:53:40 UTC] PHP Stack trace:
+[01-May-2018 00:53:40 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:55:26 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, object given in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 15
+[01-May-2018 00:55:26 UTC] PHP Stack trace:
+[01-May-2018 00:55:26 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:55:26 UTC] PHP   2. mysqli_fetch_assoc() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:15
+[01-May-2018 00:56:33 UTC] PHP Fatal error:  Call to undefined method PDO::mysqli_query() in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 11
+[01-May-2018 00:56:33 UTC] PHP Stack trace:
+[01-May-2018 00:56:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0
+[01-May-2018 00:59:29 UTC] PHP Fatal error:  Call to undefined method PDO::mysqli_query() in /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php on line 11
+[01-May-2018 00:59:29 UTC] PHP Stack trace:
+[01-May-2018 00:59:29 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/dist/API/DisplayUsers.php:0

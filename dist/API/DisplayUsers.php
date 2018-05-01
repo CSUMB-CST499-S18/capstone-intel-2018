@@ -6,14 +6,15 @@ include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
 $sql = "SELECT *
-        FROM employee
-        WHERE 1";
-
-$namedParameters = array();
+        FROM employee";
         
-$stmt = $conn->prepare($sql);
-$stmt->execute($namedParameters);
-$record = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = $conn->query($sql);
+$stmt->execute();
 
-echo json_encode($record);
+$rows = array();
+
+while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+  $rows[] = $row; // appends each row to the array
+}
+echo json_encode($rows);
 ?>
