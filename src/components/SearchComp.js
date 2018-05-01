@@ -181,9 +181,8 @@ class SearchComp extends React.Component {
             </Navbar>
 
             <div>
-              <SearchTab data={this.state.Employee} />
+              <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
             </div>
-            <div>{this.state.searchVal}</div>
         </div>
       );
     }
