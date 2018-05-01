@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css'
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
+const columns = [{
+  dataField: 'EmployeeID',
+  text: 'Employee ID'
+}, {
+  dataField: 'Name',
+  text: 'Employee Name'
+}, {
+  dataField: 'Phone',
+  text: 'Phone'
+}, {
+  dataField: 'Email',
+  text: 'Email'
+}, {
+  dataField: 'isManager',
+  text: 'Is a Manager'
+},{
+  dataField: 'Salary',
+  text: 'Salary'
+},{
+  dataField: 'isActive',
+  text: 'isActive'
+}
+];
  
  
 class SearchTab extends Component {
   constructor(props) {
     super(props);
-  
-    this.state = { data: this.props.data };
     
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     
@@ -16,9 +37,6 @@ class SearchTab extends Component {
   
   componentDidMount() {
     
-    this.setState({
-      data: this.props.data
-    });
     
   }
   
@@ -33,28 +51,12 @@ class SearchTab extends Component {
   }
   
   render() {
-    if(this.state.data.length == 0) { return null; }
+    if(this.props.data.length == 0) { return null; }
     
     return (
-      <div>
-        <BootstrapTable data={this.state.data}>
-          <TableHeaderColumn isKey dataField='EmployeeID'>
-            ID
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='Name'>
-            Name
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='Phone'>
-            Phone
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='Email'>
-            Email
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField='isManager'>
-            isManager
-          </TableHeaderColumn>
-        </BootstrapTable>
-      </div>
+      
+      <BootstrapTable keyField='EmployeeID' data={ this.props.data[0] } columns={ columns } />
+      
     );
   }
 }

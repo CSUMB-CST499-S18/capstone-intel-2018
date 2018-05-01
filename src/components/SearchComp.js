@@ -179,8 +179,7 @@ class SearchComp extends React.Component {
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
-            <div>SANITY</div>
-            
+
             <div>
               <SearchTab data={this.state.Employee} />
             </div>
