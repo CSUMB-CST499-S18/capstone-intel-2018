@@ -47,18 +47,22 @@ io.on('connection', function(client) {
   client.on('displayUser', (data) => io.emit('userData', data));
   
   client.on('searchTest', function () {
+    
+   
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
-      data: {EmployeeID: 11}
-      }).then(function (response) {
-        var info = response.data;
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      })
+      .then(function (response) {
+        console.log(response.data);
+         var info = [response.data];
         console.log(info);
         io.emit('user-info', info);
       })
       .catch(function (error) {
         console.log(error);
     });
+    
   });
   
   client.on('conTest', () => io.emit('testResponse', 'The connection is fine.'));
@@ -72,4 +76,5 @@ server.listen(PORT, function(error) {
     console.info('==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.', PORT, PORT);
   }
 });
+
 
