@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
 import { Navbar, FormGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
 import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';

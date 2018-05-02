@@ -22,3 +22,4 @@ If you've never deployed a Node app to Heroku (or just need a refresher), they h
 ### Ajax call file locations
 server.js
 EmployeeInfo.js
+App.js
