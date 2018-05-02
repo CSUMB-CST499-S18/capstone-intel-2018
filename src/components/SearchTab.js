@@ -3,6 +3,8 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
  
@@ -32,40 +34,54 @@ class SearchTab extends Component {
     
   }
   
+  cellButton(cell, row, enumObject, rowIndex) {
+    return (
+      <LinkContainer to={{ pathname: '/listEmployees'}}>
+        <Button bsStyle="primary" onClick={() => this.onClickProductSelected(cell, row, rowIndex)} block>View Profile</Button>
+      </LinkContainer>
+    )
+ }
+  
   render() {
     if(this.props.data.length == 0) { return null; }
     
-    const columns = [{
-  dataField: 'EmployeeID',
-  text: 'Employee ID'
-}, {
-  dataField: 'Name',
-  text: 'Employee Name',
-  filter: textFilter({
+    const columns = [
+      
+      {
+        dataField: 'Button',
+        text: '',
+        formatter: this.cellButton.bind(this)
+      }, {
+        dataField: 'EmployeeID',
+        text: 'Employee ID'
+      }, {
+        dataField: 'Name',
+        text: 'Employee Name',
+        filter: textFilter({
     
-    defaultValue: this.props.searchVal,
-    style: {
-       display: 'none'
-    },
+          defaultValue: this.props.searchVal,
+          style: {
+            display: 'none'
+          },
     
-  })
-}, {
-  dataField: 'Phone',
-  text: 'Phone'
-}, {
-  dataField: 'Email',
-  text: 'Email'
-}, {
-  dataField: 'isManager',
-  text: 'Is a Manager'
-},{
-  dataField: 'Salary',
-  text: 'Salary'
-},{
-  dataField: 'isActive',
-  text: 'isActive'
-}
-];
+        })
+      }, {
+        dataField: 'Phone',
+        text: 'Phone'
+      }, {
+        dataField: 'Email',
+        text: 'Email'
+      }, {
+        dataField: 'isManager',
+        text: 'Is a Manager'
+      },{
+        dataField: 'TeamName',
+        text: 'TeamName'
+      },{
+        dataField: 'TeamID',
+        text: 'TeamID'
+      }
+      ];
     
     return (
       

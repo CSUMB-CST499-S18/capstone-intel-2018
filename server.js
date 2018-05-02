@@ -51,12 +51,10 @@ io.on('connection', function(client) {
    
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsersTeam.php",
       })
       .then(function (response) {
-        console.log(response.data);
          var info = [response.data];
-        console.log(info);
         io.emit('user-info', info);
       })
       .catch(function (error) {
