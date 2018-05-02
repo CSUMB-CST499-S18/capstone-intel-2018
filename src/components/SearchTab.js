@@ -14,15 +14,19 @@ class SearchTab extends Component {
     super(props);
     
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.onClickButtonHandler = this.onClickButtonHandler.bind(this);
     
   }
   
   componentDidMount() {
     
     
+    
   }
   
   componentWillReceiveProps(nextProps) {
+    
+    
     
     if (this.props.data !== nextProps.data) {
       this.setState({
@@ -34,10 +38,15 @@ class SearchTab extends Component {
     
   }
   
-  cellButton(cell, row, enumObject, rowIndex) {
+  onClickButtonHandler(cell, row, rowIndex) {
+     console.log("row id:  " + row);
+  }
+  
+  cellButton(cell, row, rowIndex) {
+   
     return (
-      <LinkContainer to={{ pathname: '/listEmployees'}}>
-        <Button bsStyle="primary" onClick={() => this.onClickProductSelected(cell, row, rowIndex)} block>View Profile</Button>
+      <LinkContainer to={{ pathname: '/listEmployees', state: { EmployeeID: row.id }}}>
+        <Button bsStyle="primary" onClick={() => this.onClickButtonHandler(cell, row, rowIndex)} block>View Profile</Button>
       </LinkContainer>
     )
  }

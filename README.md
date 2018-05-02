@@ -17,3 +17,8 @@ If you've never deployed a Node app to Heroku (or just need a refresher), they h
 * [ Marc Garreau's Redux Starter ](https://github.com/marcgarreau/redux-starter)
 * [ React + Electron Starter ](https://github.com/alanbsmith/react-electron-starter)
 * [ React + Sinatra Example ](https://github.com/alanbsmith/react-sinatra-example)
+
+
+### Ajax call file locations
+server.js
+EmployeeInfo.js
