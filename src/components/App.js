@@ -10,7 +10,7 @@ import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
 import HomeComp from './HomeComp.js';
-import Profile from './Profile.js';
+import ProfileComp from './ProfileComp.js';
 
 const Home = () => (
   <div>
@@ -19,9 +19,9 @@ const Home = () => (
   </div>
 );
 
-const ListEmployees = () => (
+const Profile = () => (
   <div>
-    <Profile EmployeeID = {1}  />
+    <ProfileComp/>
   </div>
 );
 
@@ -47,7 +47,7 @@ const BasicExample = () => (
           </Navbar.Header>
           <Nav>
 
-            <LinkContainer to="/listEmployees">
+            <LinkContainer to='/Profile'>
               <NavItem eventKey={1}>Profile</NavItem>
             </LinkContainer>
             <LinkContainer to="/Search">
@@ -64,7 +64,7 @@ const BasicExample = () => (
         </Navbar>
 
       <Route exact path="/" component={Home}/>
-      <Route path="/listEmployees" component={ListEmployees}/>
+      <Route path="/Profile" component={Profile}/>
       <Route path="/Search" component={Search}/>
       <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
     </div>

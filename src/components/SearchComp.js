@@ -30,7 +30,7 @@ class SearchComp extends React.Component {
     
     var that = this;
     
-    socket.emit('searchTest');
+    socket.emit('search');
     
     socket.on('user-info', function (data) {
       console.log(data);

@@ -6,7 +6,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-
+let socket = io.connect();
  
  
 class SearchTab extends Component {
@@ -14,7 +14,7 @@ class SearchTab extends Component {
     super(props);
     
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-    this.onClickButtonHandler = this.onClickButtonHandler.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
     
   }
   
@@ -23,6 +23,7 @@ class SearchTab extends Component {
     
     
   }
+  
   
   componentWillReceiveProps(nextProps) {
     
@@ -38,17 +39,19 @@ class SearchTab extends Component {
     
   }
   
-  onClickButtonHandler(cell, row, rowIndex) {
-     console.log("row id:  " + row);
+  handleButtonClick(cell, row, rowIndex) {
+    
+    socket.emit('setEmpID', row.EmployeeID)
+    //window.location = '/Profile';
   }
   
   cellButton(cell, row, rowIndex) {
    
     return (
-      <LinkContainer to={{ pathname: '/listEmployees', state: { EmployeeID: row.id }}}>
-        <Button bsStyle="primary" onClick={() => this.onClickButtonHandler(cell, row, rowIndex)} block>View Profile</Button>
+      <LinkContainer to='/Profile'>
+        <Button bsStyle="primary" onClick = {this.handleButtonClick(cell, row, rowIndex)} block>View Profile</Button>
       </LinkContainer>
-    )
+    );
  }
   
   render() {

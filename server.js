@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var axios = require('axios');
 var jQuery = require('jquery');
+var tempEmpID = 1;
 
 // using webpack-dev-server and middleware in development environment
 if (process.env.NODE_ENV !== 'production') {
@@ -46,7 +47,7 @@ io.on('connection', function(client) {
   
   client.on('displayUser', (data) => io.emit('userData', data));
   
-  client.on('searchTest', function () {
+  client.on('search', function () {
     
    
     axios({
@@ -64,6 +65,13 @@ io.on('connection', function(client) {
   });
   
   client.on('conTest', () => io.emit('testResponse', 'The connection is fine.'));
+  
+  client.on('setEmpID', function (data) {
+    tempEmpID = data;
+    console.log('tempEmpId:  ' + tempEmpID);
+  });
+  
+  client.on('getEmpID', () => io.emit('empIDProfile', tempEmpID));
   
 });
 
