@@ -175,7 +175,11 @@ class SearchComp extends React.Component {
                         <FormGroup>
                             <FormControl type="text" placeholder="Enter team/employee name here..." value={this.state.searchVal} onChange={this.handleChange}/>
                         </FormGroup>{' '}
-                        <Button type="submit">Submit</Button>
+                    <Navbar.Form pullRight>
+                      <ButtonGroup>
+                        <Button>Employee</Button>
+                        <Button>Team</Button>
+                      </ButtonGroup>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>

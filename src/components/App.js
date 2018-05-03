@@ -21,7 +21,7 @@ const Home = () => (
 
 const ListEmployees = () => (
   <div>
-    <Profile/>
+    <Profile EmployeeID = {1}  />
   </div>
 );
 
@@ -53,6 +53,9 @@ const BasicExample = () => (
             <LinkContainer to="/Search">
               <NavItem eventKey={2}>Search</NavItem>
             </LinkContainer>
+            <LinkContainer to="/GitHub">
+              <NavItem eventKey={3}>GitHub</NavItem>
+            </LinkContainer>
 
           </Nav>
           <Nav pullRight>
@@ -63,6 +66,7 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route path="/listEmployees" component={ListEmployees}/>
       <Route path="/Search" component={Search}/>
+      <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
     </div>
   </Router>
 );

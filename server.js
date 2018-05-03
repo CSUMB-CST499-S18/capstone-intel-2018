@@ -54,9 +54,7 @@ io.on('connection', function(client) {
       url: "http://capstone-intel-maveyma.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
       })
       .then(function (response) {
-        console.log(response.data);
          var info = [response.data];
-        console.log(info);
         io.emit('user-info', info);
       })
       .catch(function (error) {
