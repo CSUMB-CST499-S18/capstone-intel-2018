@@ -4,7 +4,22 @@ include 'dbConnection.php';
 
 $conn = getDatabaseConnection();
 
-$sql = "DELETE FROM employeeteam
+//Get child teams
+$sql = "SELECT ChildTeams
+        FROM parentteam
+        WHERE ParentTeam = :ParentTeam";
+
+$namedParameters = array();
+$namedParameters[':ParentTeam'] = $_GET['ParentTeam'];
+        
+$stmt = $conn->prepare($sql);
+$stmt->execute($namedParameters);
+$record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo json_encode($record);
+
+
+/*$sql = "DELETE FROM employeeteam
         WHERE EmployeeID  = :EmployeeID
         AND TeamID = :TeamID";
 
@@ -15,7 +30,7 @@ $namedParameters[':TeamID'] = $_GET['TeamID'];
 
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);
-
+*/
 
 //TODO: REMOVAL LOGIC
 //SELECT *
