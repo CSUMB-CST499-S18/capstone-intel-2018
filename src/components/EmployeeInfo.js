@@ -2,33 +2,41 @@ import React, { Component } from 'react';
 import '../assets/stylesheets/EmployeeInfo.scss';
 import $ from 'jquery';
 
+let socket = io.connect();
+
 class EmployeeInfo extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
+            
+            EmployeeID: this.props.EmployeeID,
             Employee: []
         };
+        
     }
     
+    
     componentDidMount() {
+    
+    var that = this;
     console.log("Getting employee profile");
-    $.ajax({
-      type: "GET",
-      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
-      dataType: "json",
-      data: { },
-      success: function(data,status) {
-        this.setState({Employee: data});
-        console.log("Set employee profile");
-      }.bind(this)});
+    
+    socket.emit('getEmployee', this.state.EmployeeID);
+    
+    socket.on('employee-info', function (data) {
+        that.setState({ Employee: data });
+    });
+    
     }
+    
+    
     
     render() {
         return (
             <div>
-                <div>{this.state.Employee["Name"]}</div>
-                <div>Employee ID: {this.state.Employee["EmployeeID"]}</div>
+                <div>{this.state.Employee.Name}</div>
+                <div>Employee ID: {this.state.Employee.EmployeeID}</div>
                 <div>Phone: {this.state.Employee["Phone"]}</div>
                 <div>Email: {this.state.Employee["Email"]}</div>
                 <div>Salary: {this.state.Employee["Salary"]}</div>

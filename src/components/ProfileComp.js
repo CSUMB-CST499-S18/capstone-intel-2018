@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../assets/stylesheets/Profile.scss';
 import EmployeeInfo from './EmployeeInfo.js';
-import SplitPane from 'react-split-pane'
-import AjaxTest from './AjaxTest.js'
+import SplitPane from 'react-split-pane';
+
 
 class Profile extends Component {
 
@@ -10,10 +10,12 @@ class Profile extends Component {
     super(props);
     this.state = {
       likesCount : 0,
-      EmployeeID : []
+      Employee : this.props.location.state
+  
     };
     this.onLike = this.onLike.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+  
   }
 
   onLike () {
@@ -24,19 +26,18 @@ class Profile extends Component {
    componentDidMount() {
     
     
-    this.setState({ EmployeeID: this.props.EmployeeID });
-    
-    
   }
+  
 
+  
   render() {
     return (
       <div>
         <SplitPane split="vertical" defaultSize="50%">
           <div className="employeePane">
-            {/*<p> Hello React!</p>*/}
-            <EmployeeInfo myProfileID={this.props.EmployeeID}/>
+            <EmployeeInfo EmployeeID = { this.state.Employee.EmployeeID }/>
           </div>
+          
           
           <div className="teamPane">
             Likes: <span className="makeBlue">{this.state.likesCount}</span>

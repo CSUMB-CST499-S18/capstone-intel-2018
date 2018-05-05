@@ -10,18 +10,11 @@ import '../assets/stylesheets/App.scss';
 import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
 import HomeComp from './HomeComp.js';
-import Profile from './Profile.js';
+import ProfileComp from './ProfileComp.js';
 
 const Home = () => (
   <div>
-    <h2>Home</h2>
     <HomeComp/>
-  </div>
-);
-
-const ListEmployees = () => (
-  <div>
-    <Profile/>
   </div>
 );
 
@@ -47,11 +40,14 @@ const BasicExample = () => (
           </Navbar.Header>
           <Nav>
 
-            <LinkContainer to="/listEmployees">
+            <LinkContainer to={{ pathname: '/Profile', state: { EmployeeID: 1 }}}>
               <NavItem eventKey={1}>Profile</NavItem>
             </LinkContainer>
             <LinkContainer to="/Search">
               <NavItem eventKey={2}>Search</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/GitHub">
+              <NavItem eventKey={3}>GitHub</NavItem>
             </LinkContainer>
 
           </Nav>
@@ -61,8 +57,9 @@ const BasicExample = () => (
         </Navbar>
 
       <Route exact path="/" component={Home}/>
-      <Route path="/listEmployees" component={ListEmployees}/>
+      <Route path="/Profile" component={ProfileComp}/>
       <Route path="/Search" component={Search}/>
+      <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
     </div>
   </Router>
 );

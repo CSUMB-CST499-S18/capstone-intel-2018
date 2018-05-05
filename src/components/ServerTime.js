@@ -28,6 +28,10 @@ class ServerTime extends Component {
       });
   }
   
+  componentWillUnmount() {
+  this.socket.close();
+}
+  
   render() {
      return (
         <div>

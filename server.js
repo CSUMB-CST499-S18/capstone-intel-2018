@@ -52,11 +52,10 @@ io.on('connection', function(client) {
     axios({
       method: 'get',
       url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+
       })
       .then(function (response) {
-        console.log(response.data);
          var info = [response.data];
-        console.log(info);
         io.emit('user-info', info);
       })
       .catch(function (error) {
@@ -66,6 +65,26 @@ io.on('connection', function(client) {
   });
   
   client.on('conTest', () => io.emit('testResponse', 'The connection is fine.'));
+  
+  client.on('getEmployee', function (id) {
+    
+    var num = Number(id);
+    
+    console.log("EmployeeID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
+      params: { "EmployeeID": num }
+    })
+    .then(function (response) {
+      var info = response.data;
+      io.emit('employee-info', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
   
 });
 

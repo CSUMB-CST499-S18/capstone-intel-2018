@@ -1,3 +1,5 @@
+
+
 <?php
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] . "");
 include 'dbConnection.php';
@@ -5,10 +7,13 @@ include 'dbConnection.php';
 
 $conn = getDatabaseConnection();
 
-$sql = "SELECT *
-        FROM employee";
+$sql = "SELECT * 
+        FROM employee NATURAL JOIN employeeteam NATURAL JOIN team 
+        WHERE isManager = 0 OR isTeamManager = 1";
 
-
+//Sanitizing Input
+    
+        
 $stmt = $conn->query($sql);
 $stmt->execute();
 $rows = array();
