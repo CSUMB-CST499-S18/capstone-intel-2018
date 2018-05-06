@@ -154,8 +154,7 @@ class SearchComp extends React.Component {
   handleSubmit(event) {
     
   }
-  
-  
+
 
 
 

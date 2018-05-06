@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -17,13 +18,7 @@ class SearchTab extends Component {
     this.onClickButtonHandler = this.onClickButtonHandler.bind(this);
     
   }
-  
-  componentDidMount() {
-    
-    
-    
-  }
-  
+
   componentWillReceiveProps(nextProps) {
     
     
@@ -39,16 +34,16 @@ class SearchTab extends Component {
   }
   
   onClickButtonHandler(cell, row, rowIndex) {
-     console.log("row id:  " + row);
+     console.log("row id:  " + row.EmployeeID);
   }
   
   cellButton(cell, row, rowIndex) {
    
     return (
-      <LinkContainer to={{ pathname: '/listEmployees', state: { EmployeeID: row.id }}}>
-        <Button bsStyle="primary" onClick={() => this.onClickButtonHandler(cell, row, rowIndex)} block>View Profile</Button>
+      <LinkContainer to={{ pathname: '/Profile', state: { EmployeeID: row.EmployeeID }}}>
+        <Button bsStyle="primary">View Profile</Button>
       </LinkContainer>
-    )
+    );
  }
   
   render() {

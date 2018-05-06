@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import { Jumbotron, Button } from 'react-bootstrap';
+import { Jumbotron, Button, PageHeader } from 'react-bootstrap';
 
 class HomeComp extends React.Component {
 
@@ -33,29 +33,37 @@ class HomeComp extends React.Component {
       return (
         <div>
             <Jumbotron>
-                <h1>Introduction</h1>
+                <PageHeader>
+                    Introduction
+                </PageHeader>
                 <p>
                     Introduction to the project.
                 </p>
                 <p>
                     <Button bsStyle="primary">Learn more</Button>
                 </p>
-                <h1>Project Objectives</h1>
+                <PageHeader>
+                    Project Objectives
+                </PageHeader>
                 <p>
                     List of the project goals.
                 </p>
                 <p>
                     <Button bsStyle="primary">Learn more</Button>
                 </p>
-                <h1>Aproach and Tools Used</h1>
+                <PageHeader>
+                    Aproach and Tools Used
+                </PageHeader>
                 <p>
                     Description of how we aproached the problem.
                 </p>
                 <p>
                     <Button bsStyle="primary">Learn more</Button>
                 </p>
-                <h1>Going Forward</h1>
-                <p>
+                <PageHeader>
+                    Going Forward
+                </PageHeader>
+                <p> 
                     What we would want to add to the project to make it better.
                 </p>
                 <p>
