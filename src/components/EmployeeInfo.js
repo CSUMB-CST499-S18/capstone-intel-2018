@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {PanelGroup, Panel, Image} from 'react-bootstrap';
+import { Thumbnail } from 'react-bootstrap';
 import '../assets/stylesheets/EmployeeInfo.scss';
 import $ from 'jquery';
 
