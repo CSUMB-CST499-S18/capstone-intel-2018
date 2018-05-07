@@ -1,8 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import { Navbar, FormGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button, ButtonGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
+import SearchTeamTab from './SearchTeamTab.js';
 import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
 
 
@@ -17,13 +18,16 @@ class SearchComp extends React.Component {
       error: null,
       isLoaded: false,
       Employee: [],
-      searchVal: ''
+      Team: [],
+      searchVal: '',
+      searchEmp: true
     };
         
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmployeeToggle = this.handleEmployeeToggle.bind(this);
+    this.handleTeamToggle = this.handleTeamToggle.bind(this);
   }
   
   componentDidMount() {
@@ -39,6 +43,16 @@ class SearchComp extends React.Component {
       
     });
     
+    /*
+    socket.emit('getTeams');
+    
+    socket.on('team-info', function (data) {
+      console.log(data);
+      that.setState({Employee: data});
+      
+      
+    });
+    */
     socket.emit('conTest');
     
     socket.on('testResponse', function (data) {
@@ -47,9 +61,6 @@ class SearchComp extends React.Component {
     
   }
   
-  componentDidUpdate() {
-    console.log(this.state.Employee);
-  }
   
   handleChange(event) {
       var that = this;
@@ -61,12 +72,27 @@ class SearchComp extends React.Component {
   handleSubmit(event) {
     
   }
-
-
+  
+  handleEmployeeToggle() {
+    this.setState({searchEmp: true});
+  }
+  
+  handleTeamToggle() {
+    this.setState({searchEmp: false});
+  }
 
 
   render() {
     if(this.state.Employee.length == 0) { return null; }
+    
+    const flag = this.state.searchEmp;
+    
+    const DisplayInfo = flag ? (
+      <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+    ) : (
+      <SearchTeamTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+    );
+    
       return (
         <div>
             <Navbar>
@@ -83,16 +109,16 @@ class SearchComp extends React.Component {
                         </FormGroup>{' '}
                     </Navbar.Form>
                     <Navbar.Form pullRight>
-                      <ButtonGroup>
-                        <Button>Employee</Button>
-                        <Button>Team</Button>
-                      </ButtonGroup>
+                      <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                        <ToggleButton value = {1} onClick={this.handleEmployeeToggle}>Employee</ToggleButton>
+                        <ToggleButton value = {2} onClick={this.handleTeamToggle}>Team</ToggleButton>
+                      </ToggleButtonGroup>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
 
             <div>
-              <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+              {DisplayInfo}
             </div>
         </div>
       );
