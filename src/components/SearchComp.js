@@ -1,10 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import * as ajaxCalls from '../../dist/API/ajaxCalls.js';
-import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
 
 
 let socket = io.connect();
@@ -174,6 +172,7 @@ class SearchComp extends React.Component {
                         <FormGroup>
                             <FormControl type="text" placeholder="Enter team/employee name here..." value={this.state.searchVal} onChange={this.handleChange}/>
                         </FormGroup>{' '}
+                    </Navbar.Form>
                     <Navbar.Form pullRight>
                       <ButtonGroup>
                         <Button>Employee</Button>

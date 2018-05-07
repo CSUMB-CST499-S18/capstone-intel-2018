@@ -33,8 +33,8 @@ class Profile extends Component {
   render() {
     return (
       <div>
-        <SplitPane split="vertical" defaultSize="50%">
-          <div className="employeePane">
+        <SplitPane split="vertical" defaultSize="50%" className="SplitPane">
+          <div className="employeePane SplitPane">
             <EmployeeInfo EmployeeID = { this.state.Employee.EmployeeID }/>
           </div>
           

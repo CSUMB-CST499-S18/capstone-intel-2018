@@ -73,7 +73,7 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
+      url: "http://capstone-intel-maveyma.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {

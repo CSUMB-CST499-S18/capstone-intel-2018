@@ -34,53 +34,28 @@ class EmployeeInfo extends Component {
     
     
     render() {
+        if (this.state.Employee.isManager) {
+            var isManager = "Yes";
+        } else {
+            var isManager = "No";
+        }
+        
         return (
             <div>
-                <PanelGroup id = 'employeePanel'>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title>Image</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body><Image src="http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg" thumbnail responsive/></Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title>Name</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Name}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Employee ID</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.EmployeeID}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Phone</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Phone}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Email</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Email}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Salary</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Salary}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Is Manager</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.isManager}</Panel.Body>
-                    </Panel>
-                </PanelGroup>
+                <div className="ProfileInfo">
+                    <a href={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} target="_blank">
+                        <img src={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} alt="profile_picture" className="profilePic" />
+                    </a>
+                </div>
                 
+                <div>
+                    <h2 className="ProfileTitle">{this.state.Employee.Name}</h2>
+                    <p className="ProfileInfo"><b>ID:</b> {this.state.Employee.EmployeeID}</p>
+                    <p className="ProfileInfo"><b>Phone:</b> {this.state.Employee.Phone}</p>
+                    <p className="ProfileInfo"><b>Email:</b> {this.state.Employee.Email}</p>
+                    <p className="ProfileInfo"><b>Salary:</b> ${this.state.Employee.Salary}</p>
+                    <p className="ProfileInfo"><b>isManager:</b> {isManager}</p>
+                </div>
             </div>
         );
     }

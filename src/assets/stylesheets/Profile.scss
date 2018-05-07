@@ -14,10 +14,14 @@
 
 .employeePane {
     border: 3px solid red;
-    margin: 50px;
+    margin: 25px 50px 25px 50px;
 }
 
 .teamPane {
     border: 3px solid blue;
-    margin: 50px;
+    margin: 25px 50px 25px 50px;
+}
+
+.SplitPane {
+    overflow: auto !important;
 }
