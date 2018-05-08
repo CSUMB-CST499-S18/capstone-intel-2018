@@ -6,7 +6,7 @@ include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
 $sql = "SELECT *
-        FROM team";
+        FROM Team";
 
 
 $stmt = $conn->query($sql);
