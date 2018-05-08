@@ -1,7 +1,7 @@
 var path = require('path');
 var express = require('express');
 var app = express();
-var PORT = 8081;
+var PORT = process.env.PORT || 8080;
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var axios = require('axios');
@@ -53,8 +53,7 @@ io.on('connection', function(client) {
    
     axios({
       method: 'get',
-      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
-
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayUsersTeam.php",
       })
       .then(function (response) {
          var info = [response.data];
@@ -80,7 +79,7 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://capstone-intel-jaimegvelazquezc9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayEmployeeInfo.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {
@@ -101,7 +100,7 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayTeamInfo.php",
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayTeamInfo.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {
@@ -122,7 +121,7 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayTeamMembers.php",
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayTeamMembers.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {
