@@ -37,6 +37,7 @@ class EmployeeInfo extends Component {
         if (this.state.Employee.isManager == 1) {
             var isManager = "Yes";
             var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
+            var isManagerCrownSpan = <span>This user has the ability to be a manager.</span>
         } else {
             var isManager = "No";
         }
@@ -51,12 +52,12 @@ class EmployeeInfo extends Component {
                 </div>
                 
                 <div>
-                    <h2 className="ProfileTitle">{this.state.Employee.Name}{isManagerCrown}</h2>
+                    <h2 className="ProfileTitle">{this.state.Employee.Name}</h2>
                     <p className="ProfileInfo"><b>ID:</b> {this.state.Employee.EmployeeID}</p>
                     <p className="ProfileInfo"><b>Phone:</b> {this.state.Employee.Phone}</p>
                     <p className="ProfileInfo"><b>Email:</b> {this.state.Employee.Email}</p>
                     <p className="ProfileInfo"><b>Salary:</b> ${this.state.Employee.Salary}</p>
-                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}</p>
+                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}<div className="hoverbubble">{isManagerCrown}{isManagerCrownSpan}</div></p>
                 </div>
             </div>
         );
