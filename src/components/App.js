@@ -59,7 +59,7 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route path="/Profile" component={ProfileComp}/>
       <Route path="/Search" component={Search}/>
-      <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
+      <Route path='/GitHub' component={() => window.open('https://github.com/CSUMB-CST499-S18/capstone-intel-2018', '_blank')}/>
     </div>
   </Router>
 );

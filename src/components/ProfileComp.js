@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../assets/stylesheets/Profile.scss';
 import EmployeeInfo from './EmployeeInfo.js';
+import TeamInfo from './TeamInfo.js';
 import SplitPane from 'react-split-pane';
 
 
@@ -33,15 +34,14 @@ class Profile extends Component {
   render() {
     return (
       <div>
-        <SplitPane split="vertical" defaultSize="50%">
-          <div className="employeePane">
+        <SplitPane split="vertical" defaultSize="40%">
+          <div className="employeePane SplitPane">
             <EmployeeInfo EmployeeID = { this.state.Employee.EmployeeID }/>
           </div>
           
           
           <div className="teamPane">
-            Likes: <span className="makeBlue">{this.state.likesCount}</span>
-            <div><button onClick={this.onLike} className="likeButton">Like Me</button></div>
+            <TeamInfo EmployeeID = { this.state.Employee.EmployeeID } />
           </div>
         </SplitPane>
       </div>

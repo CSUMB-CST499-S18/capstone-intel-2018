@@ -46,12 +46,14 @@ io.on('connection', function(client) {
   
   client.on('displayUser', (data) => io.emit('userData', data));
   
+  
+  //search ajax call
   client.on('searchTest', function () {
     
    
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsersTeam.php",
+      url: "http://capstone-intel-maveyma.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
       })
       .then(function (response) {
          var info = [response.data];
@@ -63,8 +65,12 @@ io.on('connection', function(client) {
     
   });
   
+  
+  //connection test call
   client.on('conTest', () => io.emit('testResponse', 'The connection is fine.'));
   
+  
+  //get employee info call
   client.on('getEmployee', function (id) {
     
     var num = Number(id);
@@ -73,12 +79,33 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
+      url: "http://capstone-intel-maveyma.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {
       var info = response.data;
       io.emit('employee-info', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+  //get employee info call
+  client.on('getEmployeeTeams', function (id) {
+    
+    var num = Number(id);
+    
+    console.log("EmployeeID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayTeamInfo.php",
+      params: { "EmployeeID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('employee-team-info', info);
     })
     .catch(function (error) {
       console.log(error);
