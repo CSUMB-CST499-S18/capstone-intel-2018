@@ -138,7 +138,7 @@ class TeamInfo extends Component {
                 <OverlayTrigger overlay={popover}>
                     {plusIcon}
                 </OverlayTrigger>{' '}
-                <BootstrapTable keyField='TeamID' data={ this.state.Team } columns={columns } striped hover condensed/>
+                <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={columns } striped hover condensed/>
             </div>
         );
     }
