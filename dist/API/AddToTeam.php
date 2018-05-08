@@ -121,43 +121,48 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         $stmt->execute($namedParameters);
         $ParentNode = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        $sql = "SELECT ResourceID FROM teamresource WHERE TeamID = :TeamID";
-
-        $namedParameters = array();
-        $namedParameters[':TeamID'] = $ParentNode;        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($namedParameters);
-        $resourceID = array();
+        if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
+                
+                $sql = "SELECT ResourceID FROM teamresource WHERE TeamID = :TeamID";
         
-        while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-                $resourceID[] = $row; // appends each row to the array. 
+                $namedParameters = array();
+                $namedParameters[':TeamID'] = $ParentNode["ParentNode"];        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
+                $resourceID = array();
+                
+                while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+                        $resourceID[] = $row; // appends each row to the array. 
+                }
+                
+                /* Grant employee member access to their new team */
+                $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
+                VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ");} ";
+        
+                $namedParameters = array();
+                $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
         }
-        
-        /* Grant employee member access to their new team */
-        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
-        VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ");} ";
-
-        $namedParameters = array();
-        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($namedParameters);
         
         /****************************************Add employee to employeeteam table *********************************/
         
-        /* Adds employee to PARENTNODE team*/
-        $sql = "INSERT INTO employeeteam
-        (EmployeeID, TeamID, isTeamManager)
-        VALUES( :EmployeeID, :TeamID, :isTeamManager)";
-
-        //Sanitizing Input
-        $namedParameters = array();
-        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        $namedParameters[':TeamID'] = $ParentNode;
-        $namedParameters[':isTeamManager'] = 0;
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($namedParameters);
+        if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
+                /* Adds employee to PARENTNODE team*/
+                $sql = "INSERT INTO employeeteam
+                (EmployeeID, TeamID, isTeamManager)
+                VALUES( :EmployeeID, :TeamID, :isTeamManager)";
+        
+                //Sanitizing Input
+                $namedParameters = array();
+                $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                $namedParameters[':TeamID'] = $ParentNode["ParentNode"];
+                $namedParameters[':isTeamManager'] = 0;
+        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
+        }
         
         /* Adds employee to employeeteam WHERE ISTEAMMANAGER = 1 */
         $sql = "INSERT INTO employeeteam

@@ -103,7 +103,7 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
                 
-/*****************************Deleting OWNER from their PARENTNODE team in which they are members. **************************/
+/*****************************Deleting OWNER from their PARENTNODE team in which they are MEMBERS. **************************/
 
                 /* Get the ParentNode of the team in which they are being made manager. */
         
@@ -116,38 +116,41 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt->execute($namedParameters);
                 $ParentNode = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                //Where employee is member of the team, delete resources from employeeresource
-                $sql = "SELECT ResourceID FROM teamresource WHERE TeamID = :TeamID";
+                if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
                 
-                $namedParameters = array();
-                $namedParameters[':TeamID'] = $ParentNode;
-                $stmt = $conn->prepare($sql);
-                $stmt->execute($namedParameters);
-                $resourceID = array();
-        
-                while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-                        $resourceID[] = $row; // appends each row to the array. 
-                }
+                        //Where employee is member of the team, delete resources from employeeresource
+                        $sql = "SELECT ResourceID FROM teamresource WHERE TeamID = :TeamID";
+                        
+                        $namedParameters = array();
+                        $namedParameters[':TeamID'] = $ParentNode["ParentNode"];
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute($namedParameters);
+                        $resourceID = array();
                 
-                $sql = "DELETE FROM employeeresource
-                        WHERE EmployeeID = :EmployeeID 
-                        AND AccessID = 2 
-                        AND (";
-                
-                for($i = 0; $i < count($resourceID); $i++){
-                        $sql = $sql . " ResourceID = " . $resourceID[$i]["ResourceID"];
-                        if($i < count($resourceID) - 1) {
-                                $sql = $sql . " OR ";
-                        } elseif($i == count($resourceID) - 1){
-                                $sql = $sql . ")";
+                        while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+                                $resourceID[] = $row; // appends each row to the array. 
                         }
-                }
+                        
+                        $sql = "DELETE FROM employeeresource
+                                WHERE EmployeeID = :EmployeeID 
+                                AND AccessID = 2 
+                                AND (";
+                        
+                        for($i = 0; $i < count($resourceID); $i++){
+                                $sql = $sql . " ResourceID = " . $resourceID[$i]["ResourceID"];
+                                if($i < count($resourceID) - 1) {
+                                        $sql = $sql . " OR ";
+                                } elseif($i == count($resourceID) - 1){
+                                        $sql = $sql . ")";
+                                }
+                        }
+                        
+                        $namedParameters = array();
+                        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
                 
-                $namedParameters = array();
-                $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        
-                $stmt = $conn->prepare($sql);
-                $stmt->execute($namedParameters);
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute($namedParameters);
+                }
 
 /********************** Deleting EMPLOYEE from employeeteam table in which they are OWNER and MEMBER ****************************/
 
@@ -165,7 +168,7 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
         
-        
+        if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
         /* Here we delete the employee from the employeeteam table WHERE THEY ARE MEMBER */
                 $sql = "DELETE FROM employeeteam
                         WHERE EmployeeID  = :EmployeeID
@@ -174,10 +177,11 @@ if (isset($record)){ //If communication with the DB was established
                 //Sanitizing Input
                 $namedParameters = array();
                 $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-                $namedParameters[':TeamID'] = $ParentNode;
+                $namedParameters[':TeamID'] = $ParentNode["ParentNode"];
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+        }
         } else {
                 //Where employee is NOT the manager of the team
                 $sql = "SELECT ResourceID FROM teamresource WHERE TeamID = :TeamID";
