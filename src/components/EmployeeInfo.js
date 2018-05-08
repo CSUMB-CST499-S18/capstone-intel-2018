@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Thumbnail } from 'react-bootstrap';
+import { Thumbnail, Popover, OverlayTrigger } from 'react-bootstrap';
 import '../assets/stylesheets/EmployeeInfo.scss';
 
 let socket = io.connect();
@@ -38,9 +38,17 @@ class EmployeeInfo extends Component {
             var isManager = "Yes";
             var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
             var isManagerCrownSpan = <span>This user has the ability to be a manager.</span>
+            const popover = (
+              <Popover id="modal-popover" title="">
+                {isManagerCrownSpan} 
+              </Popover>
+            );
+            var crownPopover = <OverlayTrigger overlay={popover}>{isManagerCrown}</OverlayTrigger>
         } else {
             var isManager = "No";
         }
+        
+        
         
         
         return (
@@ -57,7 +65,8 @@ class EmployeeInfo extends Component {
                     <p className="ProfileInfo"><b>Phone:</b> {this.state.Employee.Phone}</p>
                     <p className="ProfileInfo"><b>Email:</b> {this.state.Employee.Email}</p>
                     <p className="ProfileInfo"><b>Salary:</b> ${this.state.Employee.Salary}</p>
-                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}<div className="hoverbubble">{isManagerCrown}{isManagerCrownSpan}</div></p>
+                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}</p>
+                    {crownPopover}
                 </div>
             </div>
         );

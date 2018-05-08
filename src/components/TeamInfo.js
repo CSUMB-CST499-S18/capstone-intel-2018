@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -14,23 +14,37 @@ class TeamInfo extends Component {
         
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
     
         this.state = {
             show: false,
+            value: '',
             EmployeeID: this.props.EmployeeID,
             Team: []
         };
         
     }
     
-    handleClose() {
-        this.setState({ show: false });
+    getValidationState() {
+        const length = this.state.value.length;
+        if (length > 10) return 'success';
+        else if (length > 5) return 'warning';
+        else if (length > 0) return 'error';
+        return null;
     }
     
     handleShow() {
         this.setState({ show: true });
     }
-
+    
+    handleClose() {
+        this.setState({ show: false });
+    }
+    
+    handleChange(e) {
+        this.setState({ value: e.target.value });
+    }
     
     componentDidMount() {
     
@@ -81,65 +95,49 @@ class TeamInfo extends Component {
             }
         ];
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus"/>
+        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
         var plusIconText = <span>Add this employee to a new team.</span>
         
         const popover = (
-          <Popover id="modal-popover" title="popover">
-            very popover. such engagement
+          <Popover id="modal-popover" title="">
+            {plusIconText} 
           </Popover>
         );
-        const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>;
-
-        
         
         return (
             <div>
-                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-                    Launch demo modal
-                </Button>
-
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>Add team</Modal.Title>
                     </Modal.Header>
                 
                     <Modal.Body>
-                        <h4>Text in a modal</h4>
-                        
-                        <p>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </p>
-                    
-                        <h4>Popover in a modal</h4>
-                        
-                        <p>
-                            there is a{' '}
-                            <OverlayTrigger overlay={popover}>
-                                <a href="#popover">popover</a>
-                            </OverlayTrigger>{' '}
-                            here
-                        </p>
-                    
-                        <h4>Tooltips in a modal</h4>
-                        <p>
-                            there is a{' '}
-                            <OverlayTrigger overlay={tooltip}>
-                            <a href="#tooltip">tooltip</a>
-                            </OverlayTrigger>{' '}
-                            here
-                        </p>
-                        
-                        <hr />
+                        <FormGroup 
+                            controlId="formBasicText" 
+                            validationState={this.getValidationState()}
+                        >
+                            <ControlLabel>Team ID:</ControlLabel>
+                            <FormControl
+                                type="text"
+                                value={this.state.value}
+                                placeholder="e.g. 12345"
+                                onChange={this.handleChange}
+                            />
+                            <FormControl.Feedback />
+                            {/*<HelpBlock>Validation is based on string length.</HelpBlock>*/}
+                        </FormGroup>
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.handleClose}>Close</Button>
+                        <Button onClick={this.handleClose}>Save</Button>
                     </Modal.Footer>
                 
                 </Modal>
                 
-                <div>{plusIcon}</div>
+                
+                <OverlayTrigger overlay={popover}>
+                    {plusIcon}
+                </OverlayTrigger>{' '}
                 <BootstrapTable keyField='TeamID' data={ this.state.Team } columns={columns } striped hover condensed/>
             </div>
         );
