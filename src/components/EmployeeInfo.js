@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Thumbnail } from 'react-bootstrap';
 import '../assets/stylesheets/EmployeeInfo.scss';
-import $ from 'jquery';
 
 let socket = io.connect();
 
@@ -35,7 +34,7 @@ class EmployeeInfo extends Component {
     
     
     render() {
-        if (this.state.Employee.isManager==1) {
+        if (this.state.Employee.isManager == 1) {
             var isManager = "Yes";
             var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
         } else {
