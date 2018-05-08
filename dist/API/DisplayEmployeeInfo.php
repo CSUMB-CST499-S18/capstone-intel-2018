@@ -5,7 +5,7 @@ include 'dbConnection.php';
 
 $conn = getDatabaseConnection();
 
-$sql = "SELECT employee.Name, employee.EmployeeID, employee.Phone, employee.Email, employee.isManager
+$sql = "SELECT employee.Name, employee.EmployeeID, employee.Phone, employee.Email, employee.isManager, employee.Salary
         FROM employee
         WHERE employee.EmployeeID = :EmployeeID";
 

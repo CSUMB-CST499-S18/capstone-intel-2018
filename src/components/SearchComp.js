@@ -1,10 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import { Navbar, FormGroup, FormControl, Button, ButtonGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
 import SearchTeamTab from './SearchTeamTab.js';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
+
 
 
 let socket = io.connect();
@@ -37,22 +37,22 @@ class SearchComp extends React.Component {
     socket.emit('searchTest');
     
     socket.on('user-info', function (data) {
-      console.log(data);
+      //console.log(data);
       that.setState({Employee: data});
       
       
     });
     
-    /*
+    
     socket.emit('getTeams');
     
     socket.on('team-info', function (data) {
       console.log(data);
-      that.setState({Employee: data});
+      that.setState({Team: data});
       
       
     });
-    */
+    
     socket.emit('conTest');
     
     socket.on('testResponse', function (data) {
@@ -90,7 +90,7 @@ class SearchComp extends React.Component {
     const DisplayInfo = flag ? (
       <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
     ) : (
-      <SearchTeamTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+      <SearchTeamTab data={this.state.Team} searchVal={this.state.searchVal}/>
     );
     
       return (

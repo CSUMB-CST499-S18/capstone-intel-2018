@@ -112,6 +112,27 @@ io.on('connection', function(client) {
     });
   });
   
+  //get team info
+  client.on('getTeams', function (id) {
+    
+    var num = Number(id);
+    
+    console.log("EmployeeID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayTeamMembers.php",
+      params: { "EmployeeID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('team-info', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
 });
 
 server.listen(PORT, function(error) {

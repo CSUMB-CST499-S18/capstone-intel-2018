@@ -26,6 +26,7 @@ class EmployeeInfo extends Component {
     socket.emit('getEmployee', this.state.EmployeeID);
     
     socket.on('employee-info', function (data) {
+        console.log(data);
         that.setState({ Employee: data });
     });
     
