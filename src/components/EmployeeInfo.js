@@ -34,11 +34,13 @@ class EmployeeInfo extends Component {
     
     
     render() {
-        if (this.state.Employee.isManager) {
+        if (this.state.Employee.isManager==1) {
             var isManager = "Yes";
+            var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
         } else {
             var isManager = "No";
         }
+        
         
         return (
             <div>
@@ -49,12 +51,12 @@ class EmployeeInfo extends Component {
                 </div>
                 
                 <div>
-                    <h2 className="ProfileTitle">{this.state.Employee.Name}</h2>
+                    <h2 className="ProfileTitle">{this.state.Employee.Name}{isManagerCrown}</h2>
                     <p className="ProfileInfo"><b>ID:</b> {this.state.Employee.EmployeeID}</p>
                     <p className="ProfileInfo"><b>Phone:</b> {this.state.Employee.Phone}</p>
                     <p className="ProfileInfo"><b>Email:</b> {this.state.Employee.Email}</p>
                     <p className="ProfileInfo"><b>Salary:</b> ${this.state.Employee.Salary}</p>
-                    <p className="ProfileInfo"><b>isManager:</b> {isManager}</p>
+                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}</p>
                 </div>
             </div>
         );
