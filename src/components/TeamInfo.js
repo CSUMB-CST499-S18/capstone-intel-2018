@@ -66,7 +66,7 @@ class TeamInfo extends Component {
         
         return (
       
-            <BootstrapTable keyField='EmployeeID' data={ this.state.Team } columns={ columns } striped hover condensed/>
+            <BootstrapTable keyField='TeamID' data={ this.state.Team } columns={ columns } striped hover condensed/>
       
         );
     }
