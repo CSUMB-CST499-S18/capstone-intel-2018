@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
 
 $sql = "SELECT team.TeamName, employeeteam.isTeamManager, employeeteam.TeamID
         FROM employeeteam NATURAL JOIN team
-        WHERE employeeteam.EmployeeID = :EmployeeID";
+        WHERE EmployeeID = :EmployeeID";
 
 //Sanitizing Input
 $namedParameters = array();
@@ -15,7 +15,11 @@ $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
         
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);
-$record = $stmt->fetch(PDO::FETCH_ASSOC);
+$rows = array();
 
-echo json_encode($record);
+while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+  $rows[] = $row; // appends each row to the array
+}
+
+echo json_encode($rows);
 ?>

@@ -49,6 +49,9 @@ const BasicExample = () => (
             <LinkContainer to="/GitHub">
               <NavItem eventKey={3}>GitHub</NavItem>
             </LinkContainer>
+            <LinkContainer to="/SharePoint">
+              <NavItem eventKey={3}>SharePoint</NavItem>
+            </LinkContainer>
 
           </Nav>
           <Nav pullRight>
@@ -60,6 +63,7 @@ const BasicExample = () => (
       <Route path="/Profile" component={ProfileComp}/>
       <Route path="/Search" component={Search}/>
       <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
+      <Route path='/SharePoint' component={() => window.location = 'https://csumbcapstone.sharepoint.com/sites/CompanyA/SitePages/Home.aspx'}/>
     </div>
   </Router>
 );

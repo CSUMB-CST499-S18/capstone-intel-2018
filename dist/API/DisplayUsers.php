@@ -8,9 +8,7 @@ $conn = getDatabaseConnection();
 $sql = "SELECT *
         FROM employee";
 
-//Sanitizing Input
-    
-        
+
 $stmt = $conn->query($sql);
 $stmt->execute();
 $rows = array();

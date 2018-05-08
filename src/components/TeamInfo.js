@@ -40,6 +40,7 @@ class TeamInfo extends Component {
     socket.emit('getEmployeeTeams', this.state.EmployeeID);
     
     socket.on('employee-team-info', function (data) {
+        console.log(data);
         that.setState({ Team: data });
     });
     
@@ -54,6 +55,7 @@ class TeamInfo extends Component {
       
     );
  }
+ 
     
     render() {
         if(this.state.Team.length == 0) { return null; }
@@ -61,17 +63,21 @@ class TeamInfo extends Component {
         const columns = [
             {
                 dataField: 'TeamID',
-                text: 'Team ID'
+                text: 'Team ID',
+                align: 'center'
             }, {
                 dataField: 'TeamName',
                 text: 'Team Name',
+                align: 'center'
             }, {
                 dataField: 'isTeamManager',
-                text: 'Team Manager'
+                text: 'Team Manager',
+                align: 'center'
             }, {
                 dataField: 'Button',
                 text: 'Edit Button',
-                formatter: this.cellButton.bind(this)
+                formatter: this.cellButton.bind(this),
+                align: 'center'
             }
         ];
         
@@ -88,7 +94,6 @@ class TeamInfo extends Component {
         
         
         return (
-            
             <div>
                 <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
                     Launch demo modal
