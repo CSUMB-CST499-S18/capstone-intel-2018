@@ -181,6 +181,20 @@ if (isset($record)){ //If communication with the DB was established
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+                
+        /* Log Entry */
+
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL," . "Removed employee ID: :EmployeeID" .  " from team ID: :TeamID as OWNER and from team ID : " . $ParentNode["ParentNode"] . " as MEMBER.,
+                CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+                 //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);       
         }
         } else {
                 //Where employee is NOT the manager of the team
@@ -228,6 +242,21 @@ if (isset($record)){ //If communication with the DB was established
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+                
+        /* Log Entry */
+        //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
+        
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL," . "Removed employee ID: :EmployeeID from team ID : :TeamID as MEMBER.,
+                CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+                 //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);
         }
 } else {
   echo false;

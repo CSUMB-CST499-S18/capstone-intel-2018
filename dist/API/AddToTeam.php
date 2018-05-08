@@ -177,7 +177,21 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
 
         $stmt = $conn->prepare($sql);
         $stmt->execute($namedParameters);
-         
+        
+        /* Log Entry */
+        //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
+        
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL," . "Added employee ID: :EmployeeID" .  " to team ID: :TeamID as OWNER and to team ID : " . $ParentNode["ParentNode"] . " as MEMBER.
+                , CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+                 //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);       
 } else { // else if the employee will not be the manager **************************************************************
 
         /* Get resource ID's for that team ID */
@@ -218,6 +232,19 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         $stmt = $conn->prepare($sql);
         $stmt->execute($namedParameters);
         
+        /* Log Entry */
+        //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
+        
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL," . "Added employee ID: :EmployeeID to team ID : :TeamID as MEMBER., CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+                 //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);  
         
 }        
 ?>
