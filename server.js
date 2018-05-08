@@ -54,6 +54,7 @@ io.on('connection', function(client) {
     axios({
       method: 'get',
       url: "http://capstone-intel-jaimegvelazquez.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsers.php",
+
       })
       .then(function (response) {
          var info = [response.data];
