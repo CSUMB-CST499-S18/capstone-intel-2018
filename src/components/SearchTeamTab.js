@@ -54,26 +54,32 @@ class SearchTeamTab extends Component {
       {
         dataField: 'Button',
         text: '',
-        formatter: this.cellButton.bind(this)
+        formatter: this.cellButton.bind(this),
+        align: 'center'
       }, {
         dataField: 'EmployeeID',
-        text: 'Employee ID'
+        text: 'Employee ID',
+        align: 'center'
       }, {
         dataField: 'Name',
         text: 'Employee Name',
-        
+        align: 'center'
       }, {
         dataField: 'Phone',
-        text: 'Phone'
+        text: 'Phone',
+        align: 'center'
       }, {
         dataField: 'Email',
-        text: 'Email'
+        text: 'Email',
+        align: 'center'
       }, {
         dataField: 'isManager',
-        text: 'Is a Manager'
+        text: 'Is a Manager',
+        align: 'center'
       },{
         dataField: 'TeamName',
         text: 'TeamName',
+        align: 'center',
         filter: textFilter({
     
           defaultValue: this.props.searchVal,
@@ -84,13 +90,14 @@ class SearchTeamTab extends Component {
         })
       },{
         dataField: 'TeamID',
-        text: 'TeamID'
+        text: 'TeamID',
+        align: 'center'
       }
       ];
     
     return (
       
-      <BootstrapTable keyField='EmployeeID' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
+      <BootstrapTable keyField='Butto' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
       
     );
   }

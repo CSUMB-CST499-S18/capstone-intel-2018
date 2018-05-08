@@ -28,6 +28,7 @@ class TeamInfo extends Component {
     socket.emit('getEmployeeTeams', this.state.EmployeeID);
     
     socket.on('employee-team-info', function (data) {
+        console.log(data);
         that.setState({ Team: data });
     });
     
@@ -41,6 +42,7 @@ class TeamInfo extends Component {
       
     );
  }
+ 
     
     
     
@@ -50,23 +52,27 @@ class TeamInfo extends Component {
         const columns = [
             {
                 dataField: 'TeamID',
-                text: 'Team ID'
+                text: 'Team ID',
+                align: 'center'
             }, {
                 dataField: 'TeamName',
                 text: 'Team Name',
+                align: 'center'
             }, {
                 dataField: 'isTeamManager',
-                text: 'Team Manager'
+                text: 'Team Manager',
+                align: 'center'
             }, {
                 dataField: 'Button',
                 text: 'Edit Button',
-                formatter: this.cellButton.bind(this)
+                formatter: this.cellButton.bind(this),
+                align: 'center'
             }
         ];
         
         return (
       
-            <BootstrapTable keyField='EmployeeID' data={ this.state.Team } columns={ columns } striped hover condensed/>
+            <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={ columns } striped hover condensed/>
       
         );
     }
