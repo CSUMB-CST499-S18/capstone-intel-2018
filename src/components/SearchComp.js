@@ -1,10 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import { Navbar, FormGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
-
+import SearchTeamTab from './SearchTeamTab.js';
 
 let socket = io.connect();
 
@@ -17,13 +16,16 @@ class SearchComp extends React.Component {
       error: null,
       isLoaded: false,
       Employee: [],
-      searchVal: ''
+      Team: [],
+      searchVal: '',
+      searchEmp: true
     };
         
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmployeeToggle = this.handleEmployeeToggle.bind(this);
+    this.handleTeamToggle = this.handleTeamToggle.bind(this);
   }
   
   componentDidMount() {
@@ -33,8 +35,18 @@ class SearchComp extends React.Component {
     socket.emit('searchTest');
     
     socket.on('user-info', function (data) {
-      console.log(data);
+      //console.log(data);
       that.setState({Employee: data});
+      
+      
+    });
+    
+    
+    socket.emit('getTeams');
+    
+    socket.on('team-info', function (data) {
+      console.log(data);
+      that.setState({Team: data});
       
       
     });
@@ -45,103 +57,8 @@ class SearchComp extends React.Component {
       console.log(data);
     });
     
-    
-    /*
-    $.ajax({
-      type: "GET",
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
-      dataType: "json",
-      data: { "EmployeeID": 11 },
-      success: function(data,status) {
-        this.setState({Employee: data});
-        console.log("Set employee profile");
-      }.bind(this),
-      complete: function(data,status) { //optional, used for debugging purposes
-          // alert(status);
-          console.log("Ajax complete");
-      }.bind(this),
-      error: function(errMsg) {
-            console.log(errMsg);
-        }.bind(this),
-      
-      
-      });//ajax
-        */
-      // $.ajax({
-        
-      //   type: "GET",
-      //   url: "../API/ChangeIsManager.php",
-      //   dataType: "json",
-      //   data: { "EmployeeID": 11,
-      //           "isManager": 0},
-      //   success: function(data,status) {
-      //   alert("Success");
-      //   },
-      //   complete: function(data,status) { //optional, used for debugging purposes
-      //   //alert(status);
-      //   }
-        
-      //   });//ajax
-        
-      //   $.ajax({
-        
-      //   type: "GET",
-      //   url: "../API/ChangeIsTeamManager.php",
-      //   dataType: "json",
-      //   data: { "EmployeeID": 1,
-      //           "TeamID": 1,
-      //           "isTeamManager":0
-      //   },
-      //   success: function(data,status) {
-
-      //   },
-      //   complete: function(data,status) { //optional, used for debugging purposes
-      //   //alert(status);
-      //   }
-        
-      //   });//ajax
-                 
-   // adding to team             
-        // $.ajax({
-        
-        // type: "GET",
-        // url: "../API/AddToTeam.php",
-        // dataType: "json",
-        // data: { "EmployeeID": 1,
-        //         "TeamID": 31,
-        //         "isTeamManager":0
-        // },
-        // success: function(data,status) {
-
-        // },
-        // complete: function(data,status) { //optional, used for debugging purposes
-        // //alert(status);
-        // }
-      
-        // });//ajax
-        
-        // $.ajax({
-        
-        // type: "GET",
-        // url: "../API/RemoveFromTeam.php",
-        // dataType: "json",
-        // data: { "EmployeeID": 1,
-        //         "TeamID": 31
-        // },
-        // success: function(data,status) {
-
-        // },
-        // complete: function(data,status) { //optional, used for debugging purposes
-        // //alert(status);
-        // }
-        
-        // });//ajax
-        
   }
   
-  componentDidUpdate() {
-    console.log(this.state.Employee);
-  }
   
   handleChange(event) {
       var that = this;
@@ -153,12 +70,27 @@ class SearchComp extends React.Component {
   handleSubmit(event) {
     
   }
-
-
+  
+  handleEmployeeToggle() {
+    this.setState({searchEmp: true});
+  }
+  
+  handleTeamToggle() {
+    this.setState({searchEmp: false});
+  }
 
 
   render() {
     if(this.state.Employee.length == 0) { return null; }
+    
+    const flag = this.state.searchEmp;
+    
+    const DisplayInfo = flag ? (
+      <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+    ) : (
+      <SearchTeamTab data={this.state.Team} searchVal={this.state.searchVal}/>
+    );
+    
       return (
         <div>
             <Navbar>
@@ -175,16 +107,16 @@ class SearchComp extends React.Component {
                         </FormGroup>{' '}
                     </Navbar.Form>
                     <Navbar.Form pullRight>
-                      <ButtonGroup>
-                        <Button>Employee</Button>
-                        <Button>Team</Button>
-                      </ButtonGroup>
+                      <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                        <ToggleButton value = {1} onClick={this.handleEmployeeToggle}>Employee</ToggleButton>
+                        <ToggleButton value = {2} onClick={this.handleTeamToggle}>Team</ToggleButton>
+                      </ToggleButtonGroup>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
 
             <div>
-              <SearchTab data={this.state.Employee} searchVal={this.state.searchVal}/>
+              {DisplayInfo}
             </div>
         </div>
       );
