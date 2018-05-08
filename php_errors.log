@@ -42,3 +42,189 @@
 [08-Mar-2018 20:50:56 UTC] PHP Stack trace:
 [08-Mar-2018 20:50:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:0
 [08-Mar-2018 20:50:56 UTC] PHP   2. require_once() /home/ubuntu/workspace/phpMyAdmin/js/whitelist.php:23
+[11-Apr-2018 00:19:58 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)' in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php:21
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php(21): PDO->__construct('mysql:host=;dbn...', NULL, NULL)
+#1 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(4): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php on line 21
+[11-Apr-2018 00:20:12 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)' in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php:21
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php(21): PDO->__construct('mysql:host=;dbn...', NULL, NULL)
+#1 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(4): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php on line 21
+[11-Apr-2018 04:02:57 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)' in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php:17
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php(17): PDO->__construct('mysql:host=;dbn...', NULL, NULL)
+#1 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(4): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php on line 17
+[11-Apr-2018 04:18:38 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)' in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php:22
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php(22): PDO->__construct('mysql:host=;dbn...', NULL, NULL)
+#1 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(4): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php on line 22
+[11-Apr-2018 04:18:40 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)' in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php:22
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php(22): PDO->__construct('mysql:host=;dbn...', NULL, NULL)
+#1 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(4): getDatabaseConnection()
+#2 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/dbConnection.php on line 22
+[11-Apr-2018 06:33:18 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:33:18 UTC] PHP Stack trace:
+[11-Apr-2018 06:33:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:33:18 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:33:18 UTC] PHP Stack trace:
+[11-Apr-2018 06:33:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:33:18 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:33:18 UTC] PHP Stack trace:
+[11-Apr-2018 06:33:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:34:39 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:34:39 UTC] PHP Stack trace:
+[11-Apr-2018 06:34:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:34:39 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:34:39 UTC] PHP Stack trace:
+[11-Apr-2018 06:34:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:34:39 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:34:39 UTC] PHP Stack trace:
+[11-Apr-2018 06:34:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:35:06 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:35:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:35:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:35:06 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:35:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:35:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:35:06 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:35:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:35:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:40:22 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:40:22 UTC] PHP Stack trace:
+[11-Apr-2018 06:40:22 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:40:22 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:40:22 UTC] PHP Stack trace:
+[11-Apr-2018 06:40:22 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:40:22 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:40:22 UTC] PHP Stack trace:
+[11-Apr-2018 06:40:22 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:41:06 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:41:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:41:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:41:06 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:41:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:41:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:41:06 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:41:06 UTC] PHP Stack trace:
+[11-Apr-2018 06:41:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:42:27 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:42:27 UTC] PHP Stack trace:
+[11-Apr-2018 06:42:27 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:42:27 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:42:27 UTC] PHP Stack trace:
+[11-Apr-2018 06:42:27 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:42:27 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:42:27 UTC] PHP Stack trace:
+[11-Apr-2018 06:42:27 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:09 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:46:09 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:09 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:09 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:46:09 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:09 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:09 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:46:09 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:09 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:35 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:46:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:35 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:46:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:46:35 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:46:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:46:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:51:56 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:51:56 UTC] PHP Stack trace:
+[11-Apr-2018 06:51:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:51:56 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:51:56 UTC] PHP Stack trace:
+[11-Apr-2018 06:51:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:51:56 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:51:56 UTC] PHP Stack trace:
+[11-Apr-2018 06:51:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:52:35 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:52:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:52:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:52:35 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 3
+[11-Apr-2018 06:52:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:52:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:52:35 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 4
+[11-Apr-2018 06:52:35 UTC] PHP Stack trace:
+[11-Apr-2018 06:52:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[11-Apr-2018 06:53:16 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'Capstone.Employee' doesn't exist' in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:14
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php(14): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 14
+[11-Apr-2018 07:50:08 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 3
+[11-Apr-2018 07:50:08 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 07:50:08 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 3
+[11-Apr-2018 07:50:08 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 07:50:08 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 5
+[11-Apr-2018 07:50:08 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 07:50:51 UTC] PHP Warning:  include(dbConnection.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 3
+[11-Apr-2018 07:50:51 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 07:50:51 UTC] PHP Warning:  include(): Failed opening 'dbConnection.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 3
+[11-Apr-2018 07:50:51 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 07:50:51 UTC] PHP Fatal error:  Call to undefined function getDatabaseConnection() in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php on line 5
+[11-Apr-2018 07:50:51 UTC] PHP Stack trace:
+[11-Apr-2018 07:50:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsManager.php:0
+[11-Apr-2018 08:02:14 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: parameter was not defined' in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsTeamManager.php:19
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsTeamManager.php(19): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/API/ChangeIsTeamManager.php on line 19
+[11-Apr-2018 08:07:54 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000]: General error' in /home/ubuntu/workspace/capstone-intel-2018/API/AddToTeam.php:19
+Stack trace:
+#0 /home/ubuntu/workspace/capstone-intel-2018/API/AddToTeam.php(19): PDOStatement->fetch(2)
+#1 {main}
+  thrown in /home/ubuntu/workspace/capstone-intel-2018/API/AddToTeam.php on line 19
+[17-Apr-2018 07:05:32 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:05:32 UTC] PHP Stack trace:
+[17-Apr-2018 07:05:32 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:09:02 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:09:02 UTC] PHP Stack trace:
+[17-Apr-2018 07:09:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:09:15 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:09:15 UTC] PHP Stack trace:
+[17-Apr-2018 07:09:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:10:35 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:10:35 UTC] PHP Stack trace:
+[17-Apr-2018 07:10:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:02 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:02 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:16 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:16 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:16 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:11:39 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:11:39 UTC] PHP Stack trace:
+[17-Apr-2018 07:11:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:19:58 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:19:58 UTC] PHP Stack trace:
+[17-Apr-2018 07:19:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:21:08 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:21:08 UTC] PHP Stack trace:
+[17-Apr-2018 07:21:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:22:00 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:22:00 UTC] PHP Stack trace:
+[17-Apr-2018 07:22:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0
+[17-Apr-2018 07:22:19 UTC] PHP Fatal error:  Call to undefined function create() in /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php on line 2
+[17-Apr-2018 07:22:19 UTC] PHP Stack trace:
+[17-Apr-2018 07:22:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/capstone-intel-2018/API/DisplayUsers.php:0

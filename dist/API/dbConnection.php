@@ -1,13 +1,13 @@
 <?php
 
-
 function getDatabaseConnection(){
-    /*
+    
     $host = 'localhost';//cloud 9
-    $dbname = 'tcp';
+    $dbname = 'Capstone';
     $username = 'root';
     $password = '';
-    */
+    
+    
     //using different database variables in Heroku
     if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
         $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
@@ -16,7 +16,7 @@ function getDatabaseConnection(){
         $username = $url["user"];
         $password = $url["pass"];
     } 
-    
+
     //creates db connection
     $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     
