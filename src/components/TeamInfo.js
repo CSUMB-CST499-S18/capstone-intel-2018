@@ -21,20 +21,42 @@ class TeamInfo extends Component {
             show: false,
             value: '',
             EmployeeID: this.props.EmployeeID,
-            Team: []
+            Team: [],
+            AllTeam: [],
+            TeamIDArray: []
         };
         
     }
     
+    handleCheck(val) {
+        console.log("Is it here?");
+        console.log(this.state.AllTeam.some(item => val === item));
+        return this.state.AllTeam.some(item => val === item);
+    }
+    
     getValidationState() {
         const length = this.state.value.length;
-        if (length > 10) return 'success';
-        else if (length > 5) return 'warning';
-        else if (length > 0) return 'error';
-        return null;
+        const isTeamIDValid = this.handleCheck(this.state.value);
+        if (length == 0) return null;
+        else if (isTeamIDValid == true) return 'success';
+        else if (isTeamIDValid == false) return 'error';
     }
     
     handleShow() {
+        var that = this;
+        console.log("Getting all teams");
+        socket.emit('getAllTeams', this.state.AllTeam);
+        
+        socket.on('all-teams-info', function (data) {
+            console.log(data[0]);
+            
+            var newArray = that.state.AllTeam.slice();    
+            Object.keys(data[0]).map(function (key) {
+                newArray.push(data[0][key].TeamID);
+                console.log(newArray);
+            });
+            that.setState({AllTeam:newArray});
+        });
         this.setState({ show: true });
     }
     
@@ -47,28 +69,22 @@ class TeamInfo extends Component {
     }
     
     componentDidMount() {
-    
-    var that = this;
-    console.log("Getting Team info");
-    
-    socket.emit('getEmployeeTeams', this.state.EmployeeID);
-    
-    socket.on('employee-team-info', function (data) {
-        console.log(data);
-        that.setState({ Team: data });
-    });
-    
+        var that = this;
+        console.log("Getting Team info");
+        socket.emit('getEmployeeTeams', this.state.EmployeeID);
+        
+        socket.on('employee-team-info', function (data) {
+            console.log(data);
+            that.setState({ Team: data });
+        });
     }
     
     
     cellButton(cell, row, rowIndex) {
-   
-    return (
-      
-        <Button bsStyle="primary">Edit Team</Button>
-      
-    );
- }
+        return (
+            <Button bsStyle="primary">Edit Team</Button>
+        );
+    }
  
     
     render() {
@@ -108,7 +124,7 @@ class TeamInfo extends Component {
             <div>
                 <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
                     <Modal.Header closeButton>
-                        <Modal.Title>Add team</Modal.Title>
+                        <Modal.Title>Add to team</Modal.Title>
                     </Modal.Header>
                 
                     <Modal.Body>
@@ -129,7 +145,7 @@ class TeamInfo extends Component {
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.handleClose}>Save</Button>
+                        <Button onClick={this.handleClose} bsStyle="primary" bsSize="large">Save</Button>
                     </Modal.Footer>
                 
                 </Modal>

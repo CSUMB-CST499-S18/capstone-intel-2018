@@ -112,7 +112,7 @@ io.on('connection', function(client) {
     });
   });
   
-  //get team info
+  //get teams searched by input employeeID
   client.on('getTeams', function (id) {
     
     var num = Number(id);
@@ -133,7 +133,27 @@ io.on('connection', function(client) {
     });
   });
   
+    //search ajax call
+  client.on('getAllTeams', function () {
+    
+   
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetAllTeams.php",
+      })
+      .then(function (response) {
+         var info = [response.data];
+        io.emit('all-teams-info', info);
+      })
+      .catch(function (error) {
+        console.log(error);
+    });
+    
+  });
+  
 });
+
+
 
 server.listen(PORT, function(error) {
   if (error) {
