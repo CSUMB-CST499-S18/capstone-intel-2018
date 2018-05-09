@@ -5,21 +5,19 @@ include 'dbConnection.php';
 
 $conn = getDatabaseConnection();
 
-$sql = "SELECT team.TeamName, employeeteam.isTeamManager, employeeteam.TeamID
-        FROM employeeteam NATURAL JOIN team
-        WHERE EmployeeID = :EmployeeID";
+$sql = "SELECT * 
+        FROM employee NATURAL JOIN employeeteam NATURAL JOIN team"; 
+        
 
 //Sanitizing Input
-$namedParameters = array();
-$namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+    
         
-$stmt = $conn->prepare($sql);
-$stmt->execute($namedParameters);
+$stmt = $conn->query($sql);
+$stmt->execute();
 $rows = array();
 
 while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
   $rows[] = $row; // appends each row to the array
 }
-
 echo json_encode($rows);
 ?>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {PanelGroup, Panel, Image} from 'react-bootstrap';
+import { Thumbnail, Popover, OverlayTrigger } from 'react-bootstrap';
 import '../assets/stylesheets/EmployeeInfo.scss';
-import $ from 'jquery';
 
 let socket = io.connect();
 
@@ -26,6 +25,7 @@ class EmployeeInfo extends Component {
     socket.emit('getEmployee', this.state.EmployeeID);
     
     socket.on('employee-info', function (data) {
+        console.log(data);
         that.setState({ Employee: data });
     });
     
@@ -34,53 +34,40 @@ class EmployeeInfo extends Component {
     
     
     render() {
+        if (this.state.Employee.isManager == 1) {
+            var isManager = "Yes";
+            var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
+            var isManagerCrownSpan = <span>This user has the ability to be a manager.</span>
+            const popover = (
+              <Popover id="modal-popover" title="">
+                {isManagerCrownSpan} 
+              </Popover>
+            );
+            var crownPopover = <OverlayTrigger overlay={popover}>{isManagerCrown}</OverlayTrigger>
+        } else {
+            var isManager = "No";
+        }
+        
+        
+        
+        
         return (
             <div>
-                <PanelGroup id = 'employeePanel'>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title>Image</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body><Image src="http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg" thumbnail responsive/></Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title>Name</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Name}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Employee ID</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.EmployeeID}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Phone</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Phone}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Email</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Email}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Salary</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.Salary}</Panel.Body>
-                    </Panel>
-                    <Panel>
-                        <Panel.Heading>
-                            <Panel.Title toggle>Is Manager</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>{this.state.Employee.isManager}</Panel.Body>
-                    </Panel>
-                </PanelGroup>
+                <div className="ProfileInfo">
+                    <a href={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} target="_blank">
+                        <img src={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} alt="profile_picture" className="profilePic" />
+                    </a>
+                </div>
                 
+                <div>
+                    <h2 className="ProfileTitle">{this.state.Employee.Name}</h2>
+                    <p className="ProfileInfo"><b>ID:</b> {this.state.Employee.EmployeeID}</p>
+                    <p className="ProfileInfo"><b>Phone:</b> {this.state.Employee.Phone}</p>
+                    <p className="ProfileInfo"><b>Email:</b> {this.state.Employee.Email}</p>
+                    <p className="ProfileInfo"><b>Salary:</b> ${this.state.Employee.Salary}</p>
+                    <p className="ProfileInfo"><b>Manager Certified:</b> {isManager}</p>
+                    {crownPopover}
+                </div>
             </div>
         );
     }

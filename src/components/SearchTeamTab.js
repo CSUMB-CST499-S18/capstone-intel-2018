@@ -10,7 +10,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
  
  
-class SearchTab extends Component {
+class SearchTeamTab extends Component {
   constructor(props) {
     super(props);
     
@@ -63,15 +63,7 @@ class SearchTab extends Component {
       }, {
         dataField: 'Name',
         text: 'Employee Name',
-        align: 'center',
-        filter: textFilter({
-    
-          defaultValue: this.props.searchVal,
-          style: {
-            display: 'none'
-          },
-    
-        })
+        align: 'center'
       }, {
         dataField: 'Phone',
         text: 'Phone',
@@ -87,7 +79,15 @@ class SearchTab extends Component {
       },{
         dataField: 'TeamName',
         text: 'TeamName',
-        align: 'center'
+        align: 'center',
+        filter: textFilter({
+    
+          defaultValue: this.props.searchVal,
+          style: {
+            display: 'none'
+          },
+    
+        })
       },{
         dataField: 'TeamID',
         text: 'TeamID',
@@ -97,10 +97,10 @@ class SearchTab extends Component {
     
     return (
       
-      <BootstrapTable keyField='EmployeeID' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
+      <BootstrapTable keyField='Butto' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
       
     );
   }
 }
  
-export default SearchTab;
+export default SearchTeamTab;
