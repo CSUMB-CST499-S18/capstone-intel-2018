@@ -3,7 +3,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import { Navbar, FormGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
-import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
+//import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
 
 
 let socket = io.connect();

@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var axios = require('axios');
 var jQuery = require('jquery');
+var schedule = require('node-schedule');
 
 // using webpack-dev-server and middleware in development environment
 if (process.env.NODE_ENV !== 'production') {
@@ -35,6 +36,23 @@ app.get('/*', function(req, res) {
   })
 })
 
+// sets rule for 11:59 PM Monday-Friday
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = new schedule.Range(1, 5);
+rule.hour = 23;
+rule.minute = 59;
+
+var job = schedule.scheduleJob(rule, function() {
+  axios({
+    method: 'post',
+    url: 'http://misc-kylebutler39.c9users.io:8080/capstone-intel-2018/dist/API/sendEmail.php'
+  }).then(function(response) {
+    console.log("Email sent");
+  }).catch(function(error) {
+      console.log(error);
+  });
+});
+
 io.on('connection', function(client) {
   console.log('client connected!');
 
@@ -51,7 +69,7 @@ io.on('connection', function(client) {
    
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsersTeam.php",
+      url: "http://misc-kylebutler39.c9users.io:8080/capstone-intel-2018/dist/API/DisplayUsersTeam.php",
       })
       .then(function (response) {
          var info = [response.data];
@@ -73,7 +91,7 @@ io.on('connection', function(client) {
     
     axios({
       method: 'get',
-      url: "http://cst499s18-bavery.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
+      url: "http://misc-kylebutler39.c9users.io:8080/capstone-intel-2018/dist/API/DisplayEmployeeInfo.php",
       params: { "EmployeeID": num }
     })
     .then(function (response) {
