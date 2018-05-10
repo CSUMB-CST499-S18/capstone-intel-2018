@@ -16,10 +16,10 @@ class TeamInfo extends Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    
+
         this.state = {
             show: false,
-            ProfileTeams: [], //
+            ProfileTeams: [], 
             AllTeams: [],
             AllTeamsID: [],
             Employee: [],
@@ -71,6 +71,13 @@ class TeamInfo extends Component {
     handleChange(e) {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
+        var that = this;
+        console.log("Getting a team by ID");
+        socket.emit('getTeamByID', this.state.addToTeamID);
+        socket.on('one-team-info', function (data) {
+            console.log(data);
+            that.setState({ pendingTeamToAdd: data });
+        });
     }
     
     componentDidMount() {
@@ -95,6 +102,11 @@ class TeamInfo extends Component {
             console.log(data);
             that.setState({ Employee: data });
         });
+        
+        
+        
+        
+        
     }
     
     
