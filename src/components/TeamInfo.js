@@ -19,9 +19,11 @@ class TeamInfo extends Component {
     
         this.state = {
             show: false,
-            Team: [],
-            AllTeam: [],
+            ProfileTeams: [], //
+            AllTeams: [],
+            AllTeamsID: [],
             Employee: [],
+            pendingTeamToAdd: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
             addToTeamAsManager: null,
@@ -31,7 +33,7 @@ class TeamInfo extends Component {
     }
     
     handleCheckTeamExists(val) {
-        return this.state.AllTeam.some(item => val === item);
+        return this.state.AllTeamsID.some(item => val === item);
     }
     
     getValidationState() {
@@ -45,17 +47,17 @@ class TeamInfo extends Component {
     handleShow() {
         var that = this;
         
-        console.log("Getting all teams");
-        socket.emit('getAllTeams', this.state.AllTeam);
-        
+        console.log("Getting an array of all teams in the database");
+        socket.emit('getAllTeams', this.state.AllTeams);
         socket.on('all-teams-info', function (data) {
             console.log(data[0]);
-            var newArray = that.state.AllTeam.slice();    
+            var newArray = that.state.AllTeams.slice();    
             Object.keys(data[0]).map(function (key) {
                 //Create an array of TeamIDs to check if team exists
                 newArray.push(data[0][key].TeamID);
             });
-            that.setState({AllTeam:newArray});
+            that.setState({AllTeamsID:newArray});
+            that.setState({AllTeams: data[0]});
         });
         if (this.refs.myRef)
         this.setState({ show: true });
@@ -73,9 +75,8 @@ class TeamInfo extends Component {
     
     componentDidMount() {
         var that = this;
-        console.log("Getting Team info");
+        console.log("Getting Employee's list of Teams");
         socket.emit('getEmployeeTeams', this.state.EmployeeID);
-        
         socket.on('employee-team-info', function (data) {
             console.log(data);
             Object.keys(data[0]).map(function (key) {
@@ -85,12 +86,11 @@ class TeamInfo extends Component {
                     that.setState({ managesATeam: false });
                 }
             });
-            that.setState({ Team: data });
+            that.setState({ ProfileTeams: data });
         });
         
         console.log("Getting employee profile");
         socket.emit('getEmployee', this.state.EmployeeID);
-        
         socket.on('employee-info', function (data) {
             console.log(data);
             that.setState({ Employee: data });
@@ -106,7 +106,7 @@ class TeamInfo extends Component {
  
     
     render() {
-        if(this.state.Team.length == 0) { return null; }
+        if(this.state.ProfileTeams.length == 0) { return null; }
     
         const columns = [
             {
@@ -129,8 +129,8 @@ class TeamInfo extends Component {
             }
         ];
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
-        var plusIconText = <span>Add this employee to a new team.</span>
+        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>;
+        var plusIconText = <span>Add this employee to a new team.</span>;
         
         const popover = (
           <Popover id="modal-popover" title="">
@@ -156,9 +156,6 @@ class TeamInfo extends Component {
                 );
             //}
         }
-        
-
-        
         
         return (
             <div ref="myRef">
@@ -195,7 +192,7 @@ class TeamInfo extends Component {
                 <OverlayTrigger overlay={popover}>
                     {plusIcon}
                 </OverlayTrigger>{' '}
-                <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={columns } striped hover condensed/>
+                <BootstrapTable keyField='TeamID' data={ this.state.ProfileTeams[0] } columns={columns } striped hover condensed/>
             </div>
         );
     }
