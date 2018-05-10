@@ -15,11 +15,7 @@ $namedParameters[':TeamID'] = $_GET['TeamID'];
         
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);
-$rows = array();
+$record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-  $rows[] = $row; // appends each row to the array
-}
-
-echo json_encode($rows);
+echo json_encode($record);
 ?>
