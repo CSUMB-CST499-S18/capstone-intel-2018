@@ -16,6 +16,7 @@ class TeamInfo extends Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.checkTeamManager = this.checkTeamManager.bind(this);
 
         this.state = {
             show: false,
@@ -68,16 +69,21 @@ class TeamInfo extends Component {
         this.setState({ show: false });
     }
     
-    handleChange(e) {
-        if (this.refs.myRef)
-        this.setState({ addToTeamID: e.target.value });
+    checkTeamManager() {
         var that = this;
-        console.log("Getting a team by ID");
-        socket.emit('getTeamByID', this.state.addToTeamID);
+        console.log("Getting a team by ID" + that.state.addToTeamID);
+        socket.emit('getTeamByID', that.state.addToTeamID);
         socket.on('one-team-info', function (data) {
             console.log("plzz"+data);
             that.setState({ pendingTeamToAdd: data });
         });
+    }
+    
+    handleChange(e) {
+        if (this.refs.myRef)
+        this.setState({ addToTeamID: e.target.value });
+        this.checkTeamManager();
+        
     }
     
     componentDidMount() {
