@@ -16,7 +16,6 @@ class TeamInfo extends Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
     
         this.state = {
             show: false,
@@ -25,21 +24,19 @@ class TeamInfo extends Component {
             Employee: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
-            addToTeamAsManager: '',
-            managesATeam: ''
+            addToTeamAsManager: null,
+            isMuted: false
         };
         
     }
     
-    handleCheck(val) {
-        console.log("Is it here?");
-        console.log(this.state.AllTeam.some(item => val === item));
+    handleCheckTeamExists(val) {
         return this.state.AllTeam.some(item => val === item);
     }
     
     getValidationState() {
         const length = this.state.addToTeamID.length;
-        const isTeamIDValid = this.handleCheck(this.state.addToTeamID);
+        const isTeamIDValid = this.handleCheckTeamExists(this.state.addToTeamID);
         if (length == 0) return null;
         else if (isTeamIDValid == true) return 'success';
         else if (isTeamIDValid == false) return 'error';
@@ -47,19 +44,16 @@ class TeamInfo extends Component {
     
     handleShow() {
         var that = this;
-        console.log("do u have manager cred");
-        console.log(that.state.EmployeeID);
         
         console.log("Getting all teams");
         socket.emit('getAllTeams', this.state.AllTeam);
         
         socket.on('all-teams-info', function (data) {
             console.log(data[0]);
-            
             var newArray = that.state.AllTeam.slice();    
             Object.keys(data[0]).map(function (key) {
+                //Create an array of TeamIDs to check if team exists
                 newArray.push(data[0][key].TeamID);
-                console.log(newArray);
             });
             that.setState({AllTeam:newArray});
         });
@@ -74,7 +68,7 @@ class TeamInfo extends Component {
     
     handleChange(e) {
         if (this.refs.myRef)
-        this.setState({ addToTeamID: e.target.addToTeamID });
+        this.setState({ addToTeamID: e.target.value });
     }
     
     componentDidMount() {
@@ -145,17 +139,17 @@ class TeamInfo extends Component {
         );
         
         if (this.state.Employee.isManager == true) {
-            // Second condition commented out for testing bc our org structure currently
+            // Commented out for testing bc our org structure currently
             // does not show any toggle buttons 
             // i.e. All people who have manager cred already own a team.
             //if (this.state.managesATeam == false) {
                 var toggle = (
                 <div>
-                <div><ControlLabel htmlFor='cheese-status'>Add as manager</ControlLabel></div>
+                <div><ControlLabel htmlFor='join-as-manager-status'>Add as manager</ControlLabel></div>
                 <div><Toggle
-                    id='cheese-status'
-                    defaultChecked={this.state.eggsAreReady}
-                    aria-label='No label tag'
+                    id='join-as-manager-status'
+                    defaultChecked={this.state.addToTeamAsManager}
+                    disabled={this.state.isMuted}
                     onChange={this.handleEggsChange} />
                 </div>
                 </div>
@@ -163,6 +157,7 @@ class TeamInfo extends Component {
             //}
         }
         
+
         
         
         return (
@@ -185,7 +180,7 @@ class TeamInfo extends Component {
                                 onChange={this.handleChange}
                             />
                             <FormControl.Feedback />
-                            {/*<HelpBlock>Validation is based on string length.</HelpBlock>*/}
+                            <HelpBlock>Checking if team exists</HelpBlock>
                         </FormGroup>
                         {toggle}
                     </Modal.Body>
