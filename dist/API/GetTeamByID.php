@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
 
 $sql = "SELECT *
         FROM team
-        WHERE TeamID = :TeamID";
+        WHERE team.TeamID = :TeamID";
 
 //Sanitizing Input
 $namedParameters = array();
