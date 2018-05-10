@@ -62,14 +62,17 @@ class TeamInfo extends Component {
             });
             that.setState({AllTeam:newArray});
         });
+        if (this.refs.myRef)
         this.setState({ show: true });
     }
     
     handleClose() {
+        if (this.refs.myRef)
         this.setState({ show: false });
     }
     
     handleChange(e) {
+        if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.addToTeamID });
     }
     
@@ -148,7 +151,7 @@ class TeamInfo extends Component {
         }
         
         return (
-            <div>
+            <div ref="myRef">
                 <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
                     <Modal.Header closeButton>
                         <Modal.Title>Add to team</Modal.Title>
