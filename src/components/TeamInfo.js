@@ -22,10 +22,10 @@ class TeamInfo extends Component {
             show: false,
             Team: [],
             AllTeam: [],
+            Employee: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
-            addToTeamAsManager: '',
-            hasManagerCredential: this.props.isManager
+            addToTeamAsManager: ''
         };
         
     }
@@ -46,6 +46,9 @@ class TeamInfo extends Component {
     
     handleShow() {
         var that = this;
+        console.log("do u have manager cred");
+        console.log(that.state.EmployeeID);
+        
         console.log("Getting all teams");
         socket.emit('getAllTeams', this.state.AllTeam);
         
@@ -78,6 +81,14 @@ class TeamInfo extends Component {
         socket.on('employee-team-info', function (data) {
             console.log(data);
             that.setState({ Team: data });
+        });
+        
+        console.log("Getting employee profile");
+        socket.emit('getEmployee', this.state.EmployeeID);
+        
+        socket.on('employee-info', function (data) {
+            console.log(data);
+            that.setState({ Employee: data });
         });
     }
     
@@ -122,6 +133,20 @@ class TeamInfo extends Component {
           </Popover>
         );
         
+        if (this.state.Employee.isManager == true) {
+            var toggle = (
+                <div>
+                <div><ControlLabel htmlFor='cheese-status'>Add as manager</ControlLabel></div>
+                <div><Toggle
+                    id='cheese-status'
+                    defaultChecked={this.state.eggsAreReady}
+                    aria-label='No label tag'
+                    onChange={this.handleEggsChange} />
+                </div>
+                </div>
+            );
+        }
+        
         return (
             <div>
                 <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
@@ -144,17 +169,7 @@ class TeamInfo extends Component {
                             <FormControl.Feedback />
                             {/*<HelpBlock>Validation is based on string length.</HelpBlock>*/}
                         </FormGroup>
-                        <div>
-                        <ControlLabel htmlFor='cheese-status'>Add as manager</ControlLabel>
-                        </div>
-                         
-                        <div>
-                        <Toggle
-                            id='cheese-status'
-                            defaultChecked={this.state.eggsAreReady}
-                            aria-label='No label tag'
-                            onChange={this.handleEggsChange} />
-                        </div>
+                        {toggle}
                     </Modal.Body>
                     
                     <Modal.Footer>

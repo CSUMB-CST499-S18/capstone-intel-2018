@@ -15,14 +15,8 @@ class Profile extends Component {
       Employee : this.props.location.state
   
     };
-    this.onLike = this.onLike.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
   
-  }
-
-  onLike () {
-    let newLikesCount = this.state.likesCount + 1;
-    this.setState({likesCount: newLikesCount});
   }
   
    componentDidMount() {
@@ -46,7 +40,7 @@ class Profile extends Component {
           
           <div className="teamPane">
 
-            <TeamInfo EmployeeID = {this.state.Employee.EmployeeID} isManager = {this.state.Employee.isManager}/>
+            <TeamInfo EmployeeID = {this.state.Employee.EmployeeID}/>
 
           </div>
         </SplitPane>

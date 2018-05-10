@@ -19,15 +19,15 @@ class EmployeeInfo extends Component {
     
     componentDidMount() {
     
-    var that = this;
-    console.log("Getting employee profile");
-    
-    socket.emit('getEmployee', this.state.EmployeeID);
-    
-    socket.on('employee-info', function (data) {
-        console.log(data);
-        that.setState({ Employee: data });
-    });
+        var that = this;
+        console.log("Getting employee profile");
+        
+        socket.emit('getEmployee', this.state.EmployeeID);
+        
+        socket.on('employee-info', function (data) {
+            console.log(data);
+            that.setState({ Employee: data });
+        });
     
     }
     
