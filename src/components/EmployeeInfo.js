@@ -26,6 +26,7 @@ class EmployeeInfo extends Component {
         
         socket.on('employee-info', function (data) {
             console.log(data);
+            if (that.refs.myEmpRef)
             that.setState({ Employee: data });
         });
     
@@ -52,7 +53,7 @@ class EmployeeInfo extends Component {
         
         
         return (
-            <div>
+            <div ref="myEmpRef">
                 <div className="ProfileInfo">
                     <a href={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} target="_blank">
                         <img src={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} alt="profile_picture" className="profilePic" />
