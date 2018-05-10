@@ -117,7 +117,7 @@ io.on('connection', function(client) {
     
     var num = Number(id);
     
-    console.log("TeamIDDDDD:  " + num);
+    console.log("TeamID:  " + num);
     
     axios({
       method: 'get',
