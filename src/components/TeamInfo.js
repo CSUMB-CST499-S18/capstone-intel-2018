@@ -73,7 +73,7 @@ class TeamInfo extends Component {
         this.setState({ addToTeamID: e.target.value });
         var that = this;
         console.log("Getting a team by ID");
-        socket.emit('getTeamByID', that.state.addToTeamID);
+        socket.emit('getTeamByID', this.state.addToTeamID);
         socket.on('one-team-info', function (data) {
             console.log("plzz"+data);
             that.setState({ pendingTeamToAdd: data });
