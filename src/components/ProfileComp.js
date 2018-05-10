@@ -46,7 +46,7 @@ class Profile extends Component {
           
           <div className="teamPane">
 
-            <TeamInfo EmployeeID = { this.state.Employee.EmployeeID } />
+            <TeamInfo EmployeeID = {this.state.Employee.EmployeeID} isManager = {this.state.Employee.isManager}/>
 
           </div>
         </SplitPane>

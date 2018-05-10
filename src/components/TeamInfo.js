@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
+import Toggle from 'react-toggle'
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -19,11 +20,12 @@ class TeamInfo extends Component {
     
         this.state = {
             show: false,
-            value: '',
-            EmployeeID: this.props.EmployeeID,
             Team: [],
             AllTeam: [],
-            TeamIDArray: []
+            EmployeeID: this.props.EmployeeID,
+            addToTeamID: '',
+            addToTeamAsManager: '',
+            hasManagerCredential: this.props.isManager
         };
         
     }
@@ -35,8 +37,8 @@ class TeamInfo extends Component {
     }
     
     getValidationState() {
-        const length = this.state.value.length;
-        const isTeamIDValid = this.handleCheck(this.state.value);
+        const length = this.state.addToTeamID.length;
+        const isTeamIDValid = this.handleCheck(this.state.addToTeamID);
         if (length == 0) return null;
         else if (isTeamIDValid == true) return 'success';
         else if (isTeamIDValid == false) return 'error';
@@ -65,7 +67,7 @@ class TeamInfo extends Component {
     }
     
     handleChange(e) {
-        this.setState({ value: e.target.value });
+        this.setState({ addToTeamID: e.target.addToTeamID });
     }
     
     componentDidMount() {
@@ -135,13 +137,24 @@ class TeamInfo extends Component {
                             <ControlLabel>Team ID:</ControlLabel>
                             <FormControl
                                 type="text"
-                                value={this.state.value}
+                                value={this.state.addToTeamID}
                                 placeholder="e.g. 12345"
                                 onChange={this.handleChange}
                             />
                             <FormControl.Feedback />
                             {/*<HelpBlock>Validation is based on string length.</HelpBlock>*/}
                         </FormGroup>
+                        <div>
+                        <ControlLabel htmlFor='cheese-status'>Add as manager</ControlLabel>
+                        </div>
+                         
+                        <div>
+                        <Toggle
+                            id='cheese-status'
+                            defaultChecked={this.state.eggsAreReady}
+                            aria-label='No label tag'
+                            onChange={this.handleEggsChange} />
+                        </div>
                     </Modal.Body>
                     
                     <Modal.Footer>
