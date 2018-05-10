@@ -25,7 +25,8 @@ class TeamInfo extends Component {
             Employee: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
-            addToTeamAsManager: ''
+            addToTeamAsManager: '',
+            managesATeam: ''
         };
         
     }
@@ -83,6 +84,13 @@ class TeamInfo extends Component {
         
         socket.on('employee-team-info', function (data) {
             console.log(data);
+            Object.keys(data[0]).map(function (key) {
+                if (data[0][key].isTeamManager == "1") {
+                    that.setState({ managesATeam: true });
+                } else {
+                    that.setState({ managesATeam: false });
+                }
+            });
             that.setState({ Team: data });
         });
         
@@ -137,7 +145,11 @@ class TeamInfo extends Component {
         );
         
         if (this.state.Employee.isManager == true) {
-            var toggle = (
+            // Second condition commented out for testing bc our org structure currently
+            // does not show any toggle buttons 
+            // i.e. All people who have manager cred already own a team.
+            //if (this.state.managesATeam == false) {
+                var toggle = (
                 <div>
                 <div><ControlLabel htmlFor='cheese-status'>Add as manager</ControlLabel></div>
                 <div><Toggle
@@ -147,8 +159,11 @@ class TeamInfo extends Component {
                     onChange={this.handleEggsChange} />
                 </div>
                 </div>
-            );
+                );
+            //}
         }
+        
+        
         
         return (
             <div ref="myRef">
