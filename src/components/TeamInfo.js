@@ -18,6 +18,7 @@ class TeamInfo extends Component {
         this.handleRemoveShow = this.handleRemoveShow.bind(this);
         this.handleRemoveClose = this.handleRemoveClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.checkTeamManager = this.checkTeamManager.bind(this);
 
         this.state = {
             show: false,
@@ -83,24 +84,29 @@ class TeamInfo extends Component {
         this.setState({ show: false });
     }
     
+
      handleRemoveClose() {
          console.log('Trying to remove from ' + this.state.removeFrom);
         if (this.refs.myRef)
         this.setState({ showRemove: false });
     }
     
+        
+    checkTeamManager() {
+        var that = this;
+        console.log("Getting a team by ID" + that.state.addToTeamID);
+        socket.emit('getTeamByID', that.state.addToTeamID);
+        socket.on('one-team-info', function (data) {
+            console.log(data[0].isManager);
+            that.setState({ pendingTeamToAdd: data });
+            console.log(that.state.pendingTeamToAdd.isManager);
+        });
+    }
+    
     handleChange(e) {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
-        /*
-        var that = this;
-        console.log("Getting a team by ID");
-        socket.emit('getTeamByID', this.state.addToTeamID);
-        socket.on('one-team-info', function (data) {
-            console.log("plzz"+data);
-            that.setState({ pendingTeamToAdd: data });
-        });
-        */
+        this.checkTeamManager();
     }
     
     componentDidMount() {
