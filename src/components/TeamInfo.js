@@ -69,8 +69,6 @@ class TeamInfo extends Component {
     }
     
     handleRemoveShow(row) {
-       
-        
         if (this.refs.myRef)
         {
             this.setState({ removeFrom: row.TeamID });
@@ -86,7 +84,7 @@ class TeamInfo extends Component {
     
 
      handleRemoveClose() {
-         console.log('Trying to remove from ' + this.state.removeFrom);
+        console.log('Trying to remove from ' + this.state.removeFrom);
         if (this.refs.myRef)
         this.setState({ showRemove: false });
     }
