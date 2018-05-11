@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap';
+import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock, ButtonToolbar} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -13,12 +13,15 @@ class TeamInfo extends Component {
         super(props, context);
         
         this.handleShow = this.handleShow.bind(this);
+        this.handleShowRemove = this.handleShowRemove.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleCloseRemove = this.handleCloseRemove.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
     
         this.state = {
             show: false,
+            showRemove: false,
             value: '',
             EmployeeID: this.props.EmployeeID,
             Team: []
@@ -37,9 +40,16 @@ class TeamInfo extends Component {
     handleShow() {
         this.setState({ show: true });
     }
+    handleShowRemove() {
+        this.setState({ showRemove: true });
+    }
     
     handleClose() {
-        this.setState({ show: false });
+        this.setState({show: false});
+    }
+    
+    handleCloseRemove() {
+        this.setState({ showRemove: false });
     }
     
     handleChange(e) {
@@ -64,8 +74,30 @@ class TeamInfo extends Component {
     cellButton(cell, row, rowIndex) {
    
     return (
-      
-        <Button bsStyle="primary">Edit Team</Button>
+        <ButtonToolbar>
+            <Button bsStyle="primary" onClick={this.handleShowRemove}>Edit Team</Button>
+            <Modal
+                {...this.props}
+                show={this.state.showRemove}
+                onHide={this.handleCloseRemove}
+                dialogClassName="custom-modal"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">
+                        Remove from Team
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Confirmation</h4>
+                    <p>
+                        Are you sure you want to remove this person from the team?
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.handleCloseRemove}>Close</Button>
+                 </Modal.Footer>
+            </Modal>
+        </ButtonToolbar>
       
     );
  }
