@@ -74,8 +74,9 @@ class TeamInfo extends Component {
         console.log("Getting a team by ID" + that.state.addToTeamID);
         socket.emit('getTeamByID', that.state.addToTeamID);
         socket.on('one-team-info', function (data) {
-            console.log("plzz"+data);
+            console.log(data[0].isManager);
             that.setState({ pendingTeamToAdd: data });
+            console.log(that.state.pendingTeamToAdd.isManager);
         });
     }
     
@@ -83,7 +84,6 @@ class TeamInfo extends Component {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
         this.checkTeamManager();
-        
     }
     
     componentDidMount() {
