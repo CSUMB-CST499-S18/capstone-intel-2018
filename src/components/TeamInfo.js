@@ -15,10 +15,13 @@ class TeamInfo extends Component {
         
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleRemoveShow = this.handleRemoveShow.bind(this);
+        this.handleRemoveClose = this.handleRemoveClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
             show: false,
+            showRemove: false,
             ProfileTeams: [], 
             AllTeams: [],
             AllTeamsID: [],
@@ -27,7 +30,8 @@ class TeamInfo extends Component {
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
             addToTeamAsManager: null,
-            isMuted: false
+            isMuted: false,
+            removeFrom: ''
         };
         
     }
@@ -63,14 +67,32 @@ class TeamInfo extends Component {
         this.setState({ show: true });
     }
     
+    handleRemoveShow(row) {
+       
+        
+        if (this.refs.myRef)
+        {
+            this.setState({ removeFrom: row.TeamID });
+            this.setState({ showRemove: true });
+        }
+        
+    }
+    
     handleClose() {
         if (this.refs.myRef)
         this.setState({ show: false });
     }
     
+     handleRemoveClose() {
+         console.log('Trying to remove from ' + this.state.removeFrom);
+        if (this.refs.myRef)
+        this.setState({ showRemove: false });
+    }
+    
     handleChange(e) {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
+        /*
         var that = this;
         console.log("Getting a team by ID");
         socket.emit('getTeamByID', this.state.addToTeamID);
@@ -78,6 +100,7 @@ class TeamInfo extends Component {
             console.log("plzz"+data);
             that.setState({ pendingTeamToAdd: data });
         });
+        */
     }
     
     componentDidMount() {
@@ -106,8 +129,9 @@ class TeamInfo extends Component {
     
     
     cellButton(cell, row, rowIndex) {
+        
         return (
-            <Button bsStyle="primary">Edit Team</Button>
+            <Button bsStyle="primary" onClick={ this.handleRemoveShow(row) }>Edit Team</Button>
         );
     }
  
@@ -191,6 +215,24 @@ class TeamInfo extends Component {
                     
                     <Modal.Footer>
                         <Button onClick={this.handleClose} bsStyle="primary" bsSize="large">Save</Button>
+                    </Modal.Footer>
+                
+                </Modal>
+                
+                <Modal show={this.state.showRemove} onHide={this.handleRemoveClose} dialogClassName="custom-modal"> 
+                    <Modal.Header closeButton>
+                        <Modal.Title>Remove From Team</Modal.Title>
+                    </Modal.Header>
+                
+                    <Modal.Body>
+                        <FormGroup>
+                          <p>Are you sure you want to remove this user from group?</p>
+                        </FormGroup>
+                    </Modal.Body>
+                    
+                    <Modal.Footer>
+                        <Button onClick={this.handleRemoveClose} bsStyle="primary" bsSize="large">Yes</Button>
+                        <Button onClick={this.handleRemoveClose} bsStyle="danger" bsSize="large">No</Button>
                     </Modal.Footer>
                 
                 </Modal>
