@@ -106,7 +106,7 @@ class TeamInfo extends Component {
     handleChange(e) {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
-        this.checkTeamManager();
+        //this.checkTeamManager();
     }
     
     componentDidMount() {
