@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock, ButtonToolbar} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
+import Toggle from 'react-toggle'
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -17,27 +18,51 @@ class TeamInfo extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleCloseRemove = this.handleCloseRemove.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.checkTeamManager = this.checkTeamManager.bind(this);
 
-    
         this.state = {
             show: false,
-            showRemove: false,
-            value: '',
+            ProfileTeams: [], 
+            AllTeams: [],
+            AllTeamsID: [],
+            Employee: [],
+            pendingTeamToAdd: [],
             EmployeeID: this.props.EmployeeID,
-            Team: []
+            addToTeamID: '',
+            addToTeamAsManager: null,
+            isMuted: false
         };
         
     }
     
+    handleCheckTeamExists(val) {
+        return this.state.AllTeamsID.some(item => val === item);
+    }
+    
     getValidationState() {
-        const length = this.state.value.length;
-        if (length > 10) return 'success';
-        else if (length > 5) return 'warning';
-        else if (length > 0) return 'error';
-        return null;
+        const length = this.state.addToTeamID.length;
+        const isTeamIDValid = this.handleCheckTeamExists(this.state.addToTeamID);
+        if (length == 0) return null;
+        else if (isTeamIDValid == true) return 'success';
+        else if (isTeamIDValid == false) return 'error';
     }
     
     handleShow() {
+        var that = this;
+        
+        console.log("Getting an array of all teams in the database");
+        socket.emit('getAllTeams', this.state.AllTeams);
+        socket.on('all-teams-info', function (data) {
+            console.log(data[0]);
+            var newArray = that.state.AllTeams.slice();    
+            Object.keys(data[0]).map(function (key) {
+                //Create an array of TeamIDs to check if team exists
+                newArray.push(data[0][key].TeamID);
+            });
+            that.setState({AllTeamsID:newArray});
+            that.setState({AllTeams: data[0]});
+        });
+        if (this.refs.myRef)
         this.setState({ show: true });
     }
     handleShowRemove() {
@@ -50,29 +75,52 @@ class TeamInfo extends Component {
     
     handleCloseRemove() {
         this.setState({ showRemove: false });
+        this.setState({ show: false });
+    }
+    
+    checkTeamManager() {
+        var that = this;
+        console.log("Getting a team by ID" + that.state.addToTeamID);
+        socket.emit('getTeamByID', that.state.addToTeamID);
+        socket.on('one-team-info', function (data) {
+            console.log(data[0].isManager);
+            that.setState({ pendingTeamToAdd: data });
+            console.log(that.state.pendingTeamToAdd.isManager);
+        });
     }
     
     handleChange(e) {
-        this.setState({ value: e.target.value });
+        if (this.refs.myRef)
+        this.setState({ addToTeamID: e.target.value });
+        this.checkTeamManager();
     }
     
     componentDidMount() {
-    
-    var that = this;
-    console.log("Getting Team info");
-    
-    socket.emit('getEmployeeTeams', this.state.EmployeeID);
-    
-    socket.on('employee-team-info', function (data) {
-        console.log(data);
-        that.setState({ Team: data });
-    });
-    
+        var that = this;
+        console.log("Getting Employee's list of Teams");
+        socket.emit('getEmployeeTeams', this.state.EmployeeID);
+        socket.on('employee-team-info', function (data) {
+            console.log(data);
+            Object.keys(data[0]).map(function (key) {
+                if (data[0][key].isTeamManager == "1") {
+                    that.setState({ managesATeam: true });
+                } else {
+                    that.setState({ managesATeam: false });
+                }
+            });
+            that.setState({ ProfileTeams: data });
+        });
+        
+        console.log("Getting employee profile");
+        socket.emit('getEmployee', this.state.EmployeeID);
+        socket.on('employee-info', function (data) {
+            console.log(data);
+            that.setState({ Employee: data });
+        });
     }
     
     
     cellButton(cell, row, rowIndex) {
-   
     return (
         <ButtonToolbar>
             <Button bsStyle="primary" onClick={this.handleShowRemove}>Edit Team</Button>
@@ -100,11 +148,12 @@ class TeamInfo extends Component {
         </ButtonToolbar>
       
     );
- }
+    }
+ 
  
     
     render() {
-        if(this.state.Team.length == 0) { return null; }
+        if(this.state.ProfileTeams.length == 0) { return null; }
     
         const columns = [
             {
@@ -127,8 +176,8 @@ class TeamInfo extends Component {
             }
         ];
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
-        var plusIconText = <span>Add this employee to a new team.</span>
+        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>;
+        var plusIconText = <span>Add this employee to a new team.</span>;
         
         const popover = (
           <Popover id="modal-popover" title="">
@@ -136,11 +185,30 @@ class TeamInfo extends Component {
           </Popover>
         );
         
+        if (this.state.Employee.isManager == true) {
+            // Commented out for testing bc our org structure currently
+            // does not show any toggle buttons 
+            // i.e. All people who have manager cred already own a team.
+            //if (this.state.managesATeam == false) {
+                var toggle = (
+                <div>
+                <div><ControlLabel htmlFor='join-as-manager-status'>Add as manager</ControlLabel></div>
+                <div><Toggle
+                    id='join-as-manager-status'
+                    defaultChecked={this.state.addToTeamAsManager}
+                    disabled={this.state.isMuted}
+                    onChange={this.handleEggsChange} />
+                </div>
+                </div>
+                );
+            //}
+        }
+        
         return (
-            <div>
+            <div ref="myRef">
                 <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
                     <Modal.Header closeButton>
-                        <Modal.Title>Add team</Modal.Title>
+                        <Modal.Title>Add to team</Modal.Title>
                     </Modal.Header>
                 
                     <Modal.Body>
@@ -151,17 +219,18 @@ class TeamInfo extends Component {
                             <ControlLabel>Team ID:</ControlLabel>
                             <FormControl
                                 type="text"
-                                value={this.state.value}
+                                value={this.state.addToTeamID}
                                 placeholder="e.g. 12345"
                                 onChange={this.handleChange}
                             />
                             <FormControl.Feedback />
-                            {/*<HelpBlock>Validation is based on string length.</HelpBlock>*/}
+                            <HelpBlock>Checking if team exists</HelpBlock>
                         </FormGroup>
+                        {toggle}
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.handleClose}>Save</Button>
+                        <Button onClick={this.handleClose} bsStyle="primary" bsSize="large">Save</Button>
                     </Modal.Footer>
                 
                 </Modal>
@@ -170,7 +239,7 @@ class TeamInfo extends Component {
                 <OverlayTrigger overlay={popover}>
                     {plusIcon}
                 </OverlayTrigger>{' '}
-                <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={columns } striped hover condensed/>
+                <BootstrapTable keyField='TeamID' data={ this.state.ProfileTeams[0] } columns={columns } striped hover condensed/>
             </div>
         );
     }

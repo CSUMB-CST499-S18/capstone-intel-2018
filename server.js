@@ -130,7 +130,28 @@ io.on('connection', function(client) {
     });
   });
   
-  //get team info
+    //get a team by teamID
+  client.on('getTeamByID', function (id) {
+    
+    var num = Number(id);
+    
+    console.log("TeamID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetTeamByID.php",
+      params: { "TeamID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('one-team-info', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+  //get teams searched by input employeeID
   client.on('getTeams', function (id) {
     
     var num = Number(id);
@@ -151,7 +172,27 @@ io.on('connection', function(client) {
     });
   });
   
+    //search ajax call
+  client.on('getAllTeams', function () {
+    
+   
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetAllTeams.php",
+      })
+      .then(function (response) {
+         var info = [response.data];
+        io.emit('all-teams-info', info);
+      })
+      .catch(function (error) {
+        console.log(error);
+    });
+    
+  });
+  
 });
+
+
 
 server.listen(PORT, function(error) {
   if (error) {
