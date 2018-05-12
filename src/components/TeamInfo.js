@@ -18,7 +18,9 @@ class TeamInfo extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleCloseRemove = this.handleCloseRemove.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.printhello = this.printhello.bind(this);
+        this.validateAddToTeamInput = this.validateAddToTeamInput.bind(this);
+        this.clearMutesAndValidationMessages = this.clearMutesAndValidationMessages.bind(this);
+        this.handleAddAsManagerToggleChange = this.handleAddAsManagerToggleChange.bind(this)
         this.state = {
             show: false,
             ProfileTeams: [], 
@@ -28,9 +30,10 @@ class TeamInfo extends Component {
             pendingTeamToAdd: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
-            addToTeamAsManager: null,
+            addToTeamAsManager: false,
             isMuted: false,
-            validateToggleMessage: ''
+            validateToggleMessage: '',
+            validateTeamIDMessage: ''
         };
         
     }
@@ -70,6 +73,7 @@ class TeamInfo extends Component {
     
     handleClose() {
         this.setState({show: false});
+        this.clearMutesAndValidationMessages();
     }
     
     handleCloseRemove() {
@@ -77,25 +81,60 @@ class TeamInfo extends Component {
         this.setState({ show: false });
     }
     
-    handleChange(e) {
-        this.setState({ addToTeamID: e.target.value });
+    clearMutesAndValidationMessages() {
+        this.setState({ isMuted: false });
+        this.setState({ validateToggleMessage: ""});
+        this.setState({ validateTeamIDMessage: ""});
     }
     
-    printhello() {
-        console.log(this.state.addToTeamID + "is great");
-        this.setState({ validateToggleMessage: this.state.addToTeamID });
-        var that = this;
+    handleChange(e) {
+        this.setState({ addToTeamID: e.target.value });
+        this.clearMutesAndValidationMessages();
+    }
+    
+    handleAddAsManagerToggleChange() {
+        this.setState({addToTeamAsManager: !this.state.addToTeamAsManager});
+    }
+    
+    // When user clicks the "Save" button
+    validateAddToTeamInput() {
         
-        console.log("Checking if inputted team already has a manager or not");
-        socket.emit('getTeamByID', parseInt(this.state.addToTeamID));
-        socket.on('one-teams-info', function (data) {
-            console.log("it's omg");
-            console.log(data[0]);
-            that.setState({pendingTeamToAdd:data[0]});
-        });
-        
-        console.log("omg should be over: ");
-        console.log(this.state.pendingTeamToAdd);
+        // Validating team ID input
+        if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
+            this.setState({validateTeamIDMessage: "This team does not exist."});
+        }
+        else {
+            //Validating toggle button by checking if that team already has a manager
+            var that = this;
+            console.log("Checking if inputted team already has a manager or not");
+            socket.emit('getTeamByID', this.state.addToTeamID);
+            socket.on('one-team-info', function (data) {
+                that.setState({pendingTeamToAdd:data[0]});
+                console.log("team " + that.state.pendingTeamToAdd + "has a manager: " + that.state.pendingTeamToAdd.hasManager);
+    
+                // If user toggles OFF
+                if (that.state.addToTeamAsManager == false) {
+                    that.setState({ isMuted: false });
+                    that.setState({ validateToggleMessage: "You're about to join this team as a member." });
+                }
+                // If that team DOES NOT have a manager
+                else if (that.state.pendingTeamToAdd.hasManager == "0") {
+                    //and user toggles ON 
+                    if (that.state.addToTeamAsManager == true) {
+                        that.setState({ isMuted: false });
+                        that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
+                    } 
+                }
+                // If that team DOES have a manager
+                else if (that.state.pendingTeamToAdd.hasManager == "1") {
+                    //and user toggles ON 
+                    if (that.state.addToTeamAsManager == true) {
+                        that.setState({ isMuted: true });
+                        that.setState({ validateToggleMessage: "This team already has a manager. You can only join this team as a member." });
+                    }
+                }
+            });
+        }
     }
     
     componentDidMount() {
@@ -153,10 +192,6 @@ class TeamInfo extends Component {
     );
     }
     
-    
- 
- 
-    
     render() {
         if(this.state.ProfileTeams.length == 0) { return null; }
     
@@ -202,7 +237,7 @@ class TeamInfo extends Component {
                         id='join-as-manager-status'
                         defaultChecked={this.state.addToTeamAsManager}
                         disabled={this.state.isMuted}
-                        onChange={this.handleEggsChange} />
+                        onChange={this.handleAddAsManagerToggleChange} />
                         <HelpBlock>{this.state.validateToggleMessage}</HelpBlock>
                     </div>
                 </div>
@@ -230,13 +265,13 @@ class TeamInfo extends Component {
                                 onChange={this.handleChange}
                             />
                             <FormControl.Feedback />
-                            <HelpBlock>Checking if team exists</HelpBlock>
+                            <HelpBlock>{this.state.validateTeamIDMessage}</HelpBlock>
                         </FormGroup>
                         {toggle}
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.printhello} bsStyle="primary" bsSize="large">Save</Button>
+                        <Button onClick={this.validateAddToTeamInput} disabled={this.state.isMuted} bsStyle="primary" bsSize="large">Save</Button>
                     </Modal.Footer>
                 
                 </Modal>
