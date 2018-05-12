@@ -18,7 +18,7 @@ class TeamInfo extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleCloseRemove = this.handleCloseRemove.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
+        this.printhello = this.printhello.bind(this);
         this.state = {
             show: false,
             ProfileTeams: [], 
@@ -29,7 +29,8 @@ class TeamInfo extends Component {
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
             addToTeamAsManager: null,
-            isMuted: false
+            isMuted: false,
+            validateToggleMessage: ''
         };
         
     }
@@ -50,7 +51,7 @@ class TeamInfo extends Component {
         var that = this;
         
         console.log("Getting an array of all teams in the database");
-        socket.emit('getAllTeams', this.state.AllTeams);
+        socket.emit('getAllTeams');
         socket.on('all-teams-info', function (data) {
             console.log(data[0]);
             var newArray = that.state.AllTeams.slice();    
@@ -61,7 +62,6 @@ class TeamInfo extends Component {
             that.setState({AllTeamsID:newArray});
             that.setState({AllTeams: data[0]});
         });
-        if (this.refs.myRef)
         this.setState({ show: true });
     }
     handleShowRemove() {
@@ -78,8 +78,24 @@ class TeamInfo extends Component {
     }
     
     handleChange(e) {
-        if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
+    }
+    
+    printhello() {
+        console.log(this.state.addToTeamID + "is great");
+        this.setState({ validateToggleMessage: this.state.addToTeamID });
+        var that = this;
+        
+        console.log("Checking if inputted team already has a manager or not");
+        socket.emit('getTeamByID', parseInt(this.state.addToTeamID));
+        socket.on('one-teams-info', function (data) {
+            console.log("it's omg");
+            console.log(data[0]);
+            that.setState({pendingTeamToAdd:data[0]});
+        });
+        
+        console.log("omg should be over: ");
+        console.log(this.state.pendingTeamToAdd);
     }
     
     componentDidMount() {
@@ -136,6 +152,8 @@ class TeamInfo extends Component {
       
     );
     }
+    
+    
  
  
     
@@ -179,20 +197,21 @@ class TeamInfo extends Component {
             //if (this.state.managesATeam == false) {
                 var toggle = (
                 <div>
-                <div><ControlLabel htmlFor='join-as-manager-status'>Add as manager</ControlLabel></div>
-                <div><Toggle
-                    id='join-as-manager-status'
-                    defaultChecked={this.state.addToTeamAsManager}
-                    disabled={this.state.isMuted}
-                    onChange={this.handleEggsChange} />
-                </div>
+                    <div><ControlLabel htmlFor='join-as-manager-status'>Add as manager</ControlLabel></div>
+                    <div><Toggle
+                        id='join-as-manager-status'
+                        defaultChecked={this.state.addToTeamAsManager}
+                        disabled={this.state.isMuted}
+                        onChange={this.handleEggsChange} />
+                        <HelpBlock>{this.state.validateToggleMessage}</HelpBlock>
+                    </div>
                 </div>
                 );
             //}
         }
         
         return (
-            <div ref="myRef">
+            <div>
                 <Modal show={this.state.show} onHide={this.handleClose} dialogClassName="custom-modal"> 
                     <Modal.Header closeButton>
                         <Modal.Title>Add to team</Modal.Title>
@@ -217,7 +236,7 @@ class TeamInfo extends Component {
                     </Modal.Body>
                     
                     <Modal.Footer>
-                        <Button onClick={this.handleClose} bsStyle="primary" bsSize="large">Save</Button>
+                        <Button onClick={this.printhello} bsStyle="primary" bsSize="large">Save</Button>
                     </Modal.Footer>
                 
                 </Modal>
