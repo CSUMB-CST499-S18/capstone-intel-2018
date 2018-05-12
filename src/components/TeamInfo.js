@@ -14,13 +14,17 @@ class TeamInfo extends Component {
         super(props, context);
         
         this.handleShow = this.handleShow.bind(this);
-        this.handleShowRemove = this.handleShowRemove.bind(this);
+        this.handleShowEdit = this.handleShowEdit.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.handleCloseRemove = this.handleCloseRemove.bind(this);
+        this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateAddToTeamInput = this.validateAddToTeamInput.bind(this);
         this.clearMutesAndValidationMessages = this.clearMutesAndValidationMessages.bind(this);
         this.handleAddAsManagerToggleChange = this.handleAddAsManagerToggleChange.bind(this)
+        this.handlePromote = this.handlePromote.bind(this);
+        this.promoteToManager = this.promoteToManager.bind(this);
+        this.removeFromTeam = this.removeFromTeam.bind(this);
+    
         this.state = {
             show: false,
             ProfileTeams: [], 
@@ -33,7 +37,10 @@ class TeamInfo extends Component {
             addToTeamAsManager: false,
             isMuted: false,
             validateToggleMessage: '',
-            validateTeamIDMessage: ''
+            validateTeamIDMessage: '',
+            TeamID: [],
+            TeamName: [],
+            promote: false
         };
         
     }
@@ -67,8 +74,9 @@ class TeamInfo extends Component {
         });
         this.setState({ show: true });
     }
-    handleShowRemove() {
-        this.setState({ showRemove: true });
+    
+    handleShowEdit() {
+        this.setState({ showEdit: true });
     }
     
     handleClose() {
@@ -76,9 +84,8 @@ class TeamInfo extends Component {
         this.clearMutesAndValidationMessages();
     }
     
-    handleCloseRemove() {
-        this.setState({ showRemove: false });
-        this.setState({ show: false });
+    handleCloseEdit() {
+        this.setState({ showEdit: false });
     }
     
     clearMutesAndValidationMessages() {
@@ -87,9 +94,25 @@ class TeamInfo extends Component {
         this.setState({ validateTeamIDMessage: ""});
     }
     
+
     handleChange(e) {
         this.setState({ addToTeamID: e.target.value });
         this.clearMutesAndValidationMessages();
+    }
+
+    handlePromote() {
+        var temp = !this.state.promote;
+        this.setState({promote: temp});
+    }
+    
+    removeFromTeam(){
+        this.setState({ showEdit: false });
+        var data = {empID: this.state.EmployeeID, teamID: this.state.TeamID};
+        socket.emit('removeFromTeam', data);
+    }
+    
+    promoteToManager() {
+        this.setState({ showEdit: false });
     }
     
     handleAddAsManagerToggleChange() {
@@ -159,6 +182,11 @@ class TeamInfo extends Component {
             console.log(data);
             that.setState({ Employee: data });
         });
+        
+        //when someone is removed from a team rerender the component
+        socket.on('removed', function () {
+            that.forceUpdate();
+        });
     }
     
     
@@ -191,6 +219,7 @@ class TeamInfo extends Component {
       
     );
     }
+
     
     render() {
         if(this.state.ProfileTeams.length == 0) { return null; }
@@ -208,17 +237,21 @@ class TeamInfo extends Component {
                 dataField: 'isTeamManager',
                 text: 'Team Manager',
                 align: 'center'
-            }, {
-                dataField: 'Button',
-                text: 'Edit Button',
-                formatter: this.cellButton.bind(this),
-                align: 'center'
             }
         ];
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>;
-        var plusIconText = <span>Add this employee to a new team.</span>;
+
+        const rowEvents = {
+            onClick: (e, row, rowIndex) => {
+                this.setState({TeamID: row.TeamID});
+                this.setState({TeamName: row.TeamName});
+                this.setState({ showEdit: true });
+            }
+        };
         
+        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
+        var plusIconText = <span>Add this employee to a new team.</span>
+
         const popover = (
           <Popover id="modal-popover" title="">
             {plusIconText} 
@@ -276,11 +309,49 @@ class TeamInfo extends Component {
                 
                 </Modal>
                 
+                <Modal
+                show={this.state.showEdit}
+                onHide={this.handleCloseEdit}
+                dialogClassName="custom-modal"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">
+                        Edit Team
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Choose wisely...</h4>
+                    <p>
+                        Team Name:  {this.state.TeamName}
+                    </p>
+                    <p>
+                        Team ID:  {this.state.TeamID}
+                    </p>
+                    <label>
+                    
+                        <span>Promote to manager:</span>
+                        <Toggle
+                            defaultChecked={this.state.promote}
+                            onChange={this.handlePromote} />
+                        
+                    </label>
+                </Modal.Body>
+                <Modal.Footer>
+                    <ButtonToolbar>
+                        <Button bsStyle = "danger" onClick={this.removeFromTeam}>Remove From Team</Button>
+                        <Button className="pull-right" bsStyle = "primary" onClick={this.promoteToManager}>Save</Button>
+                    </ButtonToolbar>
+                 </Modal.Footer>
+            </Modal>
+                
                 
                 <OverlayTrigger overlay={popover}>
                     {plusIcon}
                 </OverlayTrigger>{' '}
-                <BootstrapTable keyField='TeamID' data={ this.state.ProfileTeams[0] } columns={columns } striped hover condensed/>
+
+                <BootstrapTable keyField='TeamID' data={ this.state.ProfileTeams[0] } columns={columns } rowEvents={ rowEvents } striped hover condensed/>
+                <p>Click team to edit...</p>
+
             </div>
         );
     }

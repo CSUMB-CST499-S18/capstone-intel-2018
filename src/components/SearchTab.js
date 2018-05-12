@@ -94,6 +94,8 @@ class SearchTab extends Component {
         align: 'center'
       }
       ];
+      
+      
     
     return (
       
