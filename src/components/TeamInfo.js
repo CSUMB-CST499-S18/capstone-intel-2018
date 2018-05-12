@@ -190,37 +190,6 @@ class TeamInfo extends Component {
     }
     
     
-    cellButton(cell, row, rowIndex) {
-    return (
-        <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.handleShowRemove}>Edit Team</Button>
-            <Modal
-                {...this.props}
-                show={this.state.showRemove}
-                onHide={this.handleCloseRemove}
-                dialogClassName="custom-modal"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-lg">
-                        Remove from Team
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4>Confirmation</h4>
-                    <p>
-                        Are you sure you want to remove this person from the team?
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.handleCloseRemove}>Close</Button>
-                 </Modal.Footer>
-            </Modal>
-        </ButtonToolbar>
-      
-    );
-    }
-
-    
     render() {
         if(this.state.ProfileTeams.length == 0) { return null; }
     
@@ -257,6 +226,17 @@ class TeamInfo extends Component {
             {plusIconText} 
           </Popover>
         );
+        
+        const togglePromote = (
+                <div>
+                    <div><ControlLabel htmlFor='promote-to-manager'>Promote to Manager</ControlLabel></div>
+                    <div><Toggle
+                        id='promote-to-manager'
+                        defaultChecked={this.state.promote}
+                            onChange={this.handlePromote} />
+                    </div>
+                </div>
+                );
         
         if (this.state.Employee.isManager == true) {
             // Commented out for testing bc our org structure currently
@@ -327,14 +307,7 @@ class TeamInfo extends Component {
                     <p>
                         Team ID:  {this.state.TeamID}
                     </p>
-                    <label>
-                    
-                        <span>Promote to manager:</span>
-                        <Toggle
-                            defaultChecked={this.state.promote}
-                            onChange={this.handlePromote} />
-                        
-                    </label>
+                    {togglePromote}
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonToolbar>
