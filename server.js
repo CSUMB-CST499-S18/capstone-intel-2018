@@ -153,17 +153,18 @@ io.on('connection', function(client) {
     console.log("EmployeeID:  " + emp);
     console.log('TeamID:  ' + team);
     
-    axios.post('https://capstone-intel-2018-sql.herokuapp.com/dist/API/RemoveFromTeam.php', {
-      EmployeeID: emp,
-      TeamID: team
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/RemoveFromTeam.php",
+      params: { "EmployeeID": emp , "TeamID": team }
     })
     .then(function (response) {
-        console.log(response);
+      console.log(response.data);
+      io.emit('removed');
     })
     .catch(function (error) {
       console.log(error);
-  });
-    
+    });
 
   });
   
