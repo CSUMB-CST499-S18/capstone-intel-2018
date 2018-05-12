@@ -19,6 +19,8 @@ class TeamInfo extends Component {
         this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handlePromote = this.handlePromote.bind(this);
+        this.promoteToManager = this.promoteToManager.bind(this);
+        this.removeFromTeam = this.removeFromTeam.bind(this);
     
         this.state = {
             show: false,
@@ -66,16 +68,33 @@ class TeamInfo extends Component {
         this.setState({promote: temp});
     }
     
+    removeFromTeam(){
+        this.setState({ showEdit: false });
+        var data = {empID: this.state.EmployeeID, teamID: this.state.TeamID};
+        socket.emit('removeFromTeam', data);
+    }
+    
+    promoteToManager() {
+        this.setState({ showEdit: false });
+    }
+    
     componentDidMount() {
     
     var that = this;
     console.log("Getting Team info");
     
+    //tell the server to send the employee team info
     socket.emit('getEmployeeTeams', this.state.EmployeeID);
     
+    //get the teams that the employee is on
     socket.on('employee-team-info', function (data) {
         console.log(data);
         that.setState({ Team: data });
+    });
+    
+    //when someone is removed from a team rerender the component
+    socket.on('removed', function () {
+       this.forceUpdate();
     });
     
     }
@@ -178,8 +197,8 @@ class TeamInfo extends Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonToolbar>
-                        <Button bsStyle = "danger" onClick={this.handleCloseEdit}>Remove From Team</Button>
-                        <Button className="pull-right" bsStyle = "primary" onClick={this.handleCloseEdit}>Save</Button>
+                        <Button bsStyle = "danger" onClick={this.removeFromTeam}>Remove From Team</Button>
+                        <Button className="pull-right" bsStyle = "primary" onClick={this.promoteToManager}>Save</Button>
                     </ButtonToolbar>
                  </Modal.Footer>
             </Modal>

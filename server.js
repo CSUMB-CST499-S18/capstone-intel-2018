@@ -93,8 +93,6 @@ io.on('connection', function(client) {
     
     var num = Number(id);
     
-    console.log("EmployeeID:  " + num);
-    
     axios({
       method: 'get',
       url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayEmployeeInfo.php",
@@ -113,8 +111,6 @@ io.on('connection', function(client) {
   client.on('getEmployeeTeams', function (id) {
     
     var num = Number(id);
-    
-    console.log("EmployeeID:  " + num);
     
     axios({
       method: 'get',
@@ -135,8 +131,6 @@ io.on('connection', function(client) {
     
     var num = Number(id);
     
-    console.log("EmployeeID:  " + num);
-    
     axios({
       method: 'get',
       url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayTeamMembers.php",
@@ -149,6 +143,28 @@ io.on('connection', function(client) {
     .catch(function (error) {
       console.log(error);
     });
+  });
+  
+  client.on('removeFromTeam', function (data) {
+    
+    var emp = Number(data.empID);
+    var team = Number(data.teamID);
+    
+    console.log("EmployeeID:  " + emp);
+    console.log('TeamID:  ' + team);
+    
+    axios.post('https://capstone-intel-2018-sql.herokuapp.com/dist/API/RemoveFromTeam.php', {
+      EmployeeID: emp,
+      TeamID: team
+    })
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+  });
+    
+
   });
   
 });
