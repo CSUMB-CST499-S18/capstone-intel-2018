@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock, ButtonToolbar} from 'react-bootstrap';
+import  Toggle  from 'react-toggle';
 import BootstrapTable from 'react-bootstrap-table-next';
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -13,18 +14,21 @@ class TeamInfo extends Component {
         super(props, context);
         
         this.handleShow = this.handleShow.bind(this);
-        this.handleShowRemove = this.handleShowRemove.bind(this);
+        this.handleShowEdit = this.handleShowEdit.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.handleCloseRemove = this.handleCloseRemove.bind(this);
+        this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
+        this.handlePromote = this.handlePromote.bind(this);
     
         this.state = {
             show: false,
             showRemove: false,
             value: '',
             EmployeeID: this.props.EmployeeID,
-            Team: []
+            Team: [],
+            TeamID: [],
+            TeamName: [],
+            promote: false
         };
         
     }
@@ -40,20 +44,26 @@ class TeamInfo extends Component {
     handleShow() {
         this.setState({ show: true });
     }
-    handleShowRemove() {
-        this.setState({ showRemove: true });
+    
+    handleShowEdit() {
+        this.setState({ showEdit: true });
     }
     
     handleClose() {
         this.setState({show: false});
     }
     
-    handleCloseRemove() {
-        this.setState({ showRemove: false });
+    handleCloseEdit() {
+        this.setState({ showEdit: false });
     }
     
     handleChange(e) {
         this.setState({ value: e.target.value });
+    }
+    
+    handlePromote() {
+        var temp = !this.state.promote;
+        this.setState({promote: temp});
     }
     
     componentDidMount() {
@@ -71,36 +81,6 @@ class TeamInfo extends Component {
     }
     
     
-    cellButton(cell, row, rowIndex) {
-   
-    return (
-        <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.handleShowRemove}>Edit Team</Button>
-            <Modal
-                {...this.props}
-                show={this.state.showRemove}
-                onHide={this.handleCloseRemove}
-                dialogClassName="custom-modal"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-lg">
-                        Remove from Team
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4>Confirmation</h4>
-                    <p>
-                        Are you sure you want to remove this person from the team?
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.handleCloseRemove}>Close</Button>
-                 </Modal.Footer>
-            </Modal>
-        </ButtonToolbar>
-      
-    );
- }
  
     
     render() {
@@ -119,13 +99,16 @@ class TeamInfo extends Component {
                 dataField: 'isTeamManager',
                 text: 'Team Manager',
                 align: 'center'
-            }, {
-                dataField: 'Button',
-                text: 'Edit Button',
-                formatter: this.cellButton.bind(this),
-                align: 'center'
             }
         ];
+        
+        const rowEvents = {
+            onClick: (e, row, rowIndex) => {
+                this.setState({TeamID: row.TeamID});
+                this.setState({TeamName: row.TeamName});
+                this.setState({ showEdit: true });
+            }
+        };
         
         var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
         var plusIconText = <span>Add this employee to a new team.</span>
@@ -166,11 +149,47 @@ class TeamInfo extends Component {
                 
                 </Modal>
                 
+                <Modal
+                show={this.state.showEdit}
+                onHide={this.handleCloseEdit}
+                dialogClassName="custom-modal"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">
+                        Edit Team
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Choose wisely...</h4>
+                    <p>
+                        Team Name:  {this.state.TeamName}
+                    </p>
+                    <p>
+                        Team ID:  {this.state.TeamID}
+                    </p>
+                    <label>
+                    
+                        <span>Promote to manager:</span>
+                        <Toggle
+                            defaultChecked={this.state.promote}
+                            onChange={this.handlePromote} />
+                        
+                    </label>
+                </Modal.Body>
+                <Modal.Footer>
+                    <ButtonToolbar>
+                        <Button bsStyle = "danger" onClick={this.handleCloseEdit}>Remove From Team</Button>
+                        <Button className="pull-right" bsStyle = "primary" onClick={this.handleCloseEdit}>Save</Button>
+                    </ButtonToolbar>
+                 </Modal.Footer>
+            </Modal>
+                
                 
                 <OverlayTrigger overlay={popover}>
                     {plusIcon}
                 </OverlayTrigger>{' '}
-                <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={columns } striped hover condensed/>
+                <BootstrapTable keyField='TeamID' data={ this.state.Team[0] } columns={columns } rowEvents={ rowEvents } striped hover condensed/>
+                <p>Click team to edit...</p>
             </div>
         );
     }
