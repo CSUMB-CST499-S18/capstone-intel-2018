@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Modal, Popover, OverlayTrigger,Tooltip, FormControl, FormGroup, ControlLabel, HelpBlock, ButtonToolbar} from 'react-bootstrap';
+import { Button, Modal, Popover, OverlayTrigger, FormControl, FormGroup, ControlLabel, HelpBlock, ButtonToolbar} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
-import Toggle from 'react-toggle'
+import Toggle from 'react-toggle';
 import '../assets/stylesheets/TeamInfo.scss';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -18,7 +18,6 @@ class TeamInfo extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleCloseRemove = this.handleCloseRemove.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.checkTeamManager = this.checkTeamManager.bind(this);
 
         this.state = {
             show: false,
@@ -78,21 +77,9 @@ class TeamInfo extends Component {
         this.setState({ show: false });
     }
     
-    checkTeamManager() {
-        var that = this;
-        console.log("Getting a team by ID" + that.state.addToTeamID);
-        socket.emit('getTeamByID', that.state.addToTeamID);
-        socket.on('one-team-info', function (data) {
-            console.log(data[0].isManager);
-            that.setState({ pendingTeamToAdd: data });
-            console.log(that.state.pendingTeamToAdd.isManager);
-        });
-    }
-    
     handleChange(e) {
         if (this.refs.myRef)
         this.setState({ addToTeamID: e.target.value });
-        this.checkTeamManager();
     }
     
     componentDidMount() {
