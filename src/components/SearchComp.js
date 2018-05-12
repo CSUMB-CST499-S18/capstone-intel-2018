@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import { Navbar, FormGroup, FormControl, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, ToggleButton, ToggleButtonGroup, Button } from 'react-bootstrap';
 import SearchTab from './SearchTab.js';
 import SearchTeamTab from './SearchTeamTab.js';
 
@@ -26,6 +26,7 @@ class SearchComp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmployeeToggle = this.handleEmployeeToggle.bind(this);
     this.handleTeamToggle = this.handleTeamToggle.bind(this);
+    this.handleDBReset = this.handleDBReset.bind(this);
   }
   
   componentDidMount() {
@@ -78,6 +79,10 @@ class SearchComp extends React.Component {
   handleTeamToggle() {
     this.setState({searchEmp: false});
   }
+  
+  handleDBReset() {
+    socket.emit('resetDatabase');
+  }
 
 
   render() {
@@ -111,6 +116,9 @@ class SearchComp extends React.Component {
                         <ToggleButton value = {1} onClick={this.handleEmployeeToggle}>Employee</ToggleButton>
                         <ToggleButton value = {2} onClick={this.handleTeamToggle}>Team</ToggleButton>
                       </ToggleButtonGroup>
+                    </Navbar.Form>
+                    <Navbar.Form pullRight>
+                      <Button bsStyle = 'primary' onClick = {this.handleDBReset}>Reset Database</Button>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
