@@ -69,7 +69,7 @@ if (isset($record)){ //If communication with the DB was established
                                 $sql = $sql . " OR ";
                         }
                 }
-                $sql = $sql . " OR TeamID = " . $_GET['TeamID'];
+                $sql = $sql . " OR TeamID = " . $_GET['TeamID']; 
                 
         /* Here insert all ResourceID's into the $rows array*/
                 
@@ -82,6 +82,8 @@ if (isset($record)){ //If communication with the DB was established
                 }
                 
         /* Here we loop through the $rows array and append all ResourceID's to sql query, and delete from employeeresource*/
+        
+                //Just add teamID to remove specific viewer access. Add teamID column to employeeresource
                 
                 $sql = "DELETE FROM employeeresource
                         WHERE EmployeeID = :EmployeeID 
@@ -185,7 +187,7 @@ if (isset($record)){ //If communication with the DB was established
         /* Log Entry */
 
         $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
-                VALUES (NULL," . "Removed employee ID: :EmployeeID" .  " from team ID: :TeamID as OWNER and from team ID : " . $ParentNode["ParentNode"] . " as MEMBER.,
+                VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as OWNER and from team ID : " . $ParentNode["ParentNode"] . " as MEMBER.',
                 CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
                  //Sanitizing Input
@@ -247,7 +249,7 @@ if (isset($record)){ //If communication with the DB was established
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
         
         $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
-                VALUES (NULL," . "Removed employee ID: :EmployeeID from team ID : :TeamID as MEMBER.,
+                VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as MEMBER.',
                 CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
                  //Sanitizing Input

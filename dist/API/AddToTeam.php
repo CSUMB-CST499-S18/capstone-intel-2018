@@ -61,11 +61,11 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         }
 
         /* adds VISITOR permissions to child teams */        
-        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
+        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
         VALUES ";
         
         for($i = 0; $i < count($resourceID); $i++){
-        $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 3 . "),";
+        $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 3 . ", :TeamID),";
         if($i == count($resourceID) - 1) {
         $sql = substr($sql, 0, -1);
         $sql = $sql . ";}";
@@ -91,11 +91,11 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
                 $resourceID[] = $row; // appends each row to the array. 
         }       
                 /* adds owner permissions for TeamID */        
-        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
+        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
         VALUES ";
         
         for($i = 0; $i < count($resourceID); $i++){
-                $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 1 . "),";
+                $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 1 . ", :TeamID),";
                 if($i == count($resourceID) - 1) {
                 $sql = substr($sql, 0, -1);
                 $sql = $sql . ";}";
@@ -103,7 +103,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         }
         $namedParameters = array();
         $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
         $stmt = $conn->prepare($sql);
         $stmt->execute($namedParameters);
 
@@ -136,12 +136,12 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
                 }
                 
                 /* Grant employee member access to their new team */
-                $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
-                VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ");} ";
+                $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
+                VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ", :TeamID);} ";
         
                 $namedParameters = array();
                 $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-                
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
         }
@@ -182,7 +182,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
         
         $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
-                VALUES (NULL," . "Added employee ID: :EmployeeID" .  " to team ID: :TeamID as OWNER and to team ID : " . $ParentNode["ParentNode"] . " as MEMBER.
+                VALUES (NULL, 'Added employee ID: :EmployeeID to team ID: :TeamID as OWNER and to team ID: " . $ParentNode["ParentNode"] . " as MEMBER.'
                 , CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
                  //Sanitizing Input
@@ -209,12 +209,12 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         }
         
         /* Grant employee member access to their new team */
-        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID )
-        VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ");} ";
+        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
+        VALUES " . "(:EmployeeID, " . $resourceID[1]["ResourceID"] . " , " . 2 . ", :TeamID);} ";
 
         $namedParameters = array();
         $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
         $stmt = $conn->prepare($sql);
         $stmt->execute($namedParameters);
         
@@ -236,7 +236,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
         
         $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
-                VALUES (NULL," . "Added employee ID: :EmployeeID to team ID : :TeamID as MEMBER., CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                VALUES (NULL, 'Added employee ID: :EmployeeID to team ID : :TeamID as MEMBER.', CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
                  //Sanitizing Input
         $namedParameters = array();
