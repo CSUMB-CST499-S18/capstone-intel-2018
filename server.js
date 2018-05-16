@@ -51,7 +51,7 @@ var job = schedule.scheduleJob(rule, function() {
     console.log(response.data);
     mail({
       from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
-      to: "bavery@csumb.com", // list of receivers
+      to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
       subject: "Hello", // Subject line
       text: response.data // plaintext body
     });
@@ -154,6 +154,21 @@ io.on('connection', function(client) {
       io.emit('team-info', info);
     })
     .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+  //get logs
+  client.on('getLogs', function() {
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-s1l.herokuapp.com/dist/API/GetLogs.php"
+    })
+    .then(function(response) {
+      var info = [response.data];
+      io.emit('logInfo', info);
+    })
+    .catch(function(error) {
       console.log(error);
     });
   });

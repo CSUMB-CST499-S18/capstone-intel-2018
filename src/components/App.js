@@ -46,11 +46,14 @@ const BasicExample = () => (
             <LinkContainer to="/Search">
               <NavItem eventKey={2}>Search</NavItem>
             </LinkContainer>
+            <LinkContainer to="/Log">
+              <NavItem eventKey={3}>Log</NavItem>
+            </LinkContainer>
             <LinkContainer to="/GitHub">
-              <NavItem eventKey={3}>GitHub</NavItem>
+              <NavItem eventKey={4}>GitHub</NavItem>
             </LinkContainer>
             <LinkContainer to="/SharePoint">
-              <NavItem eventKey={3}>SharePoint</NavItem>
+              <NavItem eventKey={5}>SharePoint</NavItem>
             </LinkContainer>
 
           </Nav>
@@ -62,6 +65,7 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route path="/Profile" component={ProfileComp}/>
       <Route path="/Search" component={Search}/>
+      <Route path="/Log" component={Log}/>
       <Route path='/GitHub' component={() => window.location = 'https://github.com/CSUMB-CST499-S18/capstone-intel-2018'}/>
       <Route path='/SharePoint' component={() => window.location = 'https://csumbcapstone.sharepoint.com/sites/CompanyA/SitePages/Home.aspx'}/>
     </div>
