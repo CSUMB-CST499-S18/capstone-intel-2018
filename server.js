@@ -40,9 +40,8 @@ app.get('/*', function(req, res) {
 // sets rule for 11:59 PM Monday-Friday
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = new schedule.Range(1, 5);
-// rule.hour = 23;
-// rule.minute = 59;
-rule.second = 30;
+rule.hour = 23;
+rule.minute = 59;
 
 var job = schedule.scheduleJob(rule, function() {
   axios({
