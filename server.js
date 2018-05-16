@@ -211,7 +211,7 @@ io.on('connection', function(client) {
    
      axios({
       method: 'get',
-      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/resetDatabase.php",
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/ResetDatabase.php",
       })
     .then(function (response) {
     })
