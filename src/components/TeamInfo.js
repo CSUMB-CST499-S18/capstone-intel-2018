@@ -31,6 +31,7 @@ class TeamInfo extends Component {
             AllTeams: [],
             AllTeamsID: [],
             Employee: [],
+            plusIconState: true,
             pendingTeamToAdd: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
@@ -119,9 +120,10 @@ class TeamInfo extends Component {
         this.setState({addToTeamAsManager: !this.state.addToTeamAsManager});
     }
     
+    
+    
     // When user clicks the "Save" button
     validateAddToTeamInput() {
-        
         // Validating team ID input
         if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
             this.setState({validateTeamIDMessage: "This team does not exist."});
@@ -133,22 +135,22 @@ class TeamInfo extends Component {
             socket.emit('getTeamByID', this.state.addToTeamID);
             socket.on('one-team-info', function (data) {
                 that.setState({pendingTeamToAdd:data[0]});
-                console.log("team " + that.state.pendingTeamToAdd + "has a manager: " + that.state.pendingTeamToAdd.hasManager);
+                console.log("team " + that.state.pendingTeamToAdd + " has a manager: " + that.state.pendingTeamToAdd.hasManager);
     
-                // If user toggles OFF
+                // If user toggles OFF, they join as member
                 if (that.state.addToTeamAsManager == false) {
                     that.setState({ isMuted: false });
                     that.setState({ validateToggleMessage: "You're about to join this team as a member." });
                 }
-                // If that team DOES NOT have a manager
+                // If that team DOES NOT have a manager, they join as manager
                 else if (that.state.pendingTeamToAdd.hasManager == "0") {
                     //and user toggles ON 
                     if (that.state.addToTeamAsManager == true) {
                         that.setState({ isMuted: false });
                         that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
-                    } 
+                    }
                 }
-                // If that team DOES have a manager
+                // If that team DOES have a manager, mute toggle, they can only join as member
                 else if (that.state.pendingTeamToAdd.hasManager == "1") {
                     //and user toggles ON 
                     if (that.state.addToTeamAsManager == true) {
@@ -161,7 +163,7 @@ class TeamInfo extends Component {
     }
     
     componentDidMount() {
-        var that = this;
+        let that = this;
         console.log("Getting Employee's list of Teams");
         socket.emit('getEmployeeTeams', this.state.EmployeeID);
         socket.on('employee-team-info', function (data) {
@@ -174,6 +176,10 @@ class TeamInfo extends Component {
                 }
             });
             that.setState({ ProfileTeams: data });
+            
+            
+            console.log("omg");
+            console.log(that.state.ProfileTeams[0] != null);
         });
         
         console.log("Getting employee profile");
@@ -181,7 +187,17 @@ class TeamInfo extends Component {
         socket.on('employee-info', function (data) {
             console.log(data);
             that.setState({ Employee: data });
+            
+            //Employees with no manager credentials can only belong on one team
+            if (that.state.ProfileTeams[0] != null && that.state.Employee.isManager == "0") {
+                console.log("you only get one team");
+                that.setState({plusIconState: false});
+            } else {
+                console.log("you're in the clear");
+                that.setState({plusIconState: true});
+            }
         });
+        
         
         //when someone is removed from a team rerender the component
         socket.on('removed', function () {
@@ -249,9 +265,18 @@ class TeamInfo extends Component {
             }
         };
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
-        var plusIconText = <span>Add this employee to a new team.</span>
-
+        var plusIcon = null; 
+        var plusIconText = null;
+        
+        if (this.state.plusIconState == true) {
+            plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>;
+            plusIconText = <span>Add this employee to a new team.</span>;
+        } 
+        else if (this.state.plusIconState == false) {
+            plusIcon = <img src={require('../assets/images/plus.png')} className="plus plusMute"/>;
+            plusIconText = <span>Please remove the existing team first, or gain manager credentials to be on multiple teams.</span>;
+        }
+        
         const popover = (
           <Popover id="modal-popover" title="">
             {plusIconText} 
@@ -320,20 +345,22 @@ class TeamInfo extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Choose wisely...</h4>
-                    <p>
-                        Team Name:  {this.state.TeamName}
-                    </p>
-                    <p>
-                        Team ID:  {this.state.TeamID}
-                    </p>
+                    <div>
+                        <ControlLabel>Team Name: </ControlLabel> 
+                        <p>{this.state.TeamName}</p>
+                    </div>
+                    <div>
+                        <ControlLabel>Team ID: </ControlLabel> 
+                        <p>{this.state.TeamID}</p>
+                    </div>
                     <label>
-                    
-                        <span>Promote to manager:</span>
-                        <Toggle
+                        <div><ControlLabel htmlFor='promote-to-manager-status'>Promote to Manager:</ControlLabel></div>
+                        <div><Toggle
+                            id='promote-to-manager-status'
                             defaultChecked={this.state.promote}
                             onChange={this.handlePromote} />
-                        
+                           <HelpBlock>Choose wisely...</HelpBlock>
+                        </div>
                     </label>
                 </Modal.Body>
                 <Modal.Footer>

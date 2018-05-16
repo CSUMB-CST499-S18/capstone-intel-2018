@@ -38,7 +38,7 @@ class EmployeeInfo extends Component {
         if (this.state.Employee.isManager == 1) {
             var isManager = "Yes";
             var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
-            var isManagerCrownSpan = <span>This user has the ability to be a manager.</span>
+            var isManagerCrownSpan = <span>Having manager credentials means that this user is allowed to be a manager.</span>
             const popover = (
               <Popover id="modal-popover" title="">
                 {isManagerCrownSpan} 
