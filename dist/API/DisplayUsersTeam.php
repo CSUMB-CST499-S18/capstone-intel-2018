@@ -8,8 +8,9 @@ include 'dbConnection.php';
 $conn = getDatabaseConnection();
 
 $sql = "SELECT * 
-        FROM employee NATURAL JOIN employeeteam NATURAL JOIN team 
-        WHERE isManager = 0 OR isTeamManager = 1";
+  FROM employee LEFT JOIN employeeteam ON (employee.EmployeeID = employeeteam.EmployeeID)
+  LEFT JOIN team ON (employeeteam.TeamID = team.TeamID)
+  WHERE isManager = 0 OR isTeamManager = 1 OR (isTeamManager IS NULL AND isManager = 1)";
 
 //Sanitizing Input
     
