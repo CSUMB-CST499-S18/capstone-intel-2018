@@ -179,7 +179,8 @@ class TeamInfo extends Component {
             
             
             console.log("omg");
-            console.log(that.state.ProfileTeams[0] != null);
+            console.log(that.state.ProfileTeams[0].length != "0");
+            console.log(that.state.ProfileTeams[0]);
         });
         
         console.log("Getting employee profile");
@@ -189,8 +190,9 @@ class TeamInfo extends Component {
             that.setState({ Employee: data });
             
             //Employees with no manager credentials can only belong on one team
-            if (that.state.ProfileTeams[0] != null && that.state.Employee.isManager == "0") {
+            if (that.state.ProfileTeams[0] != 0 && that.state.Employee.isManager == "0") {
                 console.log("you only get one team");
+                
                 that.setState({plusIconState: false});
             } else {
                 console.log("you're in the clear");
