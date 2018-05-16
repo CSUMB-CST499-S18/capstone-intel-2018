@@ -108,7 +108,7 @@ class SearchTeamTab extends Component {
     
     return (
       
-      <BootstrapTable keyField='Butto' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
+      <BootstrapTable keyField='Button' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
       
     );
   }
