@@ -51,7 +51,7 @@ var job = schedule.scheduleJob(rule, function() {
     console.log(response.data);
     mail({
       from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
-      to: "kylebutler39@hotmail.com", // list of receivers
+      to: "bavery@csumb.com", // list of receivers
       subject: "Hello", // Subject line
       text: response.data // plaintext body
     });
