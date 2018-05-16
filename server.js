@@ -162,7 +162,7 @@ io.on('connection', function(client) {
   client.on('getLogs', function() {
     axios({
       method: 'get',
-      url: "https://capstone-intel-2018-s1l.herokuapp.com/dist/API/GetLogs.php"
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/getLogs.php"
     })
     .then(function(response) {
       var info = [response.data];

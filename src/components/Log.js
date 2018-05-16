@@ -17,9 +17,10 @@ class Log extends Component {
   }
   
    componentDidMount() {
+    var that = this;
     socket.emit('getLogs');
-    socket.on("logInfo", function(data) {
-        this.setState({logs: data});
+    socket.on('logInfo', function(data) {
+        that.setState({logs: data});
     });
     
   }
@@ -27,7 +28,7 @@ class Log extends Component {
 
   
   render() {
-    if(this.logs.length == 0) { return null; }
+    if(this.state.logs.length == 0) { return null; }
     
     const columns = [
       
@@ -55,9 +56,9 @@ class Log extends Component {
       ];
     
     return (
-      
-      <BootstrapTable keyField='LogID' data={ this.logs[0] } columns={ columns } striped hover condensed/>
-      
+      <div style={{padding: "10px"}}>
+      <BootstrapTable keyField='LogID' data={ this.state.logs[0] } columns={ columns } striped hover condensed/>
+      </div>
     );
   }
 

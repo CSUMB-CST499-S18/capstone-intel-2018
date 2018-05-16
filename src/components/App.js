@@ -11,6 +11,7 @@ import ServerTime from './ServerTime.js';
 import SearchComp from './SearchComp.js';
 import HomeComp from './HomeComp.js';
 import ProfileComp from './ProfileComp.js';
+import Log from './Log.js';
 
 const Home = () => (
   <div>
