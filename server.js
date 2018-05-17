@@ -126,7 +126,28 @@ io.on('connection', function(client) {
     });
   });
   
-  //get team info
+    //get a team by teamID
+  client.on('getTeamByID', function (id) {
+    
+    var num = Number(id);
+    
+    console.log("TeamID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetTeamByID.php",
+      params: { "TeamID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('one-team-info', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+  //get teams searched by input employeeID
   client.on('getTeams', function (id) {
     
     var num = Number(id);
@@ -145,13 +166,49 @@ io.on('connection', function(client) {
     });
   });
   
+    //search ajax call
+  client.on('getAllTeams', function () {
+    
+   
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetAllTeams.php",
+      })
+      .then(function (response) {
+         var info = [response.data];
+        io.emit('all-teams-info', info);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  });
+  
+  client.on('addToTeam', function (data) {
+    
+    var emp = Number(data.empID);
+    var team = Number(data.teamID);
+    var addAsManager = Number(data.addAsManager);
+    
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/AddToTeam.php",
+      params: { "EmployeeID": emp , "TeamID": team, "isTeamManager": addAsManager }
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
+
+  //remove from team database call
   client.on('removeFromTeam', function (data) {
     
     var emp = Number(data.empID);
     var team = Number(data.teamID);
-    
-    console.log("EmployeeID:  " + emp);
-    console.log('TeamID:  ' + team);
     
      axios({
       method: 'get',
@@ -168,7 +225,46 @@ io.on('connection', function(client) {
 
   });
   
+  
+  //reset database call
+  client.on('resetDatabase', function () {
+   
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/ResetDatabase.php",
+      })
+    .then(function (response) {
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
+  client.on('getTeam', function (ID) {
+   
+     var num = Number(ID);
+    
+    console.log("TeamID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetTeamByID.php",
+      params: { "TeamID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('teamValidation', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
 });
+
+
 
 server.listen(PORT, function(error) {
   if (error) {
