@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { Jumbotron, Button, PageHeader } from 'react-bootstrap';
+import '../assets/stylesheets/HomeComp.scss';
 
 class HomeComp extends React.Component {
 
@@ -31,11 +32,11 @@ class HomeComp extends React.Component {
 
   render() {
       return (
-        <div style={{marginLeft: 5 + 'em', marginRight: 5 + 'em'}}>
+        <div style={{width: '95%', margin: 'auto'}}>
             <Jumbotron>
-                <PageHeader>
+                <h1>
                     Introduction
-                </PageHeader>
+                </h1>
                 <p>
                     In the corporate world of nondisclosure agreements, access to different work resources is usually strictly limited to employees on a need-to-know basis. 
 
@@ -49,66 +50,68 @@ class HomeComp extends React.Component {
 
                 </p>
                 
-                <PageHeader>
+                <h1>
                     Project Objectives
-                </PageHeader>
+                </h1>
                 <p>
                     Create a team-affiliated permissions protocol and then build a full stack web tool that automatically adheres to that protocol when managing employees’ access to various resources. Abstract this process for the target user: the non-technical HR employee.
                 </p>
                 
-                <PageHeader>
+                <h1>
                     Aproach and Tools Used
-                </PageHeader>
-                <p>
+                </h1>
+                <h2>
                     --Aproach--
-                </p>
+                </h2>
                 <p>
-                    Step 0. Clarify permissions protocol terminology
-                     is a collaborative  web  platform  that
+                    Step 0. Clarify permissions protocol terminology:<br /> <span><b>SharePoint</b> is a collaborative  web  platform  that
                      allows  group-based  access  control.
-                    Resources are any files or directories.             Team has an Owner, Members, and Visitors.
+                    <b>Resources</b> are any files or directories.             A <b>team</b> has an Owner, Members, and Visitors.</span>
                 </p>
                 <p>
-                     Step 1. Define the permission protocol. Owners have full access to their team, and read access as Visitors to all child teams. Owners have read and write access to their parent team. Members have read and write access to their own team.
+                     Step 1. Define the permission protocol:<br /> <span>Owners have full access to their team, and read access as Visitors to all child teams. Owners have read and write access to their parent team. Members have read and write access to their own team.</span>
                 </p>
                 <p>
                     Step 2. Create and populate the
-                    data model with test data.
-                    Design      the      database 
+                    data model with test data:<br />
+                    <span>Design      the      database 
                     schema.    Then,  populate 
                     SharePoint with resources 
                     and    the   database   with 
                     teams and users to mimic 
-                    the vertical hierarchy of the organization.
+                    the vertical hierarchy of the organization.</span>
                 </p>
                 <p>
-                    Step 3. Build and test the full stack web tool
-                    Implement logic in PHP to update the MySQL database when calling Sharepoint APIs.
+                    Step 3. Build and test the full stack web tool:<br />
+                    <span>Implement logic in PHP to update the MySQL database when calling Sharepoint APIs. Use React to build and update the front-end</span>
 
                 </p>
                 
-                <p>
+                <h2>
                     --Tools--
-                </p>
+                </h2>
                 <p>
-                    This project was built utilizing a number of tools, including but not limited to:  Node, ClearDB, Heroku, SockeIO, Webpack, Bootstrap, Microsoft SharePoint, and React.
+                    This project was built utilizing a number of tools, including but not limited to:  Node, ClearDB, Heroku, SocketIO, Webpack, Bootstrap, Microsoft SharePoint, and React.
                 </p>
                
-                <PageHeader>
+                <h1>
                     Going Forward
-                </PageHeader>
+                </h1>
                 <p> 
-                    Expanding Compatibility
-                    Given more time, It’s possible we could have expanded our permission assignment tool to work with other shared resource platforms.
+                    <b>Expanding Compatibility:</b>
+                    <span>Given more time, we would expand our permission assignment tool to work with other shared resource platforms.</span>
+                    
+                    <b>Automate Complex Actions:</b>
+                    <span>Allow the user to perform complex actions such as promotions and demotions, and team transfers.</span>
 
-                    Multiple Users
-                    Add client/server functionality to support multiple users, say the entire HR team.
+                    <b>Multiple Users:</b>
+                    <span>Add support for multiple HR users simultaneously.</span>
 
-                    <div><img src={require('../assets/images/crown.png')} height="16"/> Crown icon made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-                    <div><img src={require('../assets/images/plus.png')} height="16"/> Plus icon made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                    <br /><img src={require('../assets/images/crown.png')} height="16"/> Crown icon made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+                    <br /><img src={require('../assets/images/plus.png')} height="16"/> Plus icon made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
                 </p>
                 
-            </Jumbotron>;
+            </Jumbotron>
         </div>
       );
     }
