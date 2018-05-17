@@ -96,8 +96,8 @@ class TeamInfo extends Component {
         this.setState({ isMuted: false });
         this.setState({ validateToggleMessage: ""});
         this.setState({ validateTeamIDMessage: ""});
+        this.setState({addToTeamIDIsValid: true});
     }
-    
 
     handleChange(e) {
         this.setState({ addToTeamID: e.target.value });
@@ -117,31 +117,30 @@ class TeamInfo extends Component {
     }
     
     addToTeam(){
-        this.setState({ show: false });
+        //this.setState({ show: false });
         var data = {empID: this.state.EmployeeID, teamID: this.state.addToTeamID, addAsManager: this.state.addToTeamAsManager};
         socket.emit('addToTeam', data);
     }
     
     validatePromote(teamID) {
         var that = this;
-            console.log("Checking if inputted team already has a manager or not");
-            socket.emit('getTeam', teamID);
-            socket.on('teamValidation', function (data) {
-                that.setState({editingTeam:data[0]});
-                console.log("team " + teamID + "has a manager: " + that.state.editingTeam.hasManager);
-    
-                if (that.state.editingTeam.hasManager == 1) {
-                    that.setState({ isPromoteMuted: true });
-                }
-                
-                else if (that.state.editingTeam.hasManager == "0") {
-                    //and user toggles ON 
-                    if (that.state.addToTeamAsManager == true) {
-                        that.setState({ isMuted: false });
-                        that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
-                    } 
-                }
-            });
+        console.log("Checking if inputted team already has a manager or not");
+        socket.emit('getTeam', teamID);
+        socket.on('teamValidation', function (data) {
+            that.setState({editingTeam:data[0]});
+            console.log("team " + teamID + "has a manager: " + that.state.editingTeam.hasManager);
+
+            if (that.state.editingTeam.hasManager == 1) {
+                that.setState({ isPromoteMuted: true });
+            }
+            else if (that.state.editingTeam.hasManager == "0") {
+                //and user toggles ON 
+                if (that.state.addToTeamAsManager == true) {
+                    that.setState({ isMuted: false });
+                    that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
+                } 
+            }
+        });
     }
     
     
@@ -152,26 +151,25 @@ class TeamInfo extends Component {
     
     // When user clicks the "Save" button
     validateAddToTeamInput() {
-        var that = this;
-        that.setState({addToTeamIDIsValid: true});
         // Make sure employee isn't added to a team they're already on
-        Object.keys(that.state.ProfileTeams[0]).map(function (key) {
-            if (that.state.ProfileTeams[0][key].TeamID == that.state.addToTeamID) {
-                that.setState({validateTeamIDMessage: "You're already on this team."});
-                that.setState({addToTeamIDIsValid: false});
-            }
-        });
-        
+        // Object.keys(that.state.ProfileTeams[0]).map(function (key) {
+        //     if (that.state.ProfileTeams[0][key].TeamID == that.state.addToTeamID) {
+        //         that.setState({validateTeamIDMessage: "You're already on this team."});
+        //         that.setState({addToTeamIDIsValid: false});
+        //     }
+        // });
         // Validating team ID input exists
+        var that = this;
         if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
-            that.setState({validateTeamIDMessage: "This team does not exist."});
-            that.setState({addToTeamIDIsValid: false});
+            this.setState({validateTeamIDMessage: "This team does not exist."});
+            this.setState({addToTeamIDIsValid: false});
         }
         
         if (this.state.addToTeamIDIsValid == true) {
             //Validating toggle button by checking if that team already has a manager
             console.log("Checking if inputted team already has a manager or not");
-            socket.emit('getTeamByID', that.state.addToTeamID);
+            
+            socket.emit('getTeamByID', this.state.addToTeamID);
             socket.on('one-team-info', function (data) {
                 that.setState({pendingTeamToAdd:data[0]});
                 console.log("team " + that.state.pendingTeamToAdd + " has a manager: " + that.state.pendingTeamToAdd.hasManager);
@@ -187,12 +185,14 @@ class TeamInfo extends Component {
                     if (that.state.pendingTeamToAdd.hasManager == "0") {
                         that.setState({ isMuted: false });
                         that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
+                        that.setState({ addToTeamAsManager: true});
                     } 
                     // If that team DOES have a manager, mute toggle, they can only join as member
                     else if (that.state.pendingTeamToAdd.hasManager == "1") {
                     //and user toggles ON 
                         that.setState({ isMuted: true });
                         that.setState({ validateToggleMessage: "This team already has a manager. You can only join this team as a member." });
+                        that.setState({ addToTeamAsManager: false});
                     }
                 }
                 
@@ -201,7 +201,7 @@ class TeamInfo extends Component {
         
         if (this.state.addToTeamIDIsValid == true) {
             console.log("Add person to this team now");
-            this.addToTeam();
+            //this.addToTeam();
         }
         else if (this.state.addToTeamIDIsValid == false) {
             console.log("You missed a validation case for teamID input; you should never see this message.");
@@ -318,16 +318,16 @@ class TeamInfo extends Component {
         );
         
         const togglePromote = (
-                <div>
-                    <div><ControlLabel htmlFor='promote-to-manager'>Promote to Manager</ControlLabel></div>
-                    <div><Toggle
-                        id='promote-to-manager'
-                        defaultChecked={this.state.promote}
-                        disabled={this.state.isPromoteMuted}
-                            onChange={this.handlePromote} />
-                    </div>
+            <div>
+                <div><ControlLabel htmlFor='promote-to-manager'>Promote to Manager</ControlLabel></div>
+                <div><Toggle
+                    id='promote-to-manager'
+                    defaultChecked={this.state.promote}
+                    disabled={this.state.isPromoteMuted}
+                        onChange={this.handlePromote} />
                 </div>
-                );
+            </div>
+        );
         
         if (this.state.Employee.isManager == true) {
             // Commented out for testing bc our org structure currently
