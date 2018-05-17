@@ -218,6 +218,7 @@ io.on('connection', function(client) {
     })
     .then(function (response) {
       console.log(response.data);
+      io.emit('added-to-team');
     })
     .catch(function (error) {
       console.log(error);
