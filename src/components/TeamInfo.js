@@ -113,35 +113,27 @@ class TeamInfo extends Component {
         var data = {empID: this.state.EmployeeID, teamID: this.state.TeamID};
         socket.emit('removeFromTeam', data);
         this.setState({ showEdit: false });
-        //this.forceUpdate();
+        socket.emit('getEmployeeTeams', this.state.EmployeeID);
     }
     
     addToTeam(){
         this.setState({ show: false });
         var data = {empID: this.state.EmployeeID, teamID: this.state.addToTeamID, addAsManager: this.state.addToTeamAsManager};
         socket.emit('addToTeam', data);
+        socket.emit('getEmployeeTeams', this.state.EmployeeID);
     }
     
     validatePromote(teamID) {
         var that = this;
             console.log("Checking if inputted team already has a manager or not");
-            socket.emit('getTeam', teamID);
-            socket.on('teamValidation', function (data) {
-                that.setState({editingTeam:data[0]});
-                console.log("team " + teamID + "has a manager: " + that.state.editingTeam.hasManager);
-    
-                if (that.state.editingTeam.hasManager == 1) {
+            
+             if (that.state.editingTeam.hasManager == 1) {
                     that.setState({ isPromoteMuted: true });
                 }
                 
                 else if (that.state.editingTeam.hasManager == "0") {
-                    //and user toggles ON 
-                    if (that.state.addToTeamAsManager == true) {
-                        that.setState({ isMuted: false });
-                        that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
-                    } 
+                    that.setState({isPromoteMuted: false });
                 }
-            });
     }
     
     
@@ -244,7 +236,17 @@ class TeamInfo extends Component {
         
         //when someone is removed from a team rerender the component
         socket.on('removed', function () {
-            that.forceUpdate();
+            socket.emit('getEmployeeTeams', that.state.EmployeeID);
+        });
+        
+        //when someone is added to a team rerender the component
+        socket.on('added-to-team', function () {
+            socket.emit('getEmployeeTeams', that.state.EmployeeID);
+        });
+        
+        socket.on('teamValidation', function (data) {
+            that.setState({editingTeam:data[0]});
+            console.log("team " + that.state.editingTeam.teamID + "has a manager: " + that.state.editingTeam.hasManager);
         });
     }
     
@@ -294,6 +296,7 @@ class TeamInfo extends Component {
                 this.setState({TeamID: row.TeamID});
                 this.setState({TeamName: row.TeamName});
                 this.setState({ showEdit: true });
+                socket.emit('getTeam', row.TeamID);
                 this.validatePromote(row.TeamID);
                     
             }
@@ -400,11 +403,8 @@ class TeamInfo extends Component {
                         <p>{this.state.TeamID}</p>
                     </div>
                     <label>
-                        <div><ControlLabel htmlFor='promote-to-manager-status'>Promote to Manager:</ControlLabel></div>
-                        <div><Toggle
-                            id='promote-to-manager-status'
-                            defaultChecked={this.state.promote}
-                            onChange={this.handlePromote} />
+                        <div>
+                            {togglePromote}
                            <HelpBlock>Choose wisely...</HelpBlock>
                         </div>
                     </label>

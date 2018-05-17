@@ -24,13 +24,13 @@ for($i = 0; $i < count($rows); $i++) {
     $message = $message . $rows[$i] . "\n";
 }
 
-$to      = 'bavery@csumbcapstone.onmicrosoft.com';
-$subject = 'Daily Log';
-$headers = 'From: kbutler-fish@csumbcapstone.onmicrosoft.com' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
+// $to      = 'bavery@csumbcapstone.onmicrosoft.com';
+// $subject = 'Daily Log';
+// $headers = 'From: kbutler-fish@csumbcapstone.onmicrosoft.com' . "\r\n" .
+//     'X-Mailer: PHP/' . phpversion();
 
-mail($to, $subject, $message, $headers);
+// mail($to, $subject, $message, $headers);
 
-// echo json_encode($message);
+echo json_encode($message);
 
 ?>
