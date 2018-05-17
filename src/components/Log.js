@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import { Button } from 'react-bootstrap';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 
@@ -13,21 +14,25 @@ class Log extends Component {
         logs: []
     };
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   
   }
   
    componentDidMount() {
+    var that = this;
     socket.emit('getLogs');
-    socket.on("logInfo", function(data) {
-        this.setState({logs: data});
+    socket.on('logInfo', function(data) {
+        that.setState({logs: data});
     });
     
   }
   
-
+  handleClick() {
+      socket.emit('sendEmail');
+  }
   
   render() {
-    if(this.logs.length == 0) { return null; }
+    if(this.state.logs.length == 0) { return null; }
     
     const columns = [
       
@@ -55,9 +60,12 @@ class Log extends Component {
       ];
     
     return (
-      
-      <BootstrapTable keyField='LogID' data={ this.logs[0] } columns={ columns } striped hover condensed/>
-      
+      <div style={{padding: "10px"}}>
+      <Button bsStyle="primary" block style={{marginBottom: "10px"}} onClick={this.handleClick}>
+      Send Email
+      </Button>
+      <BootstrapTable keyField='LogID' data={ this.state.logs[0] } columns={ columns } striped hover condensed/>
+      </div>
     );
   }
 

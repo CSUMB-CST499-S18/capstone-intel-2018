@@ -50,9 +50,9 @@ var job = schedule.scheduleJob(rule, function() {
   }).then(function(response) {
     console.log(response.data);
     mail({
-      from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+      from: "Capstone Shared Resource Tool <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
       to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
-      subject: "Hello", // Subject line
+      subject: "Daily Logs", // Subject line
       text: response.data // plaintext body
     });
   }).catch(function(error) {
@@ -178,7 +178,7 @@ io.on('connection', function(client) {
   client.on('getLogs', function() {
     axios({
       method: 'get',
-      url: "https://capstone-intel-2018-s1l.herokuapp.com/dist/API/GetLogs.php"
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/getLogs.php"
     })
     .then(function(response) {
       var info = [response.data];
@@ -283,6 +283,24 @@ io.on('connection', function(client) {
     });
 
 
+  });
+  
+  client.on('sendEmail', function() {
+    var message;
+    axios({
+      method: 'post',
+      url: 'https://capstone-intel-2018-sql.herokuapp.com/dist/API/sendEmail.php'
+    }).then(function(response) {
+      console.log(response.data);
+      mail({
+        from: "Capstone Shared Resource Tool <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+        to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
+        subject: "Daily Logs", // Subject line
+        text: response.data // plaintext body
+      });
+    }).catch(function(error) {
+        console.log(error);
+    });
   });
   
 });
