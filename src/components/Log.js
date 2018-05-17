@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import { Button } from 'react-bootstrap';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 
@@ -13,6 +14,7 @@ class Log extends Component {
         logs: []
     };
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   
   }
   
@@ -25,7 +27,9 @@ class Log extends Component {
     
   }
   
-
+  handleClick() {
+      socket.emit('sendEmail');
+  }
   
   render() {
     if(this.state.logs.length == 0) { return null; }
@@ -57,6 +61,9 @@ class Log extends Component {
     
     return (
       <div style={{padding: "10px"}}>
+      <Button bsStyle="primary" block style={{marginBottom: "10px"}} onClick={this.handleClick}>
+      Send Email
+      </Button>
       <BootstrapTable keyField='LogID' data={ this.state.logs[0] } columns={ columns } striped hover condensed/>
       </div>
     );
