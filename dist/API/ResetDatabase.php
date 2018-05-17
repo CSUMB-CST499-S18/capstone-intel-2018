@@ -31,7 +31,7 @@ $sql = "-- phpMyAdmin SQL Dump
 -- https://www.phpmyadmin.net/
 --
 -- Host: us-cdbr-iron-east-05.cleardb.net
--- Generation Time: May 17, 2018 at 08:06 AM
+-- Generation Time: May 17, 2018 at 11:22 PM
 -- Server version: 5.6.36-log
 -- PHP Version: 5.5.9-1ubuntu4.22
 
@@ -324,7 +324,7 @@ INSERT INTO `team` (`TeamID`, `TeamName`, `hasManager`) VALUES
 (11, 'DIR1', 1),
 (21, 'DIR2', 1),
 (31, 'Proj1', 1),
-(41, 'Proj2', 0),
+(41, 'Proj2', 1),
 (51, 'Proj3', 1),
 (61, 'Human Resources', 1);
 
@@ -502,7 +502,6 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 ";
 
 $stmt = $conn->prepare($sql);
