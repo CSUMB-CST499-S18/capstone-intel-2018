@@ -221,6 +221,27 @@ io.on('connection', function(client) {
 
   });
   
+  client.on('getTeam', function (ID) {
+   
+     var num = Number(ID);
+    
+    console.log("TeamID:  " + num);
+    
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/GetTeamByID.php",
+      params: { "TeamID": num }
+    })
+    .then(function (response) {
+      var info = [response.data];
+      io.emit('teamValidation', info);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
 });
 
 

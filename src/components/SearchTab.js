@@ -52,9 +52,13 @@ class SearchTab extends Component {
    {
      return('Owner');
    }
-   else
+   else if (row.isTeamManager == 0)
    {
      return('Member');
+   }
+   else
+   {
+     return('No team');
    }
    
  }

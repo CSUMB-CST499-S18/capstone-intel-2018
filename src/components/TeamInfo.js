@@ -20,9 +20,9 @@ class TeamInfo extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.validateAddToTeamInput = this.validateAddToTeamInput.bind(this);
         this.clearMutesAndValidationMessages = this.clearMutesAndValidationMessages.bind(this);
-        this.handleAddAsManagerToggleChange = this.handleAddAsManagerToggleChange.bind(this)
+        this.handleAddAsManagerToggleChange = this.handleAddAsManagerToggleChange.bind(this);
         this.handlePromote = this.handlePromote.bind(this);
-        this.promoteToManager = this.promoteToManager.bind(this);
+        this.validatePromote = this.validatePromote.bind(this);
         this.removeFromTeam = this.removeFromTeam.bind(this);
     
         this.state = {
@@ -114,35 +114,29 @@ class TeamInfo extends Component {
         //this.forceUpdate();
     }
     
-    promoteToManager() {
+    validatePromote(teamID) {
         var that = this;
             console.log("Checking if inputted team already has a manager or not");
-            socket.emit('getTeamByID', this.state.TeamID);
-            socket.on('one-team-info', function (data) {
+            socket.emit('getTeam', teamID);
+            socket.on('teamValidation', function (data) {
                 that.setState({editingTeam:data[0]});
-                console.log("team " + that.state.editingTeam + "has a manager: " + that.state.editingTeam.hasManager);
+                console.log("team " + teamID + "has a manager: " + that.state.editingTeam.hasManager);
     
-                // If user toggles OFF
-                if (that.state.promote == false) {
-                    that.setState({ isPromoteMuted: false });
+                if (that.state.editingTeam.hasManager == 1) {
+                    that.setState({ isPromoteMuted: true });
                 }
-                // If that team DOES NOT have a manager
+                
                 else if (that.state.editingTeam.hasManager == "0") {
                     //and user toggles ON 
-                    if (that.state.promote == true) {
+                    if (that.state.addToTeamAsManager == true) {
                         that.setState({ isMuted: false });
+                        that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
                     } 
                 }
-                // If that team DOES have a manager
-                else if (that.state.pendingTeamToAdd.hasManager == "1") {
-                    //and user toggles ON 
-                    if (that.state.promote == true) {
-                        that.setState({ isPromoteMuted: true });
-                    }
-                }
             });
-        this.setState({ showEdit: false });
     }
+    
+    
     
     handleAddAsManagerToggleChange() {
         this.setState({addToTeamAsManager: !this.state.addToTeamAsManager});
@@ -234,6 +228,7 @@ class TeamInfo extends Component {
     
     render() {
         if(this.state.ProfileTeams.length == 0) { return null; }
+                
     
         const columns = [
             {
@@ -263,6 +258,8 @@ class TeamInfo extends Component {
                 this.setState({TeamID: row.TeamID});
                 this.setState({TeamName: row.TeamName});
                 this.setState({ showEdit: true });
+                this.validatePromote(row.TeamID);
+                    
             }
         };
         

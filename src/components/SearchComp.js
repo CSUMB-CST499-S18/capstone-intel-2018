@@ -36,7 +36,7 @@ class SearchComp extends React.Component {
     socket.emit('searchTest');
     
     socket.on('user-info', function (data) {
-      //console.log(data);
+      console.log(data);
       that.setState({Employee: data});
       
       
