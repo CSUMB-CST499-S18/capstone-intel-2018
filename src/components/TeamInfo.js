@@ -113,6 +113,12 @@ class TeamInfo extends Component {
         socket.emit('removeFromTeam', data);
     }
     
+    addToTeam(){
+        this.setState({ show: false });
+        var data = {empID: this.state.EmployeeID, teamID: this.state.addToTeamID, addAsManager: this.state.addToTeamAsManager};
+        socket.emit('addToTeam', data);
+    }
+    
     promoteToManager() {
         this.setState({ showEdit: false });
     }
@@ -120,8 +126,6 @@ class TeamInfo extends Component {
     handleAddAsManagerToggleChange() {
         this.setState({addToTeamAsManager: !this.state.addToTeamAsManager});
     }
-    
-    
     
     // When user clicks the "Save" button
     validateAddToTeamInput() {
@@ -174,6 +178,7 @@ class TeamInfo extends Component {
         
         if (this.state.addToTeamIDIsValid == true) {
             console.log("Add person to this team now");
+            this.addToTeam();
         }
         else if (this.state.addToTeamIDIsValid == false) {
             console.log("You missed a validation case for teamID input; you should never see this message.");

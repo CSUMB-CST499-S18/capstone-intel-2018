@@ -183,6 +183,26 @@ io.on('connection', function(client) {
       });
   });
   
+  client.on('addToTeam', function (data) {
+    
+    var emp = Number(data.empID);
+    var team = Number(data.teamID);
+    var addAsManager = Number(data.addAsManager);
+    
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/AddToTeam.php",
+      params: { "EmployeeID": emp , "TeamID": team, "isTeamManager": addAsManager }
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
   client.on('removeFromTeam', function (data) {
     
     var emp = Number(data.empID);
