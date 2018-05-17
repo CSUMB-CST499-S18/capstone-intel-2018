@@ -39,21 +39,25 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         $record = explode(",", $record["ChildTeams"]); //stores all child teams in an array
          
         /* Here we loop through the array and append all child teams to the query */
-                
-        $sql = "SELECT ResourceID FROM teamresource WHERE";
-                
-        for($i = 0; $i < count($record); $i++){
-                $sql = $sql . " TeamID = " . $record[$i];
-                if($i < count($record) - 1) {
-                        $sql = $sql . " OR ";
-                        }
-                }
-        //$sql = $sql . " OR TeamID = " . $_GET['TeamID'];
         
-        /* Here insert all ResourceID's into the $rows array*/
+        if($record != NULL){
                 
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($namedParameters);
+                $sql = "SELECT ResourceID FROM teamresource WHERE";
+                        
+                for($i = 0; $i < count($record); $i++){
+                        $sql = $sql . " TeamID = " . $record[$i];
+                        if($i < count($record) - 1) {
+                                $sql = $sql . " OR ";
+                                }
+                        }
+                //$sql = $sql . " OR TeamID = " . $_GET['TeamID'];
+                
+                /* Here insert all ResourceID's into the $rows array*/
+                        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
+        
+        }
         $resourceID = array();
         
         while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
