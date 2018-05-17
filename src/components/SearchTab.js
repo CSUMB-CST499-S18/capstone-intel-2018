@@ -45,6 +45,23 @@ class SearchTab extends Component {
       </LinkContainer>
     );
  }
+ 
+ isTeamManagerCell(cell,row,rowIndex){
+   
+   if(row.isTeamManager == 1)
+   {
+     return('Owner');
+   }
+   else if (row.isTeamManager == 0)
+   {
+     return('Member');
+   }
+   else
+   {
+     return('No team');
+   }
+   
+ }
   
   render() {
     if(this.props.data.length == 0) { return null; }
@@ -72,17 +89,16 @@ class SearchTab extends Component {
           },
     
         })
+       
       }, {
-        dataField: 'Phone',
-        text: 'Phone',
-        align: 'center'
-      }, {
-        dataField: 'Email',
-        text: 'Email',
-        align: 'center'
-      }, {
-        dataField: 'isManager',
-        text: 'Is a Manager',
+        dataField: 'isTeamManager',
+        text: 'Role',
+        align: 'center',
+        hidden: true
+      },{
+        dataField: 'Role',
+        text: 'Role',
+        formatter: this.isTeamManagerCell.bind(this),
         align: 'center'
       },{
         dataField: 'TeamName',
@@ -94,6 +110,8 @@ class SearchTab extends Component {
         align: 'center'
       }
       ];
+      
+      
     
     return (
       

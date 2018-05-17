@@ -45,6 +45,19 @@ class SearchTeamTab extends Component {
       </LinkContainer>
     );
  }
+ 
+ isTeamManagerCell(cell,row,rowIndex){
+   
+   if(row.isTeamManager == 1)
+   {
+     return('Owner');
+   }
+   else
+   {
+     return('Member');
+   }
+   
+ }
   
   render() {
     if(this.props.data.length == 0) { return null; }
@@ -64,17 +77,15 @@ class SearchTeamTab extends Component {
         dataField: 'Name',
         text: 'Employee Name',
         align: 'center'
-      }, {
-        dataField: 'Phone',
-        text: 'Phone',
-        align: 'center'
-      }, {
-        dataField: 'Email',
-        text: 'Email',
-        align: 'center'
-      }, {
-        dataField: 'isManager',
-        text: 'Is a Manager',
+      },{
+        dataField: 'isTeamManager',
+        text: 'is Team Manager',
+        align: 'center',
+        hidden: true
+      },{
+        dataField: 'Role',
+        text: 'Role',
+        formatter: this.isTeamManagerCell.bind(this),
         align: 'center'
       },{
         dataField: 'TeamName',
@@ -97,7 +108,7 @@ class SearchTeamTab extends Component {
     
     return (
       
-      <BootstrapTable keyField='Butto' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
+      <BootstrapTable keyField='Button' data={ this.props.data[0] } columns={ columns } filter={ filterFactory()} striped hover condensed/>
       
     );
   }
