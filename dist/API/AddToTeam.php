@@ -188,8 +188,9 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         /* Changes hasManager boolean flag in team table from NO TEAM MANAGER (0) to HAS TEAM MANAGER (1) */
         
         $sql = "UPDATE team
-        SET hasManager = 1
-        WHERE TeamID = :TeamID";
+                SET hasManager = `1`
+                WHERE TeamID = :TeamID";
+        
         
         //Sanitizing Input
         $namedParameters = array();

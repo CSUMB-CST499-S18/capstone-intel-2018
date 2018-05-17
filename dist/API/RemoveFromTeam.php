@@ -188,6 +188,19 @@ if (isset($record)){ //If communication with the DB was established
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+        
+        /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
+        
+                $sql = "UPDATE team
+                SET hasManager = 0
+                WHERE TeamID = :TeamID";
+                
+                //Sanitizing Input
+                $namedParameters = array();
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
+        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
                 
         /* Log Entry */
 
@@ -252,18 +265,6 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
                 
-                /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
-        
-                $sql = "UPDATE team
-                SET hasManager = 0
-                WHERE TeamID = :TeamID";
-                
-                //Sanitizing Input
-                $namedParameters = array();
-                $namedParameters[':TeamID'] = $_GET['TeamID'];
-        
-                $stmt = $conn->prepare($sql);
-                $stmt->execute($namedParameters);
                         
         /* Log Entry */
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
