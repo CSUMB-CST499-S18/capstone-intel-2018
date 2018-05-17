@@ -50,7 +50,7 @@ var job = schedule.scheduleJob(rule, function() {
   }).then(function(response) {
     console.log(response.data);
     mail({
-      from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+      from: "Capstone Shared Resource Tool <no-reply@csumbcapstone.com>", // sender address
       to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
       subject: "Daily Logs", // Subject line
       text: response.data // plaintext body
@@ -181,7 +181,7 @@ io.on('connection', function(client) {
     }).then(function(response) {
       console.log(response.data);
       mail({
-        from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+        from: "Capstone Shared Resource Tool <no-reply@csumbcapstone.com>", // sender address
         to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
         subject: "Daily Logs", // Subject line
         text: response.data // plaintext body
