@@ -38,11 +38,13 @@ class TeamInfo extends Component {
             addToTeamAsManager: false,
             addToTeamIDIsValid: true,
             isMuted: false,
+            isPromoteMuted: false,
             validateToggleMessage: '',
             validateTeamIDMessage: '',
             TeamID: [],
             TeamName: [],
-            promote: false
+            promote: false,
+            editingTeam: []
         };
         
     }
@@ -108,9 +110,10 @@ class TeamInfo extends Component {
     }
     
     removeFromTeam(){
-        this.setState({ showEdit: false });
         var data = {empID: this.state.EmployeeID, teamID: this.state.TeamID};
         socket.emit('removeFromTeam', data);
+        this.setState({ showEdit: false });
+        //this.forceUpdate();
     }
     
     addToTeam(){
@@ -120,6 +123,32 @@ class TeamInfo extends Component {
     }
     
     promoteToManager() {
+        var that = this;
+            console.log("Checking if inputted team already has a manager or not");
+            socket.emit('getTeamByID', this.state.TeamID);
+            socket.on('one-team-info', function (data) {
+                that.setState({editingTeam:data[0]});
+                console.log("team " + that.state.editingTeam + "has a manager: " + that.state.editingTeam.hasManager);
+    
+                // If user toggles OFF
+                if (that.state.promote == false) {
+                    that.setState({ isPromoteMuted: false });
+                }
+                // If that team DOES NOT have a manager
+                else if (that.state.editingTeam.hasManager == "0") {
+                    //and user toggles ON 
+                    if (that.state.promote == true) {
+                        that.setState({ isMuted: false });
+                    } 
+                }
+                // If that team DOES have a manager
+                else if (that.state.pendingTeamToAdd.hasManager == "1") {
+                    //and user toggles ON 
+                    if (that.state.promote == true) {
+                        that.setState({ isPromoteMuted: true });
+                    }
+                }
+            });
         this.setState({ showEdit: false });
     }
     
@@ -225,37 +254,19 @@ class TeamInfo extends Component {
         });
     }
     
+    isTeamManagerCell(cell,row,rowIndex){
+   
+   if(row.isTeamManager == 1)
+   {
+     return('Owner');
+   }
+   else
+   {
+     return('Member');
+   }
+   
+ }
     
-    cellButton(cell, row, rowIndex) {
-    return (
-        <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.handleShowRemove}>Edit Team</Button>
-            <Modal
-                {...this.props}
-                show={this.state.showRemove}
-                onHide={this.handleCloseRemove}
-                dialogClassName="custom-modal"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-lg">
-                        Remove from Team
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4>Confirmation</h4>
-                    <p>
-                        Are you sure you want to remove this person from the team?
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.handleCloseRemove}>Close</Button>
-                 </Modal.Footer>
-            </Modal>
-        </ButtonToolbar>
-      
-    );
-    }
-
     
     render() {
         if(this.state.ProfileTeams.length == 0) { return null; }
@@ -272,7 +283,13 @@ class TeamInfo extends Component {
             }, {
                 dataField: 'isTeamManager',
                 text: 'Team Manager',
-                align: 'center'
+                align: 'center',
+                hidden: true
+            },{
+                dataField: 'Role',
+                text: 'Role',
+                align: 'center',
+                formatter: this.isTeamManagerCell.bind(this)
             }
         ];
         
@@ -302,6 +319,18 @@ class TeamInfo extends Component {
             {plusIconText} 
           </Popover>
         );
+        
+        const togglePromote = (
+                <div>
+                    <div><ControlLabel htmlFor='promote-to-manager'>Promote to Manager</ControlLabel></div>
+                    <div><Toggle
+                        id='promote-to-manager'
+                        defaultChecked={this.state.promote}
+                        disabled={this.state.isPromoteMuted}
+                            onChange={this.handlePromote} />
+                    </div>
+                </div>
+                );
         
         if (this.state.Employee.isManager == true) {
             // Commented out for testing bc our org structure currently

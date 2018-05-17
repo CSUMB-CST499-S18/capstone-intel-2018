@@ -203,13 +203,12 @@ io.on('connection', function(client) {
 
   });
   
+
+  //remove from team database call
   client.on('removeFromTeam', function (data) {
     
     var emp = Number(data.empID);
     var team = Number(data.teamID);
-    
-    console.log("EmployeeID:  " + emp);
-    console.log('TeamID:  ' + team);
     
      axios({
       method: 'get',
@@ -219,6 +218,22 @@ io.on('connection', function(client) {
     .then(function (response) {
       console.log(response.data);
       io.emit('removed');
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  });
+  
+  
+  //reset database call
+  client.on('resetDatabase', function () {
+   
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/ResetDatabase.php",
+      })
+    .then(function (response) {
     })
     .catch(function (error) {
       console.log(error);
