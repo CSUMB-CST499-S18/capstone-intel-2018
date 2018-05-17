@@ -57,30 +57,32 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
         
-        }
-        $resourceID = array();
         
-        while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-                $resourceID[] = $row; // appends each row to the array. 
-        }
-
-        /* adds VISITOR permissions to child teams */        
-        $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
-        VALUES ";
-        
-        for($i = 0; $i < count($resourceID); $i++){
-        $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 3 . ", :TeamID),";
-        if($i == count($resourceID) - 1) {
-        $sql = substr($sql, 0, -1);
-        $sql = $sql . ";}";
+                $resourceID = array();
+                
+                while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+                        $resourceID[] = $row; // appends each row to the array. 
                 }
-        }
-        $namedParameters = array();
-        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-        $namedParameters[':TeamID'] = $_GET['TeamID'];
         
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($namedParameters);
+                /* adds VISITOR permissions to child teams */        
+                $sql = "INSERT INTO employeeresource ( EmployeeID, ResourceID, AccessID, TeamID)
+                VALUES ";
+                
+                for($i = 0; $i < count($resourceID); $i++){
+                $sql = $sql . "(:EmployeeID, " . $resourceID[$i]["ResourceID"] . " , " . 3 . ", :TeamID),";
+                if($i == count($resourceID) - 1) {
+                $sql = substr($sql, 0, -1);
+                $sql = $sql . ";}";
+                        }
+                }
+                $namedParameters = array();
+                $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
+                
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
+        
+        }
          
         /* Adds OWNER access to team being assigned */
          
