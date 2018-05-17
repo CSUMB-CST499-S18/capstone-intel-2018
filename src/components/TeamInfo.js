@@ -24,6 +24,7 @@ class TeamInfo extends Component {
         this.handlePromote = this.handlePromote.bind(this);
         this.validatePromote = this.validatePromote.bind(this);
         this.removeFromTeam = this.removeFromTeam.bind(this);
+        this.isTeamInDatabase = this.isTeamInDatabase.bind(this);
     
         this.state = {
             show: false,
@@ -36,7 +37,6 @@ class TeamInfo extends Component {
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
             addToTeamAsManager: false,
-            addToTeamIDIsValid: true,
             isMuted: false,
             isPromoteMuted: false,
             validateToggleMessage: '',
@@ -142,6 +142,14 @@ class TeamInfo extends Component {
         this.setState({addToTeamAsManager: !this.state.addToTeamAsManager});
     }
     
+    isTeamInDatabase() {
+        if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
+            this.setState({validateTeamIDMessage: "This team does not exist."});
+            return false; 
+        }
+        return true; 
+    }
+    
     // When user clicks the "Save" button
     validateAddToTeamInput() {
         // Make sure employee isn't added to a team they're already on
@@ -153,12 +161,8 @@ class TeamInfo extends Component {
         // });
         // Validating team ID input exists
         var that = this;
-        if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
-            this.setState({validateTeamIDMessage: "This team does not exist."});
-            this.setState({addToTeamIDIsValid: false});
-        }
-        
-        if (this.state.addToTeamIDIsValid == true) {
+        var addToTeamIDIsValid = this.isTeamInDatabase();
+        if (addToTeamIDIsValid) {
             //Validating toggle button by checking if that team already has a manager
             console.log("Checking if inputted team already has a manager or not");
             
@@ -178,25 +182,24 @@ class TeamInfo extends Component {
                     if (that.state.pendingTeamToAdd.hasManager == "0") {
                         that.setState({ isMuted: false });
                         that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
-                        that.setState({ addToTeamAsManager: true});
                     } 
                     // If that team DOES have a manager, mute toggle, they can only join as member
                     else if (that.state.pendingTeamToAdd.hasManager == "1") {
                     //and user toggles ON 
                         that.setState({ isMuted: true });
                         that.setState({ validateToggleMessage: "This team already has a manager. You can only join this team as a member." });
-                        that.setState({ addToTeamAsManager: false});
+                        addToTeamIDIsValid = false;
                     }
                 }
                 
             });
         }
         
-        if (this.state.addToTeamIDIsValid == true) {
+        if (addToTeamIDIsValid) {
             console.log("Add person to this team now");
-            //this.addToTeam();
+            this.addToTeam();
         }
-        else if (this.state.addToTeamIDIsValid == false) {
+        else if (!addToTeamIDIsValid) {
             console.log("You missed a validation case for teamID input; you should never see this message.");
         }
         else {
