@@ -39,7 +39,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         $record = explode(",", $record["ChildTeams"]); //stores all child teams in an array
          
         /* Here we loop through the array and append all child teams to the query */
-        console.log($record);
+        echo $record;
         if($record != NULL){
                 
                 $sql = "SELECT ResourceID FROM teamresource WHERE";
