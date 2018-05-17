@@ -69,7 +69,7 @@ if (isset($record)){ //If communication with the DB was established
                                 $sql = $sql . " OR ";
                         }
                 }
-                $sql = $sql . " OR TeamID = " . $_GET['TeamID'];
+                $sql = $sql . " OR TeamID = " . $_GET['TeamID']; 
                 
         /* Here insert all ResourceID's into the $rows array*/
                 
@@ -82,9 +82,12 @@ if (isset($record)){ //If communication with the DB was established
                 }
                 
         /* Here we loop through the $rows array and append all ResourceID's to sql query, and delete from employeeresource*/
+        
+                //Just add teamID to remove specific viewer access. Add teamID column to employeeresource
                 
                 $sql = "DELETE FROM employeeresource
-                        WHERE EmployeeID = :EmployeeID 
+                        WHERE EmployeeID = :EmployeeID
+                        AND TeamID = :TeamID
                         AND (AccessID = 3 OR AccessID = 1) 
                         AND (";
                 
@@ -99,6 +102,7 @@ if (isset($record)){ //If communication with the DB was established
                 
                 $namedParameters = array();
                 $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
@@ -132,7 +136,8 @@ if (isset($record)){ //If communication with the DB was established
                         }
                         
                         $sql = "DELETE FROM employeeresource
-                                WHERE EmployeeID = :EmployeeID 
+                                WHERE EmployeeID = :EmployeeID
+                                AND TeamID = :TeamID
                                 AND AccessID = 2 
                                 AND (";
                         
@@ -147,6 +152,7 @@ if (isset($record)){ //If communication with the DB was established
                         
                         $namedParameters = array();
                         $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                        $namedParameters[':TeamID'] = $_GET['TeamID'];
                 
                         $stmt = $conn->prepare($sql);
                         $stmt->execute($namedParameters);
@@ -156,17 +162,17 @@ if (isset($record)){ //If communication with the DB was established
 
                 
         /* Here we delete the employee from the employeeteam table WHERE THEY ARE OWNER */
-                $sql = "DELETE FROM employeeteam
-                        WHERE EmployeeID  = :EmployeeID
-                        AND TeamID = :TeamID";
+        $sql = "DELETE FROM employeeteam
+                WHERE EmployeeID  = :EmployeeID
+                AND TeamID = :TeamID";
         
-                //Sanitizing Input
-                $namedParameters = array();
-                $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
-                $namedParameters[':TeamID'] = $_GET['TeamID'];
+        //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
         
-                $stmt = $conn->prepare($sql);
-                $stmt->execute($namedParameters);
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);
         
         if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
         /* Here we delete the employee from the employeeteam table WHERE THEY ARE MEMBER */
@@ -181,6 +187,20 @@ if (isset($record)){ //If communication with the DB was established
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+                
+        /* Log Entry */
+
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as OWNER and from team ID : " . $ParentNode["ParentNode"] . " as MEMBER.',
+                CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+        //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);       
         }
         } else {
                 //Where employee is NOT the manager of the team
@@ -197,7 +217,8 @@ if (isset($record)){ //If communication with the DB was established
                 }
                 
                 $sql = "DELETE FROM employeeresource
-                        WHERE EmployeeID = :EmployeeID 
+                        WHERE EmployeeID = :EmployeeID
+                        AND TeamID = :TeamID
                         AND AccessID = 2 
                         AND (";
                 
@@ -212,6 +233,7 @@ if (isset($record)){ //If communication with the DB was established
                 
                 $namedParameters = array();
                 $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
@@ -228,6 +250,34 @@ if (isset($record)){ //If communication with the DB was established
         
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
+                
+                /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
+        
+                $sql = "UPDATE team
+                SET hasManager = 0
+                WHERE TeamID = :TeamID";
+                
+                //Sanitizing Input
+                $namedParameters = array();
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
+        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
+                        
+        /* Log Entry */
+        //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
+        
+        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+                VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as MEMBER.',
+                CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
+                
+                 //Sanitizing Input
+        $namedParameters = array();
+        $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($namedParameters);
         }
 } else {
   echo false;
