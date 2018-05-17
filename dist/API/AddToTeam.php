@@ -73,6 +73,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         }
         $namedParameters = array();
         $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+        $namedParameters[':TeamID'] = $_GET['TeamID'];
         
         $stmt = $conn->prepare($sql);
         $stmt->execute($namedParameters);
