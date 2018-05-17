@@ -202,9 +202,10 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
         
         $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
-                VALUES (NULL, 'Added employee ID: :EmployeeID to team ID: :TeamID as OWNER and to team ID: " . $ParentNode["ParentNode"] . " as MEMBER.'
+                VALUES (NULL, 'Added employee ID: :EmployeeID to team ID: :TeamID as OWNER and to team ID:  as MEMBER.'
                 , CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
+
                  //Sanitizing Input
         $namedParameters = array();
         $namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
