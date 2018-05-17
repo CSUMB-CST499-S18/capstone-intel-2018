@@ -119,6 +119,19 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
                 $ParentNode = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
+        
+                $sql = "UPDATE team
+                SET hasManager = `0`
+                WHERE TeamID = :TeamID";
+                
+                //Sanitizing Input
+                $namedParameters = array();
+                $namedParameters[':TeamID'] = $_GET['TeamID'];
+        
+                $stmt = $conn->prepare($sql);
+                $stmt->execute($namedParameters);
 
                 if($ParentNode["ParentNode"] != NULL){ //Run if TeamID has a ParentNode *Works on all cases except root node*
                 
@@ -189,18 +202,6 @@ if (isset($record)){ //If communication with the DB was established
                 $stmt = $conn->prepare($sql);
                 $stmt->execute($namedParameters);
         
-        /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
-        
-                $sql = "UPDATE team
-                SET hasManager = `0`
-                WHERE TeamID = :TeamID";
-                
-                //Sanitizing Input
-                $namedParameters = array();
-                $namedParameters[':TeamID'] = $_GET['TeamID'];
-        
-                $stmt = $conn->prepare($sql);
-                $stmt->execute($namedParameters);
                 
         /* Log Entry */
 
