@@ -178,7 +178,8 @@ if (isset($record)){ //If communication with the DB was established
         /* Here we delete the employee from the employeeteam table WHERE THEY ARE MEMBER */
                 $sql = "DELETE FROM employeeteam
                         WHERE EmployeeID  = :EmployeeID
-                        AND TeamID = :TeamID";
+                        AND TeamID = :TeamID
+                        AND isTeamManager = 0";
         
                 //Sanitizing Input
                 $namedParameters = array();
