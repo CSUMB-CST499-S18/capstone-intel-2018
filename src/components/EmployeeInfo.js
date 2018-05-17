@@ -35,18 +35,19 @@ class EmployeeInfo extends Component {
     
     
     render() {
+        var isManager;
         if (this.state.Employee.isManager == 1) {
-            var isManager = "Yes";
-            var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
-            var isManagerCrownSpan = <span>Having manager credentials means that this user is allowed to be a manager.</span>
+            isManager = "Yes";
+            var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>;
+            var isManagerCrownSpan = <span>Having manager credentials means that this user is allowed to be a manager.</span>;
             const popover = (
               <Popover id="modal-popover" title="">
                 {isManagerCrownSpan} 
               </Popover>
             );
-            var crownPopover = <OverlayTrigger overlay={popover}>{isManagerCrown}</OverlayTrigger>
+            var crownPopover = <OverlayTrigger overlay={popover}>{isManagerCrown}</OverlayTrigger>;
         } else {
-            var isManager = "No";
+            isManager = "No";
         }
         
         
