@@ -190,7 +190,7 @@ if (isset($record)){ //If communication with the DB was established
                 
         /* Log Entry */
 
-        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+        $sql = "INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) 
                 VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as OWNER and from team ID : " . $ParentNode["ParentNode"] . " as MEMBER.',
                 CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
@@ -267,7 +267,7 @@ if (isset($record)){ //If communication with the DB was established
         /* Log Entry */
         //INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) VALUES (NULL, 'Testing', CURRENT_TIMESTAMP, '11', '1');
         
-        $sql = "INSERT INTO 'logentry' ('LogID', 'Action', 'TimeStp', 'TeamID', 'EmployeeID') 
+        $sql = "INSERT INTO `logentry` (`LogID`, `Action`, `TimeStp`, `TeamID`, `EmployeeID`) 
                 VALUES (NULL, 'Removed employee ID: :EmployeeID from team ID: :TeamID as MEMBER.',
                 CURRENT_TIMESTAMP, :TeamID, :EmployeeID)";
                 
