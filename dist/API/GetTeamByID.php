@@ -5,13 +5,13 @@ include 'dbConnection.php';
 
 $conn = getDatabaseConnection();
 
-$sql = "SELECT employee.Name, employee.EmployeeID, employee.Phone, employee.Email, employee.Salary, employee.isManager
-        FROM employee
-        WHERE employee.EmployeeID = :EmployeeID";
+$sql = "SELECT *
+        FROM team
+        WHERE team.TeamID = :TeamID";
 
 //Sanitizing Input
 $namedParameters = array();
-$namedParameters[':EmployeeID'] = $_GET['EmployeeID'];
+$namedParameters[':TeamID'] = $_GET['TeamID'];
         
 $stmt = $conn->prepare($sql);
 $stmt->execute($namedParameters);

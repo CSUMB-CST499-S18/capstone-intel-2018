@@ -28,7 +28,7 @@ const BasicExample = () => (
   <Router>
     <div>
       <Grid fluid>
-            <a href="http://capstone-intel-maveyma.c9users.io:8081/"><img src={require('../assets/images/Capstone Logo 2.png')} height="128"/></a>
+            <a href="http://capstone-intel-2018.herokuapp.com/"><img src={require('../assets/images/Capstone Logo 2.png')} height="128"/></a>
             <h1 style = {{align: 'center'}}>CSUMB Spring 2018 Capstone</h1>
       </Grid>
  
