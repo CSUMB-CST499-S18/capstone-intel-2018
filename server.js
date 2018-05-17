@@ -7,6 +7,7 @@ var io = require('socket.io')(server);
 var axios = require('axios');
 var jQuery = require('jquery');
 var schedule = require('node-schedule');
+var mail = require('nodemailer').mail;
 
 // using webpack-dev-server and middleware in development environment
 if (process.env.NODE_ENV !== 'production') {
@@ -47,7 +48,13 @@ var job = schedule.scheduleJob(rule, function() {
     method: 'post',
     url: 'https://capstone-intel-2018-sql.herokuapp.com/dist/API/sendEmail.php'
   }).then(function(response) {
-    console.log("Email sent");
+    console.log(response.data);
+    mail({
+      from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+      to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
+      subject: "Hello", // Subject line
+      text: response.data // plaintext body
+    });
   }).catch(function(error) {
       console.log(error);
   });
@@ -148,6 +155,39 @@ io.on('connection', function(client) {
     })
     .catch(function (error) {
       console.log(error);
+    });
+  });
+  
+  //get logs
+  client.on('getLogs', function() {
+    axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/getLogs.php"
+    })
+    .then(function(response) {
+      var info = [response.data];
+      io.emit('logInfo', info);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  });
+  
+  client.on('sendEmail', function() {
+    var message;
+    axios({
+      method: 'post',
+      url: 'https://capstone-intel-2018-sql.herokuapp.com/dist/API/sendEmail.php'
+    }).then(function(response) {
+      console.log(response.data);
+      mail({
+        from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
+        to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
+        subject: "Hello", // Subject line
+        text: response.data // plaintext body
+      });
+    }).catch(function(error) {
+        console.log(error);
     });
   });
   
