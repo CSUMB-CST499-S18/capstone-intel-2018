@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var axios = require('axios');
 var jQuery = require('jquery');
+var schedule = require('node-schedule');
 
 // using webpack-dev-server and middleware in development environment
 if (process.env.NODE_ENV !== 'production') {
@@ -34,6 +35,23 @@ app.get('/*', function(req, res) {
     }
   })
 })
+
+// sets rule for 11:59 PM Monday-Friday
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = new schedule.Range(1, 5);
+rule.hour = 23;
+rule.minute = 59;
+
+var job = schedule.scheduleJob(rule, function() {
+  axios({
+    method: 'post',
+    url: 'https://capstone-intel-2018-sql.herokuapp.com/dist/API/sendEmail.php'
+  }).then(function(response) {
+    console.log("Email sent");
+  }).catch(function(error) {
+      console.log(error);
+  });
+});
 
 io.on('connection', function(client) {
   console.log('client connected!');
@@ -75,8 +93,6 @@ io.on('connection', function(client) {
     
     var num = Number(id);
     
-    console.log("EmployeeID:  " + num);
-    
     axios({
       method: 'get',
       url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayEmployeeInfo.php",
@@ -95,8 +111,6 @@ io.on('connection', function(client) {
   client.on('getEmployeeTeams', function (id) {
     
     var num = Number(id);
-    
-    console.log("EmployeeID:  " + num);
     
     axios({
       method: 'get',
@@ -117,8 +131,6 @@ io.on('connection', function(client) {
     
     var num = Number(id);
     
-    console.log("EmployeeID:  " + num);
-    
     axios({
       method: 'get',
       url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/DisplayTeamMembers.php",
@@ -131,6 +143,29 @@ io.on('connection', function(client) {
     .catch(function (error) {
       console.log(error);
     });
+  });
+  
+  client.on('removeFromTeam', function (data) {
+    
+    var emp = Number(data.empID);
+    var team = Number(data.teamID);
+    
+    console.log("EmployeeID:  " + emp);
+    console.log('TeamID:  ' + team);
+    
+     axios({
+      method: 'get',
+      url: "https://capstone-intel-2018-sql.herokuapp.com/dist/API/RemoveFromTeam.php",
+      params: { "EmployeeID": emp , "TeamID": team }
+    })
+    .then(function (response) {
+      console.log(response.data);
+      io.emit('removed');
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   });
   
 });
