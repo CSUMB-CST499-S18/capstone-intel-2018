@@ -19,15 +19,16 @@ class EmployeeInfo extends Component {
     
     componentDidMount() {
     
-    var that = this;
-    console.log("Getting employee profile");
-    
-    socket.emit('getEmployee', this.state.EmployeeID);
-    
-    socket.on('employee-info', function (data) {
-        console.log(data);
-        that.setState({ Employee: data });
-    });
+        var that = this;
+        console.log("Getting employee profile");
+        
+        socket.emit('getEmployee', this.state.EmployeeID);
+        
+        socket.on('employee-info', function (data) {
+            console.log(data);
+            if (that.refs.myEmpRef)
+            that.setState({ Employee: data });
+        });
     
     }
     
@@ -37,7 +38,7 @@ class EmployeeInfo extends Component {
         if (this.state.Employee.isManager == 1) {
             var isManager = "Yes";
             var isManagerCrown = <img src={require('../assets/images/crown.png')} className="crown"/>
-            var isManagerCrownSpan = <span>This user has the ability to be a manager.</span>
+            var isManagerCrownSpan = <span>Having manager credentials means that this user is allowed to be a manager.</span>
             const popover = (
               <Popover id="modal-popover" title="">
                 {isManagerCrownSpan} 
@@ -52,7 +53,7 @@ class EmployeeInfo extends Component {
         
         
         return (
-            <div>
+            <div ref="myEmpRef">
                 <div className="ProfileInfo">
                     <a href={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} target="_blank">
                         <img src={"http://activerain.com/image_store/uploads/9/8/3/5/3/ar13258249335389.jpg"} alt="profile_picture" className="profilePic" />
