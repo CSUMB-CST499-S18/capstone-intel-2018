@@ -52,7 +52,7 @@ var job = schedule.scheduleJob(rule, function() {
     mail({
       from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
       to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
-      subject: "Hello", // Subject line
+      subject: "Daily Logs", // Subject line
       text: response.data // plaintext body
     });
   }).catch(function(error) {
@@ -183,7 +183,7 @@ io.on('connection', function(client) {
       mail({
         from: "Kyle Butler-Fish <kbutler-fish@csumbcapstone.onmicrosoft.com>", // sender address
         to: "bavery@csumbcapstone.onmicrosoft.com", // list of receivers
-        subject: "Hello", // Subject line
+        subject: "Daily Logs", // Subject line
         text: response.data // plaintext body
       });
     }).catch(function(error) {
