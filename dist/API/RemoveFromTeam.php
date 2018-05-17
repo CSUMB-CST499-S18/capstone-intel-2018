@@ -192,7 +192,7 @@ if (isset($record)){ //If communication with the DB was established
         /* Changes hasManager boolean flag in team table from HAS TEAM MANAGER (1) to NO TEAM MANAGER (0) */
         
                 $sql = "UPDATE team
-                SET hasManager = 0
+                SET hasManager = `0`
                 WHERE TeamID = :TeamID";
                 
                 //Sanitizing Input
