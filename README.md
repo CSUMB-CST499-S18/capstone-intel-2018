@@ -12,14 +12,10 @@ Heroku will follow the `postinstall` command in your `package.json` and compile 
 
 If you've never deployed a Node app to Heroku (or just need a refresher), they have a really great walkthrough [here](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction).
 
+#### Live Site [Here](https://capstone-intel-2018.herokuapp.com)
+
 ### OTHER STARTERS
 * [React + Node Starter ](https://github.com/alanbsmith/react-node-example)
 * [ Marc Garreau's Redux Starter ](https://github.com/marcgarreau/redux-starter)
 * [ React + Electron Starter ](https://github.com/alanbsmith/react-electron-starter)
 * [ React + Sinatra Example ](https://github.com/alanbsmith/react-sinatra-example)
-
-
-### Ajax call file locations
-server.js
-EmployeeInfo.js
-App.js
