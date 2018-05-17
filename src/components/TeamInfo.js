@@ -31,10 +31,12 @@ class TeamInfo extends Component {
             AllTeams: [],
             AllTeamsID: [],
             Employee: [],
+            plusIconState: true,
             pendingTeamToAdd: [],
             EmployeeID: this.props.EmployeeID,
             addToTeamID: '',
             addToTeamAsManager: false,
+            addToTeamIDIsValid: true,
             isMuted: false,
             isPromoteMuted: false,
             validateToggleMessage: '',
@@ -114,6 +116,12 @@ class TeamInfo extends Component {
         //this.forceUpdate();
     }
     
+    addToTeam(){
+        this.setState({ show: false });
+        var data = {empID: this.state.EmployeeID, teamID: this.state.addToTeamID, addAsManager: this.state.addToTeamAsManager};
+        socket.emit('addToTeam', data);
+    }
+    
     validatePromote(teamID) {
         var that = this;
             console.log("Checking if inputted team already has a manager or not");
@@ -144,49 +152,69 @@ class TeamInfo extends Component {
     
     // When user clicks the "Save" button
     validateAddToTeamInput() {
+        var that = this;
+        that.setState({addToTeamIDIsValid: true});
+        // Make sure employee isn't added to a team they're already on
+        Object.keys(that.state.ProfileTeams[0]).map(function (key) {
+            if (that.state.ProfileTeams[0][key].TeamID == that.state.addToTeamID) {
+                that.setState({validateTeamIDMessage: "You're already on this team."});
+                that.setState({addToTeamIDIsValid: false});
+            }
+        });
         
-        // Validating team ID input
+        // Validating team ID input exists
         if (this.handleCheckTeamExists(this.state.addToTeamID) == false) {
-            this.setState({validateTeamIDMessage: "This team does not exist."});
+            that.setState({validateTeamIDMessage: "This team does not exist."});
+            that.setState({addToTeamIDIsValid: false});
         }
-        else {
+        
+        if (this.state.addToTeamIDIsValid == true) {
             //Validating toggle button by checking if that team already has a manager
-            var that = this;
             console.log("Checking if inputted team already has a manager or not");
-            socket.emit('getTeamByID', this.state.addToTeamID);
+            socket.emit('getTeamByID', that.state.addToTeamID);
             socket.on('one-team-info', function (data) {
                 that.setState({pendingTeamToAdd:data[0]});
-                console.log("team " + that.state.pendingTeamToAdd + "has a manager: " + that.state.pendingTeamToAdd.hasManager);
+                console.log("team " + that.state.pendingTeamToAdd + " has a manager: " + that.state.pendingTeamToAdd.hasManager);
     
-                // If user toggles OFF
+                // If user toggles OFF, they join as member
                 if (that.state.addToTeamAsManager == false) {
                     that.setState({ isMuted: false });
                     that.setState({ validateToggleMessage: "You're about to join this team as a member." });
                 }
-                // If that team DOES NOT have a manager
-                else if (that.state.pendingTeamToAdd.hasManager == "0") {
-                    //and user toggles ON 
-                    if (that.state.addToTeamAsManager == true) {
+                // If user toggles ON, they want to join a team as  manager
+                if (that.state.addToTeamAsManager == true) {
+                    // If that team DOES NOT have a manager, they join as manager
+                    if (that.state.pendingTeamToAdd.hasManager == "0") {
                         that.setState({ isMuted: false });
                         that.setState({ validateToggleMessage: "You're about to join this team as its manager." });
                     } 
-                }
-                // If that team DOES have a manager
-                else if (that.state.pendingTeamToAdd.hasManager == "1") {
+                    // If that team DOES have a manager, mute toggle, they can only join as member
+                    else if (that.state.pendingTeamToAdd.hasManager == "1") {
                     //and user toggles ON 
-                    if (that.state.addToTeamAsManager == true) {
                         that.setState({ isMuted: true });
                         that.setState({ validateToggleMessage: "This team already has a manager. You can only join this team as a member." });
                     }
                 }
+                
             });
+        }
+        
+        if (this.state.addToTeamIDIsValid == true) {
+            console.log("Add person to this team now");
+            this.addToTeam();
+        }
+        else if (this.state.addToTeamIDIsValid == false) {
+            console.log("You missed a validation case for teamID input; you should never see this message.");
+        }
+        else {
+            console.log("If it's not true or false, what is it");
         }
     }
     
     componentDidMount() {
         var that = this;
         console.log("Getting Employee's list of Teams");
-        socket.emit('getEmployeeTeams', this.state.EmployeeID);
+        socket.emit('getEmployeeTeams', that.state.EmployeeID);
         socket.on('employee-team-info', function (data) {
             console.log(data);
             Object.keys(data[0]).map(function (key) {
@@ -200,11 +228,19 @@ class TeamInfo extends Component {
         });
         
         console.log("Getting employee profile");
-        socket.emit('getEmployee', this.state.EmployeeID);
+        socket.emit('getEmployee', that.state.EmployeeID);
         socket.on('employee-info', function (data) {
             console.log(data);
             that.setState({ Employee: data });
+            
+            //Employees with no manager credentials can only belong on one team
+            if (that.state.ProfileTeams[0] != 0 && that.state.Employee.isManager == "0") {
+                that.setState({plusIconState: false});
+            } else {
+                that.setState({plusIconState: true});
+            }
         });
+        
         
         //when someone is removed from a team rerender the component
         socket.on('removed', function () {
@@ -263,9 +299,18 @@ class TeamInfo extends Component {
             }
         };
         
-        var plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>
-        var plusIconText = <span>Add this employee to a new team.</span>
-
+        var plusIcon = null; 
+        var plusIconText = null;
+        
+        if (this.state.plusIconState == true) {
+            plusIcon = <img src={require('../assets/images/plus.png')} className="plus" onClick={this.handleShow}/>;
+            plusIconText = <span>Add this employee to a new team.</span>;
+        } 
+        else if (this.state.plusIconState == false) {
+            plusIcon = <img src={require('../assets/images/plus.png')} className="plus plusMute"/>;
+            plusIconText = <span>Please remove the existing team first, or gain manager credentials to be on multiple teams.</span>;
+        }
+        
         const popover = (
           <Popover id="modal-popover" title="">
             {plusIconText} 
@@ -346,14 +391,23 @@ class TeamInfo extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Choose wisely...</h4>
-                    <p>
-                        Team Name:  {this.state.TeamName}
-                    </p>
-                    <p>
-                        Team ID:  {this.state.TeamID}
-                    </p>
-                    {togglePromote}
+                    <div>
+                        <ControlLabel>Team Name: </ControlLabel> 
+                        <p>{this.state.TeamName}</p>
+                    </div>
+                    <div>
+                        <ControlLabel>Team ID: </ControlLabel> 
+                        <p>{this.state.TeamID}</p>
+                    </div>
+                    <label>
+                        <div><ControlLabel htmlFor='promote-to-manager-status'>Promote to Manager:</ControlLabel></div>
+                        <div><Toggle
+                            id='promote-to-manager-status'
+                            defaultChecked={this.state.promote}
+                            onChange={this.handlePromote} />
+                           <HelpBlock>Choose wisely...</HelpBlock>
+                        </div>
+                    </label>
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonToolbar>
