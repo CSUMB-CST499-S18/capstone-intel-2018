@@ -40,7 +40,7 @@ if($_GET['isTeamManager'] == 1){ //If they're a manager, get child teams
          
         /* Here we loop through the array and append all child teams to the query */
         
-        if(sizeof($record) > 0){
+        if(sizeof($record) > 1){
                 
                 $sql = "SELECT ResourceID FROM teamresource WHERE";
                         
