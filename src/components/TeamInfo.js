@@ -191,20 +191,21 @@ class TeamInfo extends Component {
                         addToTeamIDIsValid = false;
                     }
                 }
+                if (addToTeamIDIsValid) {
+                    console.log("Add person to this team now");
+                    this.addToTeam();
+                }
+                else if (!addToTeamIDIsValid) {
+                    console.log("You missed a validation case for teamID input; you should never see this message.");
+                }
+                else {
+                    console.log("If it's not true or false, what is it");
+                }
                 
             });
         }
         
-        if (addToTeamIDIsValid) {
-            console.log("Add person to this team now");
-            this.addToTeam();
-        }
-        else if (!addToTeamIDIsValid) {
-            console.log("You missed a validation case for teamID input; you should never see this message.");
-        }
-        else {
-            console.log("If it's not true or false, what is it");
-        }
+        
     }
     
     componentDidMount() {
